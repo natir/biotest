@@ -1,4 +1,4 @@
-//! Many function to generate test data for bioinformatics data procedural macro crate
+//! Generate random test data for bioinformatics"
 
 #![warn(missing_docs)]
 

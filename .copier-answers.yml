@@ -13,5 +13,5 @@ forge_namespace: natir
 forge_repo_name: biotest
 msrv: '1.75'
 proc_macro: true
-project_description: Many function to generate test data for bioinformatics data
+project_description: Generate random test data for bioinformatics
 project_name: biotest
