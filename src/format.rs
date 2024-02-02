@@ -11,4 +11,7 @@ pub mod fasta;
 #[cfg(feature = "fastq")]
 pub mod fastq;
 
+#[cfg(feature = "vcf")]
+pub mod vcf;
+
 /* projet use */

@@ -39,6 +39,20 @@ pub const PHRED64: [u8; 40] = gen_array::<40, 64>();
 /// Alphabets with [ \ ] ^ _ `
 pub const ALPHABETS: [u8; 58] = gen_array::<58, 65>();
 
+/// Some different possible chromosomes name
+pub const CHROMOSOMES: [&[u8]; 10] = [
+    b"chr1",
+    b"23",
+    b"93",
+    b"chrMT",
+    b"X",
+    b"NC_000015.10",
+    b"ENA|LT795502|LT795502.1",
+    b"NC_016845.1",
+    b"YAR028W",
+    b"1",
+];
+
 #[cfg(test)]
 mod tests {
     /* project use */

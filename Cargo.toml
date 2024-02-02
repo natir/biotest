@@ -17,6 +17,7 @@ license-file = "LICENSE"
 [features]
 fasta  = []
 fastq  = []
+vcf  = []
 derive = ["dep:biotest_derive"]
 
 [dependencies]
