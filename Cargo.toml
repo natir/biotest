@@ -1,0 +1,49 @@
+[package]
+name = "biotest"
+version = "0.1.0"
+authors = ["Pierre Marijon <pierre@marijon.fr>"]
+edition = "2021"
+description = "Many function to generate test data for bioinformatics data"
+rust-version = "1.75"
+
+homepage = "https://github.com/natir/biotest"
+repository = "https://github.com/natir/biotest"
+documentation = "https://natir.github.io/biotest/biotest"
+
+readme = "Readme.md"
+license-file = "LICENSE"
+
+
+[dependencies]
+
+
+# Error management
+thiserror      = { version = "1" }
+
+
+# Logging and error management
+log            = { version = "0.4" }
+
+# Procedural macro
+biotest_derive = { path = "biotest_derive", optional = true }
+
+
+[dev-dependencies]
+criterion      = { version = "0.5" }
+
+# CLI management
+clap           = { version = "4", features = ["derive"] }
+
+# Logging management
+stderrlog      = { version = "0.5" }
+[profile.release]
+lto = 'thin'
+opt-level = 3
+overflow-checks = false
+panic = 'abort'
+incremental = false
+
+
+[profile.profiling]
+inherits = "release"
+debug = true

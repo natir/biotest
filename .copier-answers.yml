@@ -1,0 +1,17 @@
+_commit: 1.7.1
+_src_path: gh:natir/copier-rust
+author_email: pierre@marijon.fr
+author_name: Pierre Marijon
+ci: github
+cli: false
+copyright_date: '2024'
+copyright_holder: Pierre Marijon
+copyright_holder_email: pierre@marijon.fr
+copyright_license: MIT
+forge_host: github.com
+forge_namespace: natir
+forge_repo_name: biotest
+msrv: '1.75'
+proc_macro: true
+project_description: Many function to generate test data for bioinformatics data
+project_name: biotest
