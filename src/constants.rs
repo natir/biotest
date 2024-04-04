@@ -19,28 +19,28 @@ const fn gen_array<const N: usize, const B: usize>() -> [u8; N] {
 }
 
 /// Fixed random seed
-pub const SEED: [u8; 32] = [42; 32];
+pub static SEED: [u8; 32] = [42; 32];
 
 /// Nucleotides with any case
-pub const NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
+pub static NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
 
 /// Nucleotides lower
-pub const NUCLEOTIDES_LOWER: [u8; 4] = *b"actg";
+pub static NUCLEOTIDES_LOWER: [u8; 4] = *b"actg";
 
 /// Nucleotides upper
-pub const NUCLEOTIDES_UPPER: [u8; 4] = *b"ACTG";
+pub static NUCLEOTIDES_UPPER: [u8; 4] = *b"ACTG";
 
 /// All possible phred 33 value
-pub const PHRED33: [u8; 40] = gen_array::<40, 33>();
+pub static PHRED33: [u8; 40] = gen_array::<40, 33>();
 
 /// All possible phred 64 value
-pub const PHRED64: [u8; 40] = gen_array::<40, 64>();
+pub static PHRED64: [u8; 40] = gen_array::<40, 64>();
 
 /// Alphabets with [ \ ] ^ _ `
-pub const ALPHABETS: [u8; 58] = gen_array::<58, 65>();
+pub static ALPHABETS: [u8; 58] = gen_array::<58, 65>();
 
 /// Some different possible chromosomes name
-pub const CHROMOSOMES: [&[u8]; 10] = [
+pub static CHROMOSOMES: [&[u8]; 10] = [
     b"chr1",
     b"23",
     b"93",
@@ -52,6 +52,21 @@ pub const CHROMOSOMES: [&[u8]; 10] = [
     b"YAR028W",
     b"1",
 ];
+
+/// All vcf info type
+pub static VCF_INFO_TYPE: [&[u8]; 5] = [b"Integer", b"Float", b"Flag", b"Character", b"String"];
+
+/// All vcf info number
+pub static VCF_INFO_NUMBER: [&[u8]; 6] = [b"1", b"2", b"A", b"R", b"G", b"."];
+
+/// All vcf info type
+pub static VCF_FORMAT_TYPE: [&[u8]; 4] = [b"Integer", b"Float", b"Character", b"String"];
+
+/// All vcf info number
+pub static VCF_FORMAT_NUMBER: [&[u8]; 6] = [b"1", b"2", b"A", b"R", b"G", b"."];
+
+/// biotest version
+pub static BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
 
 #[cfg(test)]
 mod tests {

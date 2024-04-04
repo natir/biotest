@@ -35,7 +35,10 @@ biotest_derive = { path = "biotest_derive", optional = true }
 
 [dev-dependencies]
 criterion      = { version = "0.5" }
+
+# test
 tempfile       = { version = "3" }
+assert_matches = { version = "1" }
 
 # CLI management
 clap           = { version = "4", features = ["derive"] }
