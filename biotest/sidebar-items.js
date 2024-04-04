@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["rand","text"],"mod":["constants","error","format"]};
+window.SIDEBAR_ITEMS = {"fn":["quality","rand","sequence","text"],"mod":["constants","error","format"]};
