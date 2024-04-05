@@ -403,7 +403,7 @@ where
 {
     let mut output = std::fs::File::create(&path)?;
 
-    header::write(&mut output, None, false, None)?;
+    header::write(&mut output, nb_filters, add_info, nb_samples)?;
     records(
         &mut output,
         rng,
