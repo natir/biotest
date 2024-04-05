@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"biotest":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.77.1/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"biotest/fasta/struct.FastaBuilder.html\" title=\"struct biotest::fasta::FastaBuilder\">FastaBuilder</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.77.1/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"biotest/fastq/struct.FastqBuilder.html\" title=\"struct biotest::fastq::FastqBuilder\">FastqBuilder</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

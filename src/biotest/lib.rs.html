@@ -77,53 +77,12 @@
 <a href="#75" id="75">75</a>
 <a href="#76" id="76">76</a>
 <a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a>
-<a href="#81" id="81">81</a>
-<a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a>
-<a href="#90" id="90">90</a>
-<a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
-<a href="#93" id="93">93</a>
-<a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a>
-<a href="#96" id="96">96</a>
-<a href="#97" id="97">97</a>
-<a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a>
-<a href="#104" id="104">104</a>
-<a href="#105" id="105">105</a>
-<a href="#106" id="106">106</a>
-<a href="#107" id="107">107</a>
-<a href="#108" id="108">108</a>
-<a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a>
-<a href="#112" id="112">112</a>
-<a href="#113" id="113">113</a>
-<a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a>
-<a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Generate random test data for bioinformatics
+//!
+//! There's a feature for every file format that can be generated:
+//! - fasta
+//! - fastq
+//! - vcf
 
 </span><span class="attr">#![warn(missing_docs)]
 
@@ -134,41 +93,33 @@
 <span class="kw">use </span>rand::SeedableRng;
 
 <span class="comment">/* project use */
-</span><span class="attr">#[cfg(feature = <span class="string">"derive"</span>)]
-</span><span class="kw">pub use </span>biotest_derive <span class="kw">as </span>derive;
+//#[cfg(feature = "derive")]
+//pub use biotest_derive as derive;
 
-<span class="comment">/* mod declaration */
+/* mod declaration */
 </span><span class="kw">pub mod </span>constants;
+<span class="kw">pub mod </span>values;
 <span class="attr">#[macro_use]
 </span><span class="kw">pub mod </span>error;
-<span class="kw">pub mod </span>format;
+<span class="kw">mod </span>format;
 
-<span class="doccomment">/// Generate random generator
+<span class="comment">/* reexport */
+</span><span class="attr">#[cfg(feature = <span class="string">"fasta"</span>)]
+</span><span class="kw">pub use </span>format::fasta;
+
+<span class="attr">#[cfg(feature = <span class="string">"fastq"</span>)]
+</span><span class="kw">pub use </span>format::fastq;
+
+<span class="attr">#[cfg(feature = <span class="string">"vcf"</span>)]
+</span><span class="kw">pub use </span>format::vcf;
+
+<span class="doccomment">/// Create a random generator with [constants::SEED]
 </span><span class="kw">pub fn </span>rand() -&gt; rand::rngs::StdRng {
     rand::rngs::StdRng::from_seed(constants::SEED)
 }
 
-<span class="doccomment">/// Write random text of length in output
-</span><span class="kw">pub fn </span>text&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng, length: usize) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write,
-{
-    output.write_all(
-        <span class="kw-2">&amp;</span>(<span class="number">0</span>..length)
-            .map(|<span class="kw">_</span>| {
-                constants::ALPHABETS
-                    .choose(rng)
-                    .cloned()
-                    .ok_or(<span class="macro">create_unreachable!</span>())
-            })
-            .collect::&lt;error::Result&lt;Vec&lt;u8&gt;&gt;&gt;()<span class="question-mark">?</span>,
-    )<span class="question-mark">?</span>;
-
-    <span class="prelude-val">Ok</span>(())
-}
-
 <span class="doccomment">/// Write a random sequence of length in output
-</span><span class="kw">pub fn </span>sequence&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng, length: usize) -&gt; error::Result&lt;()&gt;
+</span><span class="kw">fn </span>sequence&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng, length: usize) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
     </span>W: std::io::Write,
 {
@@ -186,41 +137,10 @@
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="doccomment">/// Write a random quality of length in output
-</span><span class="kw">pub fn </span>quality&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng, length: usize) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write,
-{
-    output.write_all(
-        <span class="kw-2">&amp;</span>(<span class="number">0</span>..length)
-            .map(|<span class="kw">_</span>| {
-                constants::PHRED33
-                    .choose(rng)
-                    .cloned()
-                    .ok_or(<span class="macro">create_unreachable!</span>())
-            })
-            .collect::&lt;error::Result&lt;Vec&lt;u8&gt;&gt;&gt;()<span class="question-mark">?</span>,
-    )<span class="question-mark">?</span>;
-
-    <span class="prelude-val">Ok</span>(())
-}
-
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="comment">/* project use */
     </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>text_() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>rng = rand();
-
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
-        text(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">20</span>)<span class="question-mark">?</span>;
-
-        <span class="macro">assert_eq!</span>(output, <span class="string">b"oNi_PdzwC[tBTlDDl[MK"</span>);
-
-        <span class="prelude-val">Ok</span>(())
-    }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>sequence_() -&gt; error::Result&lt;()&gt; {
@@ -230,18 +150,6 @@
         sequence(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">20</span>)<span class="question-mark">?</span>;
 
         <span class="macro">assert_eq!</span>(output, <span class="string">b"taTATgAAtCGCgtGTTAGT"</span>);
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>quality_() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>rng = rand();
-
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
-        quality(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">20</span>)<span class="question-mark">?</span>;
-
-        <span class="macro">assert_eq!</span>(output, <span class="string">b"A*C69HD.##3)(0'4E@H+"</span>);
 
         <span class="prelude-val">Ok</span>(())
     }

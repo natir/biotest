@@ -98,7 +98,6 @@
 <a href="#96" id="96">96</a>
 <a href="#97" id="97">97</a>
 <a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Declarations of some constants value
 
 </span><span class="comment">/* std use */
@@ -107,7 +106,7 @@
 
 /* projet use */
 
-</span><span class="kw">const fn </span>gen_array&lt;<span class="kw">const </span>N: usize, <span class="kw">const </span>B: usize&gt;() -&gt; [u8; N] {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>gen_array&lt;<span class="kw">const </span>N: usize, <span class="kw">const </span>B: usize&gt;() -&gt; [u8; N] {
     <span class="kw">let </span><span class="kw-2">mut </span>array = [<span class="number">0</span>; N];
 
     <span class="kw">let </span><span class="kw-2">mut </span>i = <span class="number">0</span>;
@@ -122,14 +121,13 @@
 <span class="doccomment">/// Fixed random seed
 </span><span class="kw">pub static </span>SEED: [u8; <span class="number">32</span>] = [<span class="number">42</span>; <span class="number">32</span>];
 
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>ASCII_VISIBLE: [u8; <span class="number">94</span>] = gen_array::&lt;<span class="number">94</span>, <span class="number">33</span>&gt;();
+
 <span class="doccomment">/// Nucleotides with any case
 </span><span class="kw">pub static </span>NUCLEOTIDES: [u8; <span class="number">8</span>] = <span class="kw-2">*</span><span class="string">b"ACTGactg"</span>;
 
-<span class="doccomment">/// Nucleotides lower
-</span><span class="kw">pub static </span>NUCLEOTIDES_LOWER: [u8; <span class="number">4</span>] = <span class="kw-2">*</span><span class="string">b"actg"</span>;
-
-<span class="doccomment">/// Nucleotides upper
-</span><span class="kw">pub static </span>NUCLEOTIDES_UPPER: [u8; <span class="number">4</span>] = <span class="kw-2">*</span><span class="string">b"ACTG"</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DNA_NUCLEOTIDES: [u8; <span class="number">8</span>] = <span class="kw-2">*</span><span class="string">b"ACTGactg"</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>RNA_NUCLEOTIDES: [u8; <span class="number">8</span>] = <span class="kw-2">*</span><span class="string">b"ACUGacug"</span>;
 
 <span class="doccomment">/// All possible phred 33 value
 </span><span class="kw">pub static </span>PHRED33: [u8; <span class="number">40</span>] = gen_array::&lt;<span class="number">40</span>, <span class="number">33</span>&gt;();
@@ -167,7 +165,7 @@
 </span><span class="kw">pub static </span>VCF_FORMAT_NUMBER: [<span class="kw-2">&amp;</span>[u8]; <span class="number">6</span>] = [<span class="string">b"1"</span>, <span class="string">b"2"</span>, <span class="string">b"A"</span>, <span class="string">b"R"</span>, <span class="string">b"G"</span>, <span class="string">b"."</span>];
 
 <span class="doccomment">/// biotest version
-</span><span class="kw">pub static </span>BIOTEST_VERSION: <span class="kw-2">&amp;</span>[u8] = <span class="macro">env!</span>(<span class="string">"CARGO_PKG_VERSION"</span>).as_bytes();
+</span><span class="kw">pub const </span>BIOTEST_VERSION: <span class="kw-2">&amp;</span>[u8] = <span class="macro">env!</span>(<span class="string">"CARGO_PKG_VERSION"</span>).as_bytes();
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {

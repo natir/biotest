@@ -52,6 +52,8 @@
 <a href="#50" id="50">50</a>
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
+<a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Error struct of project biotest
 
 </span><span class="comment">/* crate use */
@@ -83,6 +85,8 @@
     };
 }
 
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>create_unreachable;
+
 <span class="doccomment">/// Alias of result
 </span><span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = core::result::Result&lt;T, Error&gt;;
 
@@ -93,7 +97,7 @@
         <span class="macro">assert_matches::assert_matches!</span>(
             <span class="macro">create_unreachable!</span>(),
             <span class="kw">crate</span>::error::Error::Unreachable {
-                line: <span class="number">40</span>,
+                line: <span class="number">42</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"windows"</span>)]
                 </span>file: <span class="string">"src\\error.rs"</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"unix"</span>)]
