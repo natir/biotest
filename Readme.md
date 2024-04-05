@@ -18,4 +18,4 @@ biotest = { url = "https:///natir/biotest.git" }
 
 ## Minimum supported Rust version
 
-Currently the minimum supported Rust version is 1.75.
+Currently the minimum supported Rust version is 1.63.

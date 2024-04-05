@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 description = "Proc macro crate of biotest crate"
-rust-version = "1.75"
+rust-version = "1.63"
 
 readme = "../Readme.md"
 license-file = "../LICENSE"

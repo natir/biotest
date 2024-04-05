@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Pierre Marijon <pierre@marijon.fr>"]
 edition = "2021"
 description = "Generate random test data for bioinformatics"
-rust-version = "1.75"
+rust-version = "1.63"
 
 homepage = "https://github.com/natir/biotest"
 repository = "https://github.com/natir/biotest"
@@ -34,17 +34,9 @@ biotest_derive = { path = "biotest_derive", optional = true }
 
 
 [dev-dependencies]
-criterion      = { version = "0.5" }
-
-# test
+# Test
 tempfile       = { version = "3" }
 assert_matches = { version = "1" }
-
-# CLI management
-clap           = { version = "4", features = ["derive"] }
-
-# Logging management
-stderrlog      = { version = "0.5" }
 
 
 [profile.release]
