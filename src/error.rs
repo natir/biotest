@@ -29,6 +29,8 @@ macro_rules! create_unreachable {
     };
 }
 
+pub(crate) use create_unreachable;
+
 /// Alias of result
 pub type Result<T> = core::result::Result<T, Error>;
 
@@ -39,7 +41,7 @@ mod tests {
         assert_matches::assert_matches!(
             create_unreachable!(),
             crate::error::Error::Unreachable {
-                line: 40,
+                line: 42,
                 #[cfg(target_family = "windows")]
                 file: "src\\error.rs",
                 #[cfg(target_family = "unix")]

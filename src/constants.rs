@@ -6,7 +6,7 @@
 
 /* projet use */
 
-const fn gen_array<const N: usize, const B: usize>() -> [u8; N] {
+pub(crate) const fn gen_array<const N: usize, const B: usize>() -> [u8; N] {
     let mut array = [0; N];
 
     let mut i = 0;
@@ -21,14 +21,13 @@ const fn gen_array<const N: usize, const B: usize>() -> [u8; N] {
 /// Fixed random seed
 pub static SEED: [u8; 32] = [42; 32];
 
+pub(crate) const ASCII_VISIBLE: [u8; 94] = gen_array::<94, 33>();
+
 /// Nucleotides with any case
 pub static NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
 
-/// Nucleotides lower
-pub static NUCLEOTIDES_LOWER: [u8; 4] = *b"actg";
-
-/// Nucleotides upper
-pub static NUCLEOTIDES_UPPER: [u8; 4] = *b"ACTG";
+pub(crate) const DNA_NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
+pub(crate) const RNA_NUCLEOTIDES: [u8; 8] = *b"ACUGacug";
 
 /// All possible phred 33 value
 pub static PHRED33: [u8; 40] = gen_array::<40, 33>();
@@ -66,7 +65,7 @@ pub static VCF_FORMAT_TYPE: [&[u8]; 4] = [b"Integer", b"Float", b"Character", b"
 pub static VCF_FORMAT_NUMBER: [&[u8]; 6] = [b"1", b"2", b"A", b"R", b"G", b"."];
 
 /// biotest version
-pub static BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
+pub const BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
 
 #[cfg(test)]
 mod tests {
