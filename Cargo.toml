@@ -18,7 +18,7 @@ license-file = "LICENSE"
 fasta  = []
 fastq  = []
 vcf  = []
-derive = ["dep:biotest_derive"]
+
 
 [dependencies]
 rand           = { version = "0.8" }
@@ -29,9 +29,6 @@ thiserror      = { version = "1" }
 
 # Logging and error management
 log            = { version = "0.4" }
-
-# Procedural macro
-biotest_derive = { path = "biotest_derive", optional = true }
 
 
 [dev-dependencies]

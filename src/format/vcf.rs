@@ -83,7 +83,7 @@ fn generate_float(rng: &mut rand::rngs::StdRng) -> f32 {
 fn generate_string(rng: &mut rand::rngs::StdRng, length: usize) -> error::Result<Vec<u8>> {
     (0..length)
         .map(|_| {
-            constants::ALPHABETS
+            constants::ASCII_VISIBLE
                 .choose(rng)
                 .cloned()
                 .ok_or(create_unreachable!())
@@ -167,7 +167,7 @@ fn generate_value(
             _ => Err(create_unreachable!()),
         },
         b"Character" => match vcf_number {
-            b"1" | b"A" => Ok(vec![constants::ALPHABETS
+            b"1" | b"A" => Ok(vec![constants::ASCII_VISIBLE
                 .choose(rng)
                 .cloned()
                 .ok_or(create_unreachable!())?]),
@@ -175,7 +175,7 @@ fn generate_value(
                 let mut ret = Vec::new();
                 for _ in 0..2 {
                     ret.push(
-                        constants::ALPHABETS
+                        constants::ASCII_VISIBLE
                             .choose(rng)
                             .cloned()
                             .ok_or(create_unreachable!())?,
@@ -190,7 +190,7 @@ fn generate_value(
                 let mut ret = Vec::new();
                 for _ in 0..nb_samples {
                     ret.push(
-                        constants::ALPHABETS
+                        constants::ASCII_VISIBLE
                             .choose(rng)
                             .cloned()
                             .ok_or(create_unreachable!())?,
@@ -205,7 +205,7 @@ fn generate_value(
                 let mut ret = Vec::new();
                 for _ in 0..rng.gen_range(1..5) {
                     ret.push(
-                        constants::ALPHABETS
+                        constants::ASCII_VISIBLE
                             .choose(rng)
                             .cloned()
                             .ok_or(create_unreachable!())?,

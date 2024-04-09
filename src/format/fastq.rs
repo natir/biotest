@@ -8,56 +8,71 @@
 use crate::error;
 use crate::format;
 use crate::values;
-use crate::values::Random;
+
+use crate::values::RandomBytes as _;
 
 /// Struct to generate random fastq record
 #[derive(derive_builder::Builder)]
 #[builder(pattern = "owned")]
+#[cfg_attr(feature = "tools", derive(clap::Parser))]
 pub struct Fastq {
     /// Alphabet use for id generation
     #[builder(default = "values::Alphabet::Upper")]
     id: values::Alphabet,
+
     /// Length of id
     #[builder(default = "10")]
     id_len: usize,
+
     /// Id prefix
     #[builder(default = "b\"\".to_vec()")]
     id_prefix: Vec<u8>,
+
     /// Id suffix
     #[builder(default = "b\"\".to_vec()")]
     id_suffix: Vec<u8>,
+
     /// Alphapet use for comment generation
     #[builder(default = "values::Alphabet::Lower")]
     comment: values::Alphabet,
     /// Comment length
     #[builder(default = "20")]
     comment_len: usize,
+
     /// Comment prefix
     #[builder(default = "b\"\".to_vec()")]
     comment_prefix: Vec<u8>,
+
     /// Comment suffix
     #[builder(default = "b\"\".to_vec()")]
     comment_suffix: Vec<u8>,
+
     /// Alphabet use for sequence generation
-    #[builder(default = "values::Nucleotides::Dna(values::Dna::All)")]
+    #[builder(default = "values::Nucleotides::Dna")]
     sequence: values::Nucleotides,
+
     /// Sequence length
     #[builder(default = "150")]
     sequence_len: usize,
+
     /// Alphabet use for plus comment generation
     #[builder(default = "values::Alphabet::A2z")]
     plus: values::Alphabet,
+
     /// Plus comment len
     #[builder(default = "5")]
     plus_len: usize,
+
     /// Plus prefix
     #[builder(default = "b\"\".to_vec()")]
     plus_prefix: Vec<u8>,
+
     /// Plus suffix
     #[builder(default = "b\"\".to_vec()")]
     plus_suffix: Vec<u8>,
+
     /// Alphabet use for quality generation
-    #[builder(default = "values::Quality::Illumina(18)")]
+    #[builder(default = "values::Quality::Illumina")]
     quality: values::Quality,
 }
 

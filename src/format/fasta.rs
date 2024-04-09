@@ -6,10 +6,10 @@
 
 /* projet use */
 use crate::error;
-
 use crate::format;
 use crate::values;
-use crate::values::Random;
+
+use crate::values::RandomBytes as _;
 
 /// Struct to generate random fastq record
 #[derive(derive_builder::Builder)]
@@ -18,30 +18,39 @@ pub struct Fasta {
     /// Alphabet use for id generation
     #[builder(default = "values::Alphabet::Upper")]
     id: values::Alphabet,
+
     /// Length of id
     #[builder(default = "10")]
     id_len: usize,
+
     /// Id prefix
     #[builder(default = "b\"\".to_vec()")]
     id_prefix: Vec<u8>,
+
     /// Id suffix
     #[builder(default = "b\"\".to_vec()")]
     id_suffix: Vec<u8>,
+
     /// Alphapet use for comment generation
     #[builder(default = "values::Alphabet::Lower")]
     comment: values::Alphabet,
+
     /// Comment length
     #[builder(default = "20")]
     comment_len: usize,
+
     /// Comment prefix
     #[builder(default = "b\"\".to_vec()")]
     comment_prefix: Vec<u8>,
+
     /// Comment suffix
     #[builder(default = "b\"\".to_vec()")]
     comment_suffix: Vec<u8>,
+
     /// Alphabet use for sequence generation
-    #[builder(default = "values::Nucleotides::Dna(values::Dna::All)")]
+    #[builder(default = "values::Nucleotides::Dna")]
     sequence: values::Nucleotides,
+
     /// Sequence length
     #[builder(default = "150")]
     sequence_len: usize,

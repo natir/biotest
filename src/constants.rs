@@ -29,15 +29,6 @@ pub static NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
 pub(crate) const DNA_NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
 pub(crate) const RNA_NUCLEOTIDES: [u8; 8] = *b"ACUGacug";
 
-/// All possible phred 33 value
-pub static PHRED33: [u8; 40] = gen_array::<40, 33>();
-
-/// All possible phred 64 value
-pub static PHRED64: [u8; 40] = gen_array::<40, 64>();
-
-/// Alphabets with [ \ ] ^ _ `
-pub static ALPHABETS: [u8; 58] = gen_array::<58, 65>();
-
 /// Some different possible chromosomes name
 pub static CHROMOSOMES: [&[u8]; 10] = [
     b"chr1",
@@ -66,33 +57,3 @@ pub static VCF_FORMAT_NUMBER: [&[u8]; 6] = [b"1", b"2", b"A", b"R", b"G", b"."];
 
 /// biotest version
 pub const BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
-
-#[cfg(test)]
-mod tests {
-    /* project use */
-    use super::*;
-
-    #[test]
-    fn phred33() {
-        assert_eq!(
-            gen_array::<40, 33>().to_vec(),
-            b"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGH".to_vec()
-        );
-    }
-
-    #[test]
-    fn phred64() {
-        assert_eq!(
-            gen_array::<40, 64>().to_vec(),
-            b"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefg".to_vec()
-        );
-    }
-
-    #[test]
-    fn alphapets() {
-        assert_eq!(
-            gen_array::<58, 65>().to_vec(),
-            b"ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz".to_vec()
-        );
-    }
-}

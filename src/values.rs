@@ -9,7 +9,8 @@ use rand::seq::SliceRandom;
 use crate::constants;
 use crate::error;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "tools", derive(clap::ValueEnum))]
 /// Differente generic ascii alphabet
 pub enum Alphabet {
     /// Any visible ascii character
@@ -33,15 +34,22 @@ impl core::convert::AsRef<[u8]> for Alphabet {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "tools", derive(clap::ValueEnum))]
 /// Fastq quality range, default: Illumina(1.8)
 pub enum Quality {
     /// Sanger fastq quality range
     Sanger,
     /// Solexa fastq quality range
     Solexa,
-    /// Illumina quality range 1.3 -> 13, 1.5 -> 15 and 1.8 -> 18 is availlable
-    Illumina(u8),
+    /// Illumina quality range version 1.3
+    Illumina13,
+    /// Illumina quality range version 1.5
+    Illumina15,
+    /// Illumina quality range version 1.8
+    Illumina18,
+    /// Illumina quality range version 1.8
+    Illumina,
 }
 
 impl core::convert::AsRef<[u8]> for Quality {
@@ -49,88 +57,49 @@ impl core::convert::AsRef<[u8]> for Quality {
         match self {
             Quality::Sanger => &constants::ASCII_VISIBLE[0..40],
             Quality::Solexa => &constants::ASCII_VISIBLE[26..71],
-            Quality::Illumina(13) => &constants::ASCII_VISIBLE[31..71],
-            Quality::Illumina(15) => &constants::ASCII_VISIBLE[34..71],
-            Quality::Illumina(18) => &constants::ASCII_VISIBLE[0..41],
-            _ => &constants::ASCII_VISIBLE[0..41],
+            Quality::Illumina13 => &constants::ASCII_VISIBLE[31..71],
+            Quality::Illumina15 => &constants::ASCII_VISIBLE[34..71],
+            Quality::Illumina18 | Quality::Illumina => &constants::ASCII_VISIBLE[0..41],
         }
     }
 }
 
-#[derive(Debug)]
-/// Dna nucleotides
-pub enum Dna {
-    /// All
-    All,
-    /// Lower case only
-    Lower,
-    /// Upper case only
-    Upper,
-}
-
-#[derive(Debug)]
-/// Rna nucleotides
-pub enum Rna {
-    /// All
-    All,
-    /// Lower case only
-    Lower,
-    /// Upper case only
-    Upper,
-}
-
-#[derive(Debug)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "tools", derive(clap::ValueEnum))]
 /// Any nucleotides
 pub enum Nucleotides {
-    /// Dna
-    Dna(Dna),
-
-    /// Rna
-    Rna(Rna),
-}
-
-impl core::convert::AsRef<[u8]> for Dna {
-    fn as_ref(&self) -> &[u8] {
-        match self {
-            Dna::All => &constants::DNA_NUCLEOTIDES,
-            Dna::Lower => &constants::DNA_NUCLEOTIDES[4..],
-            Dna::Upper => &constants::DNA_NUCLEOTIDES[..4],
-        }
-    }
-}
-
-impl core::convert::AsRef<[u8]> for Rna {
-    fn as_ref(&self) -> &[u8] {
-        match self {
-            Rna::All => &constants::RNA_NUCLEOTIDES,
-            Rna::Lower => &constants::RNA_NUCLEOTIDES[4..],
-            Rna::Upper => &constants::RNA_NUCLEOTIDES[..4],
-        }
-    }
+    /// Dna any case
+    Dna,
+    /// Dna lower case
+    DnaLower,
+    /// Dna upper case
+    DnaUpper,
+    /// Rna any case
+    Rna,
+    /// Rna lower case
+    RnaLower,
+    /// Rna upper case
+    RnaUpper,
 }
 
 impl core::convert::AsRef<[u8]> for Nucleotides {
     fn as_ref(&self) -> &[u8] {
         match self {
-            Nucleotides::Dna(a) => a.as_ref(),
-            Nucleotides::Rna(a) => a.as_ref(),
+            Nucleotides::Dna => &constants::DNA_NUCLEOTIDES,
+            Nucleotides::DnaLower => &constants::DNA_NUCLEOTIDES[4..],
+            Nucleotides::DnaUpper => &constants::DNA_NUCLEOTIDES[..4],
+            Nucleotides::Rna => &constants::RNA_NUCLEOTIDES,
+            Nucleotides::RnaLower => &constants::RNA_NUCLEOTIDES[4..],
+            Nucleotides::RnaUpper => &constants::RNA_NUCLEOTIDES[..4],
         }
     }
 }
 
 /// Trait use to generate random data from values Enum
-pub trait Random
+pub trait RandomBytes
 where
     Self: core::convert::AsRef<[u8]>,
 {
-    /// Generate one bytes
-    fn one(&self, rng: &mut rand::rngs::StdRng) -> error::Result<u8> {
-        self.as_ref()
-            .choose(rng)
-            .cloned()
-            .ok_or(error::create_unreachable!())
-    }
-
     /// Generate n bytes
     fn n(&self, rng: &mut rand::rngs::StdRng, n: usize) -> error::Result<Vec<u8>> {
         (0..n)
@@ -144,9 +113,9 @@ where
     }
 }
 
-impl Random for Alphabet {}
-impl Random for Quality {}
-impl Random for Nucleotides {}
+impl RandomBytes for Alphabet {}
+impl RandomBytes for Quality {}
+impl RandomBytes for Nucleotides {}
 
 #[cfg(test)]
 mod tests {
@@ -175,31 +144,31 @@ mod tests {
             b";<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefg"
         );
         assert_eq!(
-            Quality::Illumina(13).as_ref(),
+            Quality::Illumina13.as_ref(),
             b"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefg"
         );
         assert_eq!(
-            Quality::Illumina(15).as_ref(),
+            Quality::Illumina15.as_ref(),
             b"CDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefg"
         );
         assert_eq!(
-            Quality::Illumina(18).as_ref(),
+            Quality::Illumina18.as_ref(),
             b"!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHI"
         );
         assert_eq!(
-            Quality::Illumina(100).as_ref(),
+            Quality::Illumina.as_ref(),
             b"!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHI"
         );
     }
 
     #[test]
     fn nucleotides() {
-        assert_eq!(Nucleotides::Dna(Dna::All).as_ref(), b"ACTGactg");
-        assert_eq!(Nucleotides::Dna(Dna::Lower).as_ref(), b"actg");
-        assert_eq!(Nucleotides::Dna(Dna::Upper).as_ref(), b"ACTG");
+        assert_eq!(Nucleotides::Dna.as_ref(), b"ACTGactg");
+        assert_eq!(Nucleotides::DnaLower.as_ref(), b"actg");
+        assert_eq!(Nucleotides::DnaUpper.as_ref(), b"ACTG");
 
-        assert_eq!(Nucleotides::Rna(Rna::All).as_ref(), b"ACUGacug");
-        assert_eq!(Nucleotides::Rna(Rna::Lower).as_ref(), b"acug");
-        assert_eq!(Nucleotides::Rna(Rna::Upper).as_ref(), b"ACUG");
+        assert_eq!(Nucleotides::Rna.as_ref(), b"ACUGacug");
+        assert_eq!(Nucleotides::RnaLower.as_ref(), b"acug");
+        assert_eq!(Nucleotides::RnaUpper.as_ref(), b"ACUG");
     }
 }
