@@ -9,7 +9,7 @@ use crate::error;
 use crate::format;
 use crate::values;
 
-use crate::values::RandomBytes as _;
+use crate::values::Generate as _;
 
 /// Struct to generate random fastq record
 #[derive(derive_builder::Builder)]
@@ -80,7 +80,7 @@ impl format::Format for Fasta {
         // id
         output.write_all(&[b'>'])?;
         output.write_all(&self.id_prefix)?;
-        output.write_all(&self.id.n(rng, self.id_len)?)?;
+        output.write_all(&self.id.generate(rng, self.id_len)?)?;
         output.write_all(&self.id_suffix)?;
         if self.id_prefix.len() + self.id_len + self.id_suffix.len() != 0 {
             output.write_all(&[b' '])?;
@@ -88,12 +88,12 @@ impl format::Format for Fasta {
 
         // comment
         output.write_all(&self.comment_prefix)?;
-        output.write_all(&self.comment.n(rng, self.comment_len)?)?;
+        output.write_all(&self.comment.generate(rng, self.comment_len)?)?;
         output.write_all(&self.comment_suffix)?;
         output.write_all(b"\n")?;
 
         // sequence
-        output.write_all(&self.sequence.n(rng, self.sequence_len)?)?;
+        output.write_all(&self.sequence.generate(rng, self.sequence_len)?)?;
 
         Ok(())
     }

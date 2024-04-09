@@ -9,12 +9,11 @@ use crate::error;
 use crate::format;
 use crate::values;
 
-use crate::values::RandomBytes as _;
+use crate::values::Generate as _;
 
 /// Struct to generate random fastq record
 #[derive(derive_builder::Builder)]
 #[builder(pattern = "owned")]
-#[cfg_attr(feature = "tools", derive(clap::Parser))]
 pub struct Fastq {
     /// Alphabet use for id generation
     #[builder(default = "values::Alphabet::Upper")]
@@ -100,7 +99,7 @@ impl format::Format for Fastq {
         // id
         output.write_all(&[b'@'])?;
         output.write_all(&self.id_prefix)?;
-        output.write_all(&self.id.n(rng, self.id_len)?)?;
+        output.write_all(&self.id.generate(rng, self.id_len)?)?;
         output.write_all(&self.id_suffix)?;
         if self.id_prefix.len() + self.id_len + self.id_suffix.len() != 0 {
             output.write_all(&[b' '])?;
@@ -108,23 +107,23 @@ impl format::Format for Fastq {
 
         // comment
         output.write_all(&self.comment_prefix)?;
-        output.write_all(&self.comment.n(rng, self.comment_len)?)?;
+        output.write_all(&self.comment.generate(rng, self.comment_len)?)?;
         output.write_all(&self.comment_suffix)?;
         output.write_all(b"\n")?;
 
         // sequence
-        output.write_all(&self.sequence.n(rng, self.sequence_len)?)?;
+        output.write_all(&self.sequence.generate(rng, self.sequence_len)?)?;
         output.write_all(b"\n")?;
 
         // plus
         output.write_all(b"+")?;
         output.write_all(&self.plus_prefix)?;
-        output.write_all(&self.plus.n(rng, self.plus_len)?)?;
+        output.write_all(&self.plus.generate(rng, self.plus_len)?)?;
         output.write_all(&self.plus_suffix)?;
         output.write_all(b"\n")?;
 
         // quality
-        output.write_all(&self.quality.n(rng, self.sequence_len)?)?;
+        output.write_all(&self.quality.generate(rng, self.sequence_len)?)?;
 
         Ok(())
     }

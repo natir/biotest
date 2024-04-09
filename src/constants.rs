@@ -57,3 +57,14 @@ pub static VCF_FORMAT_NUMBER: [&[u8]; 6] = [b"1", b"2", b"A", b"R", b"G", b"."];
 
 /// biotest version
 pub const BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
+
+#[cfg(test)]
+mod tests {
+    /* project use */
+    use super::*;
+
+    #[test]
+    fn ascii_visible() {
+        assert_eq!(ASCII_VISIBLE, gen_array::<94, 33>())
+    }
+}
