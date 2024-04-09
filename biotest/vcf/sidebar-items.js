@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["create","records"],"mod":["header"]};
+window.SIDEBAR_ITEMS = {"enum":["VcfBuilderError"],"mod":["header"],"struct":["Vcf","VcfBuilder"]};

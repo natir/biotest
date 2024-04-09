@@ -335,7 +335,7 @@
 <span class="doccomment">/// Generate version
 </span><span class="kw">fn </span>version&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
-    </span>W: std::io::Write,
+    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
 {
     output.write_all(<span class="string">b"##fileformat=VCFv4.3\n"</span>)<span class="question-mark">?</span>;
 
@@ -345,7 +345,7 @@
 <span class="doccomment">/// Generate contigs header
 </span><span class="kw">fn </span>contigs&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
-    </span>W: std::io::Write,
+    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
 {
     <span class="kw">for </span>chr <span class="kw">in </span>constants::CHROMOSOMES {
         output.write_all(<span class="string">b"##contig=&lt;ID="</span>)<span class="question-mark">?</span>;
@@ -359,7 +359,7 @@
 <span class="doccomment">/// Generate all filter
 </span><span class="kw">fn </span>filters&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, number: u8) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
-    </span>W: std::io::Write,
+    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
 {
     <span class="kw">for </span>n <span class="kw">in </span><span class="number">0</span>..number {
         output.write_all(<span class="string">b"##FILTER=&lt;ID=Filter_"</span>)<span class="question-mark">?</span>;
@@ -373,7 +373,7 @@
 <span class="doccomment">/// Generate all possible info header
 </span><span class="kw">fn </span>infos&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
-    </span>W: std::io::Write,
+    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
 {
     <span class="kw">for </span>vcf_type <span class="kw">in </span>constants::VCF_INFO_TYPE {
         <span class="kw">if </span>vcf_type == <span class="string">b"Flag" </span>{
@@ -412,7 +412,7 @@
 <span class="doccomment">/// Generate all possible format header
 </span><span class="kw">fn </span>formats&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
-    </span>W: std::io::Write,
+    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
 {
     <span class="kw">for </span>vcf_type <span class="kw">in </span>constants::VCF_FORMAT_TYPE {
         <span class="kw">for </span>vcf_number <span class="kw">in </span>constants::VCF_FORMAT_NUMBER {
@@ -441,7 +441,7 @@
 <span class="doccomment">/// Column name
 </span><span class="kw">fn </span>columns_name&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, genotypes: <span class="prelude-ty">Option</span>&lt;u8&gt;) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
-    </span>W: std::io::Write,
+    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
 {
     output.write_all(<span class="string">b"#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO"</span>)<span class="question-mark">?</span>;
 
@@ -466,7 +466,7 @@
     nb_samples: <span class="prelude-ty">Option</span>&lt;u8&gt;,
 ) -&gt; error::Result&lt;()&gt;
 <span class="kw">where
-    </span>W: std::io::Write,
+    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
 {
     version(output)<span class="question-mark">?</span>;
     contigs(output)<span class="question-mark">?</span>;

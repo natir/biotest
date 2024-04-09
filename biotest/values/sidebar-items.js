@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Alphabet","Dna","Nucleotides","Quality","Rna"],"trait":["Random"]};
+window.SIDEBAR_ITEMS = {"enum":["Alphabet","Chromosomes","Float","Integer","Nucleotides","Quality","VcfFormatNumber","VcfFormatType","VcfInfoNumber","VcfInfoType"],"trait":["Generate","Get"]};

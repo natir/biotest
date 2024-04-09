@@ -206,6 +206,15 @@
 <a href="#204" id="204">204</a>
 <a href="#205" id="205">205</a>
 <a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a>
+<a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Fasta generation
 
 </span><span class="comment">/* std use */
@@ -214,10 +223,10 @@
 
 /* projet use */
 </span><span class="kw">use </span><span class="kw">crate</span>::error;
-
 <span class="kw">use </span><span class="kw">crate</span>::format;
 <span class="kw">use </span><span class="kw">crate</span>::values;
-<span class="kw">use </span><span class="kw">crate</span>::values::Random;
+
+<span class="kw">use </span><span class="kw">crate</span>::values::Generate <span class="kw">as _</span>;
 
 <span class="doccomment">/// Struct to generate random fastq record
 </span><span class="attr">#[derive(derive_builder::Builder)]
@@ -226,30 +235,39 @@
     <span class="doccomment">/// Alphabet use for id generation
     </span><span class="attr">#[builder(default = <span class="string">"values::Alphabet::Upper"</span>)]
     </span>id: values::Alphabet,
+
     <span class="doccomment">/// Length of id
     </span><span class="attr">#[builder(default = <span class="string">"10"</span>)]
     </span>id_len: usize,
+
     <span class="doccomment">/// Id prefix
     </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
     </span>id_prefix: Vec&lt;u8&gt;,
+
     <span class="doccomment">/// Id suffix
     </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
     </span>id_suffix: Vec&lt;u8&gt;,
+
     <span class="doccomment">/// Alphapet use for comment generation
     </span><span class="attr">#[builder(default = <span class="string">"values::Alphabet::Lower"</span>)]
     </span>comment: values::Alphabet,
+
     <span class="doccomment">/// Comment length
     </span><span class="attr">#[builder(default = <span class="string">"20"</span>)]
     </span>comment_len: usize,
+
     <span class="doccomment">/// Comment prefix
     </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
     </span>comment_prefix: Vec&lt;u8&gt;,
+
     <span class="doccomment">/// Comment suffix
     </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
     </span>comment_suffix: Vec&lt;u8&gt;,
+
     <span class="doccomment">/// Alphabet use for sequence generation
-    </span><span class="attr">#[builder(default = <span class="string">"values::Nucleotides::Dna(values::Dna::All)"</span>)]
+    </span><span class="attr">#[builder(default = <span class="string">"values::Nucleotides::Dna"</span>)]
     </span>sequence: values::Nucleotides,
+
     <span class="doccomment">/// Sequence length
     </span><span class="attr">#[builder(default = <span class="string">"150"</span>)]
     </span>sequence_len: usize,
@@ -279,7 +297,7 @@
         <span class="comment">// id
         </span>output.write_all(<span class="kw-2">&amp;</span>[<span class="string">b'&gt;'</span>])<span class="question-mark">?</span>;
         output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id_prefix)<span class="question-mark">?</span>;
-        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id.n(rng, <span class="self">self</span>.id_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id.generate(rng, <span class="self">self</span>.id_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
         output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id_suffix)<span class="question-mark">?</span>;
         <span class="kw">if </span><span class="self">self</span>.id_prefix.len() + <span class="self">self</span>.id_len + <span class="self">self</span>.id_suffix.len() != <span class="number">0 </span>{
             output.write_all(<span class="kw-2">&amp;</span>[<span class="string">b' '</span>])<span class="question-mark">?</span>;
@@ -287,12 +305,12 @@
 
         <span class="comment">// comment
         </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment_prefix)<span class="question-mark">?</span>;
-        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment.n(rng, <span class="self">self</span>.comment_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment.generate(rng, <span class="self">self</span>.comment_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
         output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment_suffix)<span class="question-mark">?</span>;
         output.write_all(<span class="string">b"\n"</span>)<span class="question-mark">?</span>;
 
         <span class="comment">// sequence
-        </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.sequence.n(rng, <span class="self">self</span>.sequence_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.sequence.generate(rng, <span class="self">self</span>.sequence_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
     }
