@@ -446,18 +446,6 @@
 <a href="#444" id="444">444</a>
 <a href="#445" id="445">445</a>
 <a href="#446" id="446">446</a>
-<a href="#447" id="447">447</a>
-<a href="#448" id="448">448</a>
-<a href="#449" id="449">449</a>
-<a href="#450" id="450">450</a>
-<a href="#451" id="451">451</a>
-<a href="#452" id="452">452</a>
-<a href="#453" id="453">453</a>
-<a href="#454" id="454">454</a>
-<a href="#455" id="455">455</a>
-<a href="#456" id="456">456</a>
-<a href="#457" id="457">457</a>
-<a href="#458" id="458">458</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Declarations of many possible values
 
 </span><span class="comment">/* std use */
@@ -627,19 +615,7 @@
     }
 }
 
-<span class="comment">// impl core::convert::Into&lt;core::ops::Range&lt;i32&gt;&gt; for Integer {
-//     fn into(self) -&gt; core::ops::Range&lt;i32&gt; {
-//         match self {
-//             Integer::Position =&gt; 0..i32::MAX,
-//             Integer::Vcf =&gt; (i32::MIN + 7)..i32::MAX,
-//             Integer::Quality =&gt; 0..255,
-//             Integer::Full =&gt; i32::MIN..i32::MAX,
-//             Integer::UserDefine(x) =&gt; x,
-//         }
-//     }
-// }
-
-</span><span class="doccomment">/// Range of float value
+<span class="doccomment">/// Range of float value
 </span><span class="attr">#[derive(Debug, Clone, Default)]
 </span><span class="kw">pub enum </span>Float {
     <span class="attr">#[default]
