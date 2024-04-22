@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["write"]};
+window.SIDEBAR_ITEMS = {"enum":["HeaderBuilderError"],"struct":["Header","HeaderBuilder"]};

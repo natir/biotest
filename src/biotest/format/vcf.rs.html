@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/format/vcf.rs`."><title>vcf.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="biotest" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/format/vcf.rs`."><title>vcf.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="biotest" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../biotest/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -167,537 +167,30 @@
 <a href="#165" id="165">165</a>
 <a href="#166" id="166">166</a>
 <a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a>
-<a href="#170" id="170">170</a>
-<a href="#171" id="171">171</a>
-<a href="#172" id="172">172</a>
-<a href="#173" id="173">173</a>
-<a href="#174" id="174">174</a>
-<a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a>
-<a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a>
-<a href="#180" id="180">180</a>
-<a href="#181" id="181">181</a>
-<a href="#182" id="182">182</a>
-<a href="#183" id="183">183</a>
-<a href="#184" id="184">184</a>
-<a href="#185" id="185">185</a>
-<a href="#186" id="186">186</a>
-<a href="#187" id="187">187</a>
-<a href="#188" id="188">188</a>
-<a href="#189" id="189">189</a>
-<a href="#190" id="190">190</a>
-<a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-<a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a>
-<a href="#198" id="198">198</a>
-<a href="#199" id="199">199</a>
-<a href="#200" id="200">200</a>
-<a href="#201" id="201">201</a>
-<a href="#202" id="202">202</a>
-<a href="#203" id="203">203</a>
-<a href="#204" id="204">204</a>
-<a href="#205" id="205">205</a>
-<a href="#206" id="206">206</a>
-<a href="#207" id="207">207</a>
-<a href="#208" id="208">208</a>
-<a href="#209" id="209">209</a>
-<a href="#210" id="210">210</a>
-<a href="#211" id="211">211</a>
-<a href="#212" id="212">212</a>
-<a href="#213" id="213">213</a>
-<a href="#214" id="214">214</a>
-<a href="#215" id="215">215</a>
-<a href="#216" id="216">216</a>
-<a href="#217" id="217">217</a>
-<a href="#218" id="218">218</a>
-<a href="#219" id="219">219</a>
-<a href="#220" id="220">220</a>
-<a href="#221" id="221">221</a>
-<a href="#222" id="222">222</a>
-<a href="#223" id="223">223</a>
-<a href="#224" id="224">224</a>
-<a href="#225" id="225">225</a>
-<a href="#226" id="226">226</a>
-<a href="#227" id="227">227</a>
-<a href="#228" id="228">228</a>
-<a href="#229" id="229">229</a>
-<a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a>
-<a href="#232" id="232">232</a>
-<a href="#233" id="233">233</a>
-<a href="#234" id="234">234</a>
-<a href="#235" id="235">235</a>
-<a href="#236" id="236">236</a>
-<a href="#237" id="237">237</a>
-<a href="#238" id="238">238</a>
-<a href="#239" id="239">239</a>
-<a href="#240" id="240">240</a>
-<a href="#241" id="241">241</a>
-<a href="#242" id="242">242</a>
-<a href="#243" id="243">243</a>
-<a href="#244" id="244">244</a>
-<a href="#245" id="245">245</a>
-<a href="#246" id="246">246</a>
-<a href="#247" id="247">247</a>
-<a href="#248" id="248">248</a>
-<a href="#249" id="249">249</a>
-<a href="#250" id="250">250</a>
-<a href="#251" id="251">251</a>
-<a href="#252" id="252">252</a>
-<a href="#253" id="253">253</a>
-<a href="#254" id="254">254</a>
-<a href="#255" id="255">255</a>
-<a href="#256" id="256">256</a>
-<a href="#257" id="257">257</a>
-<a href="#258" id="258">258</a>
-<a href="#259" id="259">259</a>
-<a href="#260" id="260">260</a>
-<a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a>
-<a href="#263" id="263">263</a>
-<a href="#264" id="264">264</a>
-<a href="#265" id="265">265</a>
-<a href="#266" id="266">266</a>
-<a href="#267" id="267">267</a>
-<a href="#268" id="268">268</a>
-<a href="#269" id="269">269</a>
-<a href="#270" id="270">270</a>
-<a href="#271" id="271">271</a>
-<a href="#272" id="272">272</a>
-<a href="#273" id="273">273</a>
-<a href="#274" id="274">274</a>
-<a href="#275" id="275">275</a>
-<a href="#276" id="276">276</a>
-<a href="#277" id="277">277</a>
-<a href="#278" id="278">278</a>
-<a href="#279" id="279">279</a>
-<a href="#280" id="280">280</a>
-<a href="#281" id="281">281</a>
-<a href="#282" id="282">282</a>
-<a href="#283" id="283">283</a>
-<a href="#284" id="284">284</a>
-<a href="#285" id="285">285</a>
-<a href="#286" id="286">286</a>
-<a href="#287" id="287">287</a>
-<a href="#288" id="288">288</a>
-<a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a>
-<a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
-<a href="#295" id="295">295</a>
-<a href="#296" id="296">296</a>
-<a href="#297" id="297">297</a>
-<a href="#298" id="298">298</a>
-<a href="#299" id="299">299</a>
-<a href="#300" id="300">300</a>
-<a href="#301" id="301">301</a>
-<a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
-<a href="#306" id="306">306</a>
-<a href="#307" id="307">307</a>
-<a href="#308" id="308">308</a>
-<a href="#309" id="309">309</a>
-<a href="#310" id="310">310</a>
-<a href="#311" id="311">311</a>
-<a href="#312" id="312">312</a>
-<a href="#313" id="313">313</a>
-<a href="#314" id="314">314</a>
-<a href="#315" id="315">315</a>
-<a href="#316" id="316">316</a>
-<a href="#317" id="317">317</a>
-<a href="#318" id="318">318</a>
-<a href="#319" id="319">319</a>
-<a href="#320" id="320">320</a>
-<a href="#321" id="321">321</a>
-<a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
-<a href="#324" id="324">324</a>
-<a href="#325" id="325">325</a>
-<a href="#326" id="326">326</a>
-<a href="#327" id="327">327</a>
-<a href="#328" id="328">328</a>
-<a href="#329" id="329">329</a>
-<a href="#330" id="330">330</a>
-<a href="#331" id="331">331</a>
-<a href="#332" id="332">332</a>
-<a href="#333" id="333">333</a>
-<a href="#334" id="334">334</a>
-<a href="#335" id="335">335</a>
-<a href="#336" id="336">336</a>
-<a href="#337" id="337">337</a>
-<a href="#338" id="338">338</a>
-<a href="#339" id="339">339</a>
-<a href="#340" id="340">340</a>
-<a href="#341" id="341">341</a>
-<a href="#342" id="342">342</a>
-<a href="#343" id="343">343</a>
-<a href="#344" id="344">344</a>
-<a href="#345" id="345">345</a>
-<a href="#346" id="346">346</a>
-<a href="#347" id="347">347</a>
-<a href="#348" id="348">348</a>
-<a href="#349" id="349">349</a>
-<a href="#350" id="350">350</a>
-<a href="#351" id="351">351</a>
-<a href="#352" id="352">352</a>
-<a href="#353" id="353">353</a>
-<a href="#354" id="354">354</a>
-<a href="#355" id="355">355</a>
-<a href="#356" id="356">356</a>
-<a href="#357" id="357">357</a>
-<a href="#358" id="358">358</a>
-<a href="#359" id="359">359</a>
-<a href="#360" id="360">360</a>
-<a href="#361" id="361">361</a>
-<a href="#362" id="362">362</a>
-<a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-<a href="#365" id="365">365</a>
-<a href="#366" id="366">366</a>
-<a href="#367" id="367">367</a>
-<a href="#368" id="368">368</a>
-<a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
-<a href="#376" id="376">376</a>
-<a href="#377" id="377">377</a>
-<a href="#378" id="378">378</a>
-<a href="#379" id="379">379</a>
-<a href="#380" id="380">380</a>
-<a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
-<a href="#391" id="391">391</a>
-<a href="#392" id="392">392</a>
-<a href="#393" id="393">393</a>
-<a href="#394" id="394">394</a>
-<a href="#395" id="395">395</a>
-<a href="#396" id="396">396</a>
-<a href="#397" id="397">397</a>
-<a href="#398" id="398">398</a>
-<a href="#399" id="399">399</a>
-<a href="#400" id="400">400</a>
-<a href="#401" id="401">401</a>
-<a href="#402" id="402">402</a>
-<a href="#403" id="403">403</a>
-<a href="#404" id="404">404</a>
-<a href="#405" id="405">405</a>
-<a href="#406" id="406">406</a>
-<a href="#407" id="407">407</a>
-<a href="#408" id="408">408</a>
-<a href="#409" id="409">409</a>
-<a href="#410" id="410">410</a>
-<a href="#411" id="411">411</a>
-<a href="#412" id="412">412</a>
-<a href="#413" id="413">413</a>
-<a href="#414" id="414">414</a>
-<a href="#415" id="415">415</a>
-<a href="#416" id="416">416</a>
-<a href="#417" id="417">417</a>
-<a href="#418" id="418">418</a>
-<a href="#419" id="419">419</a>
-<a href="#420" id="420">420</a>
-<a href="#421" id="421">421</a>
-<a href="#422" id="422">422</a>
-<a href="#423" id="423">423</a>
-<a href="#424" id="424">424</a>
-<a href="#425" id="425">425</a>
-<a href="#426" id="426">426</a>
-<a href="#427" id="427">427</a>
-<a href="#428" id="428">428</a>
-<a href="#429" id="429">429</a>
-<a href="#430" id="430">430</a>
-<a href="#431" id="431">431</a>
-<a href="#432" id="432">432</a>
-<a href="#433" id="433">433</a>
-<a href="#434" id="434">434</a>
-<a href="#435" id="435">435</a>
-<a href="#436" id="436">436</a>
-<a href="#437" id="437">437</a>
-<a href="#438" id="438">438</a>
-<a href="#439" id="439">439</a>
-<a href="#440" id="440">440</a>
-<a href="#441" id="441">441</a>
-<a href="#442" id="442">442</a>
-<a href="#443" id="443">443</a>
-<a href="#444" id="444">444</a>
-<a href="#445" id="445">445</a>
-<a href="#446" id="446">446</a>
-<a href="#447" id="447">447</a>
-<a href="#448" id="448">448</a>
-<a href="#449" id="449">449</a>
-<a href="#450" id="450">450</a>
-<a href="#451" id="451">451</a>
-<a href="#452" id="452">452</a>
-<a href="#453" id="453">453</a>
-<a href="#454" id="454">454</a>
-<a href="#455" id="455">455</a>
-<a href="#456" id="456">456</a>
-<a href="#457" id="457">457</a>
-<a href="#458" id="458">458</a>
-<a href="#459" id="459">459</a>
-<a href="#460" id="460">460</a>
-<a href="#461" id="461">461</a>
-<a href="#462" id="462">462</a>
-<a href="#463" id="463">463</a>
-<a href="#464" id="464">464</a>
-<a href="#465" id="465">465</a>
-<a href="#466" id="466">466</a>
-<a href="#467" id="467">467</a>
-<a href="#468" id="468">468</a>
-<a href="#469" id="469">469</a>
-<a href="#470" id="470">470</a>
-<a href="#471" id="471">471</a>
-<a href="#472" id="472">472</a>
-<a href="#473" id="473">473</a>
-<a href="#474" id="474">474</a>
-<a href="#475" id="475">475</a>
-<a href="#476" id="476">476</a>
-<a href="#477" id="477">477</a>
-<a href="#478" id="478">478</a>
-<a href="#479" id="479">479</a>
-<a href="#480" id="480">480</a>
-<a href="#481" id="481">481</a>
-<a href="#482" id="482">482</a>
-<a href="#483" id="483">483</a>
-<a href="#484" id="484">484</a>
-<a href="#485" id="485">485</a>
-<a href="#486" id="486">486</a>
-<a href="#487" id="487">487</a>
-<a href="#488" id="488">488</a>
-<a href="#489" id="489">489</a>
-<a href="#490" id="490">490</a>
-<a href="#491" id="491">491</a>
-<a href="#492" id="492">492</a>
-<a href="#493" id="493">493</a>
-<a href="#494" id="494">494</a>
-<a href="#495" id="495">495</a>
-<a href="#496" id="496">496</a>
-<a href="#497" id="497">497</a>
-<a href="#498" id="498">498</a>
-<a href="#499" id="499">499</a>
-<a href="#500" id="500">500</a>
-<a href="#501" id="501">501</a>
-<a href="#502" id="502">502</a>
-<a href="#503" id="503">503</a>
-<a href="#504" id="504">504</a>
-<a href="#505" id="505">505</a>
-<a href="#506" id="506">506</a>
-<a href="#507" id="507">507</a>
-<a href="#508" id="508">508</a>
-<a href="#509" id="509">509</a>
-<a href="#510" id="510">510</a>
-<a href="#511" id="511">511</a>
-<a href="#512" id="512">512</a>
-<a href="#513" id="513">513</a>
-<a href="#514" id="514">514</a>
-<a href="#515" id="515">515</a>
-<a href="#516" id="516">516</a>
-<a href="#517" id="517">517</a>
-<a href="#518" id="518">518</a>
-<a href="#519" id="519">519</a>
-<a href="#520" id="520">520</a>
-<a href="#521" id="521">521</a>
-<a href="#522" id="522">522</a>
-<a href="#523" id="523">523</a>
-<a href="#524" id="524">524</a>
-<a href="#525" id="525">525</a>
-<a href="#526" id="526">526</a>
-<a href="#527" id="527">527</a>
-<a href="#528" id="528">528</a>
-<a href="#529" id="529">529</a>
-<a href="#530" id="530">530</a>
-<a href="#531" id="531">531</a>
-<a href="#532" id="532">532</a>
-<a href="#533" id="533">533</a>
-<a href="#534" id="534">534</a>
-<a href="#535" id="535">535</a>
-<a href="#536" id="536">536</a>
-<a href="#537" id="537">537</a>
-<a href="#538" id="538">538</a>
-<a href="#539" id="539">539</a>
-<a href="#540" id="540">540</a>
-<a href="#541" id="541">541</a>
-<a href="#542" id="542">542</a>
-<a href="#543" id="543">543</a>
-<a href="#544" id="544">544</a>
-<a href="#545" id="545">545</a>
-<a href="#546" id="546">546</a>
-<a href="#547" id="547">547</a>
-<a href="#548" id="548">548</a>
-<a href="#549" id="549">549</a>
-<a href="#550" id="550">550</a>
-<a href="#551" id="551">551</a>
-<a href="#552" id="552">552</a>
-<a href="#553" id="553">553</a>
-<a href="#554" id="554">554</a>
-<a href="#555" id="555">555</a>
-<a href="#556" id="556">556</a>
-<a href="#557" id="557">557</a>
-<a href="#558" id="558">558</a>
-<a href="#559" id="559">559</a>
-<a href="#560" id="560">560</a>
-<a href="#561" id="561">561</a>
-<a href="#562" id="562">562</a>
-<a href="#563" id="563">563</a>
-<a href="#564" id="564">564</a>
-<a href="#565" id="565">565</a>
-<a href="#566" id="566">566</a>
-<a href="#567" id="567">567</a>
-<a href="#568" id="568">568</a>
-<a href="#569" id="569">569</a>
-<a href="#570" id="570">570</a>
-<a href="#571" id="571">571</a>
-<a href="#572" id="572">572</a>
-<a href="#573" id="573">573</a>
-<a href="#574" id="574">574</a>
-<a href="#575" id="575">575</a>
-<a href="#576" id="576">576</a>
-<a href="#577" id="577">577</a>
-<a href="#578" id="578">578</a>
-<a href="#579" id="579">579</a>
-<a href="#580" id="580">580</a>
-<a href="#581" id="581">581</a>
-<a href="#582" id="582">582</a>
-<a href="#583" id="583">583</a>
-<a href="#584" id="584">584</a>
-<a href="#585" id="585">585</a>
-<a href="#586" id="586">586</a>
-<a href="#587" id="587">587</a>
-<a href="#588" id="588">588</a>
-<a href="#589" id="589">589</a>
-<a href="#590" id="590">590</a>
-<a href="#591" id="591">591</a>
-<a href="#592" id="592">592</a>
-<a href="#593" id="593">593</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! VCF generation
 
 </span><span class="comment">/* std use */
 
 /* crates use */
-</span><span class="kw">use </span>rand::seq::SliceRandom <span class="kw">as _</span>;
-<span class="kw">use </span>rand::Rng <span class="kw">as _</span>;
 
-<span class="comment">/* projet use */
+/* projet use */
 </span><span class="kw">use </span><span class="kw">crate</span>::error;
-<span class="kw">use </span><span class="kw">crate</span>::values;
-
-<span class="kw">use </span><span class="kw">crate</span>::values::Generate <span class="kw">as _</span>;
-<span class="kw">use </span><span class="kw">crate</span>::values::Get <span class="kw">as _</span>;
 
 <span class="comment">/* module declaration */
 </span><span class="kw">pub mod </span>header;
+<span class="kw">pub mod </span>record;
 
 <span class="doccomment">/// Struct to generate random fastq record
 </span><span class="attr">#[derive(derive_builder::Builder)]
 #[builder(pattern = <span class="string">"owned"</span>)]
 </span><span class="kw">pub struct </span>Vcf {
-    <span class="doccomment">/// Alphabet use for chromosomes
-    </span><span class="attr">#[builder(default = <span class="string">"values::Chromosomes::Default"</span>)]
-    </span>chromosomes: values::Chromosomes,
+    <span class="doccomment">/// Structure to define header
+    </span><span class="attr">#[builder(default = <span class="string">"header::Header::builder().build().unwrap()"</span>)]
+    </span>header: header::Header,
 
-    <span class="doccomment">/// Possible position
-    </span><span class="attr">#[builder(default = <span class="string">"values::Integer::Position"</span>)]
-    </span>position: values::Integer,
-
-    <span class="doccomment">/// Alphabet use to variant id
-    </span><span class="attr">#[builder(default = <span class="string">"values::Alphabet::VcfDefault"</span>)]
-    </span>id: values::Alphabet,
-
-    <span class="doccomment">/// Length of id
-    </span><span class="attr">#[builder(default = <span class="string">"1"</span>)]
-    </span>id_len: usize,
-
-    <span class="doccomment">/// Id prefix
-    </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
-    </span>id_prefix: Vec&lt;u8&gt;,
-
-    <span class="doccomment">/// Id suffix
-    </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
-    </span>id_suffix: Vec&lt;u8&gt;,
-
-    <span class="doccomment">/// Alphabet use to reference sequence
-    </span><span class="attr">#[builder(default = <span class="string">"values::Nucleotides::Dna"</span>)]
-    </span>reference: values::Nucleotides,
-
-    <span class="doccomment">/// Alphabet use to reference sequence
-    </span><span class="attr">#[builder(default = <span class="string">"1"</span>)]
-    </span>reference_len: usize,
-
-    <span class="doccomment">/// Alphabet use to alternative sequence
-    </span><span class="attr">#[builder(default = <span class="string">"values::Nucleotides::DnaUpper"</span>)]
-    </span>alternative: values::Nucleotides,
-
-    <span class="doccomment">/// Alphabet use to alternative sequence
-    </span><span class="attr">#[builder(default = <span class="string">"1"</span>)]
-    </span>alternative_len: usize,
-
-    <span class="doccomment">/// Quality range
-    </span><span class="attr">#[builder(default = <span class="string">"values::Integer::Quality"</span>)]
-    </span>quality: values::Integer,
-
-    <span class="doccomment">/// Filter range
-    </span><span class="attr">#[builder(default = <span class="string">"values::Integer::UserDefine(0..3)"</span>)]
-    </span>filter: values::Integer,
-
-    <span class="doccomment">/// Filter prefix
-    </span><span class="attr">#[builder(default = <span class="string">"b\"filter_\".to_vec()"</span>)]
-    </span>filter_prefix: Vec&lt;u8&gt;,
-
-    <span class="doccomment">/// Filter suffix
-    </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
-    </span>filter_suffix: Vec&lt;u8&gt;,
-
-    <span class="doccomment">/// InfoType
-    </span><span class="attr">#[builder(default = <span class="string">"values::VcfInfoType::All"</span>)]
-    </span>info_type: values::VcfInfoType,
-
-    <span class="doccomment">/// InfoNumber
-    </span><span class="attr">#[builder(default = <span class="string">"values::VcfInfoNumber::All"</span>)]
-    </span>info_number: values::VcfInfoNumber,
-
-    <span class="doccomment">/// FormatType
-    </span><span class="attr">#[builder(default = <span class="string">"values::VcfFormatType::All"</span>)]
-    </span>format_type: values::VcfFormatType,
-
-    <span class="doccomment">/// FormatNumber
-    </span><span class="attr">#[builder(default = <span class="string">"values::VcfFormatNumber::All"</span>)]
-    </span>format_number: values::VcfFormatNumber,
-
-    <span class="doccomment">/// Number of sample
-    </span><span class="attr">#[builder(default = <span class="string">"3"</span>)]
-    </span>sample: usize,
-
-    <span class="doccomment">/// Sample prefix
-    </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
-    </span>sample_prefix: Vec&lt;u8&gt;,
-
-    <span class="doccomment">/// Sample suffix
-    </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
-    </span>sample_suffix: Vec&lt;u8&gt;,
+    <span class="doccomment">/// Structure to define record
+    </span><span class="attr">#[builder(default = <span class="string">"record::Record::builder().build().unwrap()"</span>)]
+    </span>record: record::Record,
 }
 
 <span class="kw">impl </span>Vcf {
@@ -705,106 +198,15 @@
     </span><span class="kw">pub fn </span>builder() -&gt; VcfBuilder {
         VcfBuilder::default()
     }
-
-    <span class="kw">fn </span>format&lt;W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
-    <span class="kw">where
-        </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-    {
-        <span class="kw">for </span>vcf_type <span class="kw">in </span><span class="self">self</span>.format_type.as_ref() {
-            <span class="kw">for </span>vcf_number <span class="kw">in </span><span class="self">self</span>.format_number.as_ref() {
-                output.write_all(<span class="string">b"format_"</span>)<span class="question-mark">?</span>;
-                output.write_all(vcf_type)<span class="question-mark">?</span>;
-                output.write_all(<span class="string">b"_"</span>)<span class="question-mark">?</span>;
-                output.write_all(vcf_number)<span class="question-mark">?</span>;
-
-                <span class="kw">if </span><span class="prelude-val">Some</span>(vcf_number) != <span class="self">self</span>.format_number.as_ref().last()
-                    || <span class="prelude-val">Some</span>(vcf_type) != <span class="self">self</span>.format_type.as_ref().last()
-                {
-                    output.write_all(<span class="string">b":"</span>)<span class="question-mark">?</span>;
-                }
-            }
-        }
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="kw">fn </span>sample&lt;W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, output: <span class="kw-2">&amp;mut </span>W, rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng) -&gt; error::Result&lt;()&gt;
-    <span class="kw">where
-        </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-    {
-        <span class="kw">for </span>vcf_type <span class="kw">in </span><span class="self">self</span>.format_type.as_ref() {
-            <span class="kw">for </span>vcf_number <span class="kw">in </span><span class="self">self</span>.format_number.as_ref() {
-                output.write_all(<span class="kw-2">&amp;</span>generate_value(
-                    rng,
-                    vcf_type,
-                    vcf_number,
-                    <span class="self">self</span>.sample <span class="kw">as </span>u8,
-                )<span class="question-mark">?</span>)<span class="question-mark">?</span>;
-                <span class="kw">if </span><span class="prelude-val">Some</span>(vcf_number) != <span class="self">self</span>.format_number.as_ref().last()
-                    || <span class="prelude-val">Some</span>(vcf_type) != <span class="self">self</span>.format_type.as_ref().last()
-                {
-                    output.write_all(<span class="string">b":"</span>)<span class="question-mark">?</span>;
-                }
-            }
-        }
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="doccomment">/// Generate info
-    </span><span class="kw">fn </span>info&lt;W&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        output: <span class="kw-2">&amp;mut </span>W,
-        rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng,
-        nb_samples: u8,
-    ) -&gt; error::Result&lt;()&gt;
-    <span class="kw">where
-        </span>W: std::io::Write,
-    {
-        <span class="kw">for </span>vcf_type <span class="kw">in </span><span class="self">self</span>.info_type.as_ref() {
-            <span class="kw">if </span>vcf_type == <span class="string">b"Flag" </span>{
-                <span class="kw">if </span>rng.gen_bool(<span class="number">0.5</span>) {
-                    output.write_all(<span class="string">b"Flag_0"</span>)<span class="question-mark">?</span>;
-                }
-            } <span class="kw">else </span>{
-                <span class="kw">for </span>vcf_number <span class="kw">in </span><span class="self">self</span>.info_number.as_ref() {
-                    output.write_all(<span class="string">b"info_"</span>)<span class="question-mark">?</span>;
-                    output.write_all(vcf_type)<span class="question-mark">?</span>;
-                    output.write_all(<span class="string">b"_"</span>)<span class="question-mark">?</span>;
-                    output.write_all(vcf_number)<span class="question-mark">?</span>;
-                    output.write_all(<span class="string">b"="</span>)<span class="question-mark">?</span>;
-                    output.write_all(<span class="kw-2">&amp;</span>generate_value(rng, vcf_type, vcf_number, nb_samples)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
-
-                    <span class="kw">if </span><span class="prelude-val">Some</span>(vcf_number) != <span class="self">self</span>.info_number.as_ref().last()
-                        || <span class="prelude-val">Some</span>(vcf_type) != <span class="self">self</span>.info_type.as_ref().last()
-                    {
-                        output.write_all(<span class="string">b";"</span>)<span class="question-mark">?</span>;
-                    }
-                }
-            }
-        }
-
-        <span class="prelude-val">Ok</span>(())
-    }
 }
 
 <span class="kw">impl </span><span class="kw">crate</span>::format::Format <span class="kw">for </span>Vcf {
     <span class="kw">fn </span>header(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         output: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>std::io::Write,
-        rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng,
+        _rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng,
     ) -&gt; error::Result&lt;()&gt; {
-        header::write(
-            output,
-            <span class="prelude-val">Some</span>(
-                &lt;values::Integer <span class="kw">as </span>Into&lt;core::ops::Range&lt;i32&gt;&gt;&gt;::into(<span class="self">self</span>.filter.clone()).len()
-                    <span class="kw">as </span>u8,
-            ),
-            <span class="bool-val">true</span>,
-            <span class="prelude-val">Some</span>(<span class="self">self</span>.sample <span class="kw">as </span>u8),
-        )<span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>(())
+        <span class="self">self</span>.header.generate(output)
     }
 
     <span class="kw">fn </span>record(
@@ -812,210 +214,7 @@
         output: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>std::io::Write,
         rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng,
     ) -&gt; error::Result&lt;()&gt; {
-        <span class="comment">// chromosomes
-        </span>output.write_all(
-            <span class="self">self</span>.chromosomes
-                .as_ref()
-                .choose(rng)
-                .ok_or(<span class="macro">error::create_unreachable!</span>())<span class="question-mark">?</span>,
-        )<span class="question-mark">?</span>;
-        output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
-
-        <span class="comment">// position
-        </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.position.clone().get(rng))<span class="question-mark">?</span>;
-        output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
-
-        <span class="comment">// identifiant
-        </span><span class="kw">let </span>id_len = <span class="self">self</span>.id_prefix.len() + <span class="self">self</span>.id_len + <span class="self">self</span>.id_suffix.len();
-        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id_prefix)<span class="question-mark">?</span>;
-        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id.generate(rng, <span class="self">self</span>.id_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
-        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id_suffix)<span class="question-mark">?</span>;
-        <span class="kw">if </span>id_len == <span class="number">0 </span>{
-            output.write_all(<span class="kw-2">&amp;</span>[<span class="string">b'.'</span>])<span class="question-mark">?</span>;
-        }
-        output.write_all(<span class="kw-2">&amp;</span>[<span class="string">b'\t'</span>])<span class="question-mark">?</span>;
-
-        <span class="comment">// reference
-        </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.reference.generate(rng, <span class="self">self</span>.reference_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
-        output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
-
-        <span class="comment">// alternative
-        </span><span class="kw">let </span>alt_len = rng.gen_range(<span class="number">0</span>..<span class="self">self</span>.alternative_len);
-        <span class="kw">if </span>alt_len == <span class="number">0 </span>{
-            output.write_all(<span class="string">b"."</span>)<span class="question-mark">?</span>;
-        } <span class="kw">else </span>{
-            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.alternative.generate(rng, alt_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
-        }
-        output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
-
-        <span class="comment">// quality
-        </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.quality.clone().get(rng))<span class="question-mark">?</span>;
-        output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
-
-        <span class="comment">// filter
-        </span><span class="kw">let </span>nb_filters =
-            &lt;values::Integer <span class="kw">as </span>Into&lt;core::ops::Range&lt;i32&gt;&gt;&gt;::into(<span class="self">self</span>.filter.clone()).len();
-        <span class="kw">if </span>nb_filters == <span class="number">0 </span>|| rng.gen_bool(<span class="number">1.0 </span>/ nb_filters <span class="kw">as </span>f64) {
-            output.write_all(<span class="string">b"."</span>)<span class="question-mark">?</span>;
-        } <span class="kw">else </span>{
-            output.write_all(<span class="string">b"Filter_"</span>)<span class="question-mark">?</span>;
-            output.write_all(rng.gen_range(<span class="number">0</span>..nb_filters).to_string().as_bytes())<span class="question-mark">?</span>;
-        }
-
-        <span class="comment">// format
-        </span><span class="self">self</span>.format(output)<span class="question-mark">?</span>;
-
-        <span class="comment">// sample
-        </span><span class="self">self</span>.sample(output, rng)<span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>(())
-    }
-}
-
-<span class="kw">fn </span>generate_value(
-    rng: <span class="kw-2">&amp;mut </span>rand::rngs::StdRng,
-    vcf_type: <span class="kw-2">&amp;</span>[u8],
-    vcf_number: <span class="kw-2">&amp;</span>[u8],
-    nb_samples: u8,
-) -&gt; error::Result&lt;Vec&lt;u8&gt;&gt; {
-    <span class="kw">match </span>vcf_type {
-        <span class="string">b"Integer" </span>=&gt; <span class="kw">match </span>vcf_number {
-            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; <span class="prelude-val">Ok</span>(values::Integer::default().get(rng)),
-            <span class="string">b"2" </span>| <span class="string">b"R" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
-                    ret.extend(values::Integer::default().get(rng));
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"G" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..nb_samples {
-                    ret.extend(values::Integer::default().get(rng));
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"." </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..rng.gen_range(<span class="number">1</span>..<span class="number">5</span>) {
-                    ret.extend(values::Integer::default().get(rng));
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">create_unreachable!</span>()),
-        },
-        <span class="string">b"Float" </span>=&gt; <span class="kw">match </span>vcf_number {
-            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; <span class="prelude-val">Ok</span>(values::Float::default().get(rng)),
-            <span class="string">b"2" </span>| <span class="string">b"R" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
-                    ret.extend(values::Float::default().get(rng));
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"G" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..nb_samples {
-                    ret.extend(values::Float::default().get(rng));
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"." </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..rng.gen_range(<span class="number">1</span>..<span class="number">5</span>) {
-                    ret.extend(values::Float::default().get(rng));
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">create_unreachable!</span>()),
-        },
-        <span class="string">b"Character" </span>=&gt; <span class="kw">match </span>vcf_number {
-            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; <span class="prelude-val">Ok</span>(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>),
-            <span class="string">b"2" </span>| <span class="string">b"R" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"G" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..nb_samples {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"." </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..rng.gen_range(<span class="number">1</span>..<span class="number">5</span>) {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">create_unreachable!</span>()),
-        },
-        <span class="string">b"String" </span>=&gt; <span class="kw">match </span>vcf_number {
-            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; values::Alphabet::default().generate(rng, <span class="number">10</span>),
-            <span class="string">b"2" </span>| <span class="string">b"R" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">10</span>)<span class="question-mark">?</span>);
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"G" </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..nb_samples {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">10</span>)<span class="question-mark">?</span>);
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="string">b"." </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
-                <span class="kw">for _ in </span><span class="number">0</span>..rng.gen_range(<span class="number">1</span>..<span class="number">5</span>) {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">10</span>)<span class="question-mark">?</span>);
-                    ret.push(<span class="string">b','</span>);
-                }
-                ret.pop();
-
-                <span class="prelude-val">Ok</span>(ret)
-            }
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">create_unreachable!</span>()),
-        },
-        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">create_unreachable!</span>()),
+        <span class="self">self</span>.record.generate(output, rng)
     }
 }
 
@@ -1028,162 +227,111 @@
     </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::format::Format <span class="kw">as _</span>;
 
-    <span class="kw">const </span>TRUTH: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"##fileformat=VCFv4.3
-##contig=&lt;ID=chr1,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=23,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=93,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=chrMT,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=X,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=NC_000015.10,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=ENA|LT795502|LT795502.1,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=NC_016845.1,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=YAR028W,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=1,length=2147483648,species=\"random\"&gt;
-#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
-YAR028W	509242864	.	a	ATg	6	.
-chrMT	1592900903	.	A	CGCg	200	.
-X	562593432	.	T	G	65	.
-chr1	993087666	.	a	cAcg	122	.
-1	1705884896	.	A	tGc	72	.
+    <span class="kw">const </span>DEFAULT: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"##fileformat=VCFv4.3
+##contig=&lt;ID=chr1,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=23,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=93,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=chrMT,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=X,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=NC_000015.10,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=ENA|LT795502|LT795502.1,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=NC_016845.1,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=YAR028W,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=1,length=4294967295,species=\"random\"&gt;
+##FILTER=&lt;ID=filter_0,Description=\"generated vcf filter field\"&gt;
+##FILTER=&lt;ID=filter_1,Description=\"generated vcf filter field\"&gt;
+##FILTER=&lt;ID=filter_2,Description=\"generated vcf filter field\"&gt;
+##INFO=&lt;ID=info_Integer_1,Number=1,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_2,Number=2,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_A,Number=A,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_R,Number=R,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_G,Number=G,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_.,Number=.,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_1,Number=1,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_2,Number=2,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_A,Number=A,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Flag_0,Number=0,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_R,Number=R,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_G,Number=G,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_.,Number=.,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_1,Number=1,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_2,Number=2,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_A,Number=A,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_R,Number=R,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_G,Number=G,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_.,Number=.,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##FORMAT=&lt;ID=format_Integer_1,Number=1,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_2,Number=2,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_A,Number=A,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_R,Number=R,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_G,Number=G,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_.,Number=.,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_1,Number=1,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_2,Number=2,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_A,Number=A,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_R,Number=R,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_G,Number=G,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_.,Number=.,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_1,Number=1,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_2,Number=2,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_A,Number=A,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_R,Number=R,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_G,Number=G,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_.,Number=.,Type=String,Description=\"generated vcf format field\"&gt;
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	sample_0	sample_1	sample_2
+YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=-496257857,2127853583,-1498117423;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=-7.5115204,74.78337,1.5983124;info_Float_.=26.825455;info_Flag_0;info_Character_1=b;info_Character_2=L,^;info_Character_A=4;info_Character_R=&amp;,a;info_Character_G=N,k,%;info_Character_.={;info_String_1=nSOJk4@lC,;info_String_2=jS/\\D&amp;BI|t,Y!R:7saso?;info_String_A=d!\"JhX)qQp;info_String_R=LD?P=?w~A),5[[@lIC.kc;info_String_G=3/bSljA-eF,F9c\"303:t],TqU?Kssw+$;info_String_.=[MEs+_JX%Y	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	1331697702:-73747613,1645597043:-1553292372:-1685240233,-1820034465:300184414,394747854,1197504288:-512239285,-1414044731:-26.444412:12.577988,-87.76228:-3.4822464:-95.66553,55.56636:-43.384956,-35.16729,6.755356:-9.445259,-43.99848,-94.4432,-92.06316:_:{,z:F:H,i:T,6,j:[,+:2;2l`&gt;IYzJ:v7\"4m{_&gt;h~,&lt;G_oKV#{ze:!)!m\'S9/0_:dJ?2UvwuUy,^7GYW`=N;7:|)8^vf&gt;dg#,1c`ok8Kh$S,_+GbKm=pyh:b:}\"s1f#s/	-1699207592:-1247215950,-1253877200:-1343277579:188169583,-1589761063:-532454402,989628108,295511500:1300868485:-14.547348:10.005661,82.95245:46.642517:90.124435,12.111877:69.43762,-11.427376,58.87137:-3.6344528,56.566788:e:),I:j:t,i:U,&amp;,v:m,&lt;,_,/:4y*`HYz#-o:9zE|;./\"-M,;&lt;;|nStAje:SF&gt;o/R,iE#:/,\"$RTVc(7,*(Sn6&gt;ZQPD:ho#H0_&lt;Tl9,PWg*UP~Esp,,{OVYEkbvA:.?sf#3gn*R,]yhrn0?zU8,N0+\"VIx*d-	-1697963895:1138852593,181408155:-317412374:-1000659906,1329247534:628009109,-1501500099,-1741170910:-1510591037,-995737568,2069116675,-1117969497:25.04361:84.79895,44.54808:36.19725:-48.734688,-33.58867:-54.331757,84.5206,69.88823:87.006195:?:E,t:,:?,B:b,$,s:?,4,%,}:Pm=/&lt;N[3&amp;;:=H&gt;}~CRs}y,o^H0T~a31`:EJblc1Z!bn:tm9=sB&lt;\":\\,7oU=q*dDU(:-k5AqYk|~^,o\"SF3e.$lt,R9J~QqXY_R:jI\\,&gt;VLD1@,O#Bvp?rT;+,+]M$Tdqh7g,Qa;ou#&lt;4,C
+NC_000015.10	1990771979	.	g	.	76	.	info_Integer_1=985125610;info_Integer_2=-2076159385,2095020886;info_Integer_A=-1486927124;info_Integer_R=-1366888910,1109498274;info_Integer_G=-1220195155,375528302,622622151;info_Integer_.=-1851270635,-1683478441,-1058618036;info_Float_1=36.333466;info_Float_2=57.98674,-34.06732;info_Float_A=73.12625;info_Float_R=-68.685196,-28.807327;info_Float_G=-97.25389,-83.217316,53.371017;info_Float_.=-59.54485;info_Character_1=t;info_Character_2=;,/;info_Character_A=z;info_Character_R=o,_;info_Character_G=P,P,z;info_Character_.=:;info_String_1=76\'~ydkEh{;info_String_2=Xl#hA?\")Rw,,l=ox~|&amp;ia;info_String_A=G,gM=1K57g;info_String_R=d`(@9@akA8,:h_D#Nc;Wl;info_String_G={HXu,f7kdJ,UO;dRyY_@8,Mh3r0.9$4Y;info_String_.=5d#lUKvy]|,%Z,&amp;HF$q.},GKTV\"\'&gt;Dya,lKw0U`lz9V	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	776188052:-1578532767,-1302325449:52657598:-2135958655,-1135523634:1449106916,1753648080,1075637484:676542150,1902606622,2019226502,-439308040:50.887344:94.68472,-16.335388:-91.662834:66.09871,58.31633:32.06732,-26.503494,-79.61113:-88.184525,98.6815:q:g,C:k:g,4:T,l,n:s,N,K,/:#f/x`\\2u\"s:Z;*F0(P9Ui,?\';EKG-mgV:9Ry@]wiwe&amp;:/{.Gkl(;rC,-%m53k:R`#:dF.Teg4k(j,jo)5g#q}+{,JcAX#{yXK9:A(6mOH&lt;hSn,!E|.b$yN_n,RKrO6xaHM?,i|k.s8v,eo	-1588922597:1583267046,831043256:-1845708418:-906269054,-1882153225:491525986,340896502,-594200150:1373957466,1343650241,-1818387709,771445599:-56.410862:-26.67012,32.126236:-42.344856:45.14885,-23.34468:-91.05513,-93.02018,33.876923:34.392242:-:q,Q:U:!,_:@,P,r:b,x,5:+$=-(;Q=px:fZv`SDm.yU,Dby17::KR?:`/IP4ql~rK:r6v}ij}G7B,9eVU*qa^(U:RcG0,5\'ZEI,%5/|7F\'{FF,4&lt;-\'AS#YT^:Dr12Qc:?CW,&gt;^rDy5/NJ\',ryU[[n^]MC	-737734461:-1039503775,-224718148:395331087:-609396723,-643192338:-1099264898,-1414310378,-1613799467:409401431:-45.04497:31.736618,45.791763:11.747528:43.78209,-20.865295:30.616302,-71.162605,42.38507:-13.728645,-92.6682:r:[,@:t:l,*:&lt;,9,#:l,r,\':)PyfWkO8{h:X10^xZmBXN,e&gt;H2W.k0Mo:&lt;zuJ\"o&gt;M&lt;k:&lt;0A\\I5IbB-,u9Z6Z\\M(E*:]ThbTo$-UQ,ofB#a9jMQS,grY}7F\'#qL:qb_n&gt;uRpJ|,Ol/A7S=l+:,vEQK5SD5iL,i)Fn]ZdXT:
+NC_016845.1	161805126	.	C	.	0	filter_0	info_Integer_1=2025181494;info_Integer_2=-457162078,-677257609;info_Integer_A=1064522814;info_Integer_R=655262959,-1345573638;info_Integer_G=244104587,-1751589973,-33143890;info_Integer_.=-1440412853,-331423089,568438530;info_Float_1=-31.163742;info_Float_2=-57.342316,59.797592;info_Float_A=-0.16572571;info_Float_R=-90.35363,25.20082;info_Float_G=-82.30049,85.982254,-14.1403885;info_Float_.=49.404236,88.34059,-99.591736,-19.608734;info_Flag_0;info_Character_1=,;info_Character_2=%,Z;info_Character_A=3;info_Character_R=|,};info_Character_G=,,y,&lt;;info_Character_.=R;info_String_1=I*gmU*f%z/;info_String_2=H-On}TkELC,&gt;w0ri^=zTz;info_String_A=/eEcrxZ7FT;info_String_R=\\fuU.o&amp;mik,&gt;&lt;qfh(wB?~;info_String_G=xL=2&lt;z,&gt;*:,_]5tgv+GDN,&amp;PmOH6Ba}[;info_String_.={O(*pu1DV,,OGpJM.JK\\e,$]`H]X~o4~	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-2031554200:465234222,1514255955:1150635418:66804676,1494669369:-948127707,-773241792,-1952938182:285409541:-45.340466:-71.99507,65.908295:9.153915:60.76036,-67.940445:-17.430664,78.5948,-11.59816:17.45729:X:L,u:C:n,*:T,?,l:8:#/MV3Sat`u:t)Q(1^:\"@],\'(ogRPDne2:}tG-?X&amp;f!?:HnJ`VA_yBe,eCC|uQF]?Q:^gLpL8&amp;`fK,2fFfJjfat[,-7sL&lt;Ly7I.:keo1(FciPk,]a(~i5&gt;Cr_	-246472977:1741690154,1085519110:-567213617:-400517020,1344286726:-1099251448,-600330030,-954898033:87050511,-488849812,341647170:47.2063:-13.576843,27.678421:8.278969:-50.282,57.042984:-28.196312,-70.92239,25.547836:79.772995,19.348503,-7.1992874,44.35666:\":N,Q:X:;,D:t,?,]:6,o,u,,:=.m/R+G1Er:C-D^sLB*Yu,*q|xV~0t_::GC?j8YG|B):}h&gt;X4K*.aM,DSRm~Z?#2o:@=&amp;8uI2%*b,CYdPF`%psa,Hb_#E*#\"$3:jPX1c/$CT6,s$$&lt;(x_k)@	1779253445:-2008333700,1469319739:1386427454:40699918,-1626132079:266038065,1328345211,1048991265:1788306263,396523608:47.059006:7.5892487,36.29811:18.503044:59.088684,84.92091:87.00018,42.422363,88.077545:22.039795,-20.849182,63.43016,-62.645317:S:$,O:r:g,#:L,&lt;,B:t,k,[:5[?bN4K;QM:E|\\QN{;4T7,M.+e_*Wha]:8!6k?&gt;)t,8:7iX\\q}q#dv,\"~GXa&gt;*V&lt;/:5&amp;Qr{]GwT1,2^5pr?V}B4,k46wBdIg2::\'Ia/M3\"Sbh,MC&gt;-nVxp-C,k#bh1:RmsT,tr])/6I0,/
+93	1628481200	.	g	.	243	.	info_Integer_1=-1745451465;info_Integer_2=-1416442745,1351086165;info_Integer_A=1149927617;info_Integer_R=-1257660465,570311405;info_Integer_G=-235852620,248766754,-897953129;info_Integer_.=-282537957,-648221198;info_Float_1=-13.898972;info_Float_2=69.033844,-81.27475;info_Float_A=-75.5985;info_Float_R=-30.964996,-65.281845;info_Float_G=45.846268,-76.65327,-3.310463;info_Float_.=-50.443413;info_Character_1=@;info_Character_2=G,j;info_Character_A=~;info_Character_R=0,q;info_Character_G=/,t,S;info_Character_.=G,y,a,];info_String_1=cH\"Mt+!DW7;info_String_2=m&gt;WYSDke/$,V6GA=($ETH;info_String_A=PKC&gt;kG\\k4G;info_String_R=6o?URXH\'iP,;Iq*U.qFP/;info_String_G=!|${+J)km6,s8l=qoJY*l,_%8P$8.LgD;info_String_.=0b|DhucyPM	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	2126175016:1129636117,-2081418625:-234859576:812882666,857277679:-2041946338,-2042220346,-1448296019:-207192413,-575858759,361961114,1833951153:11.249496:-53.691505,-56.08103:51.13185:50.876236,7.7953796:91.50241,55.230377,28.686188:56.792877,-72.2456,-41.596485,-67.26294:^:T,d:~:k,|:b,K,~:-,s,R,i:p-\'~#SArsU:mrZR2hqbm\',caSQKrBat\":&lt;[atyOUHv&lt;:Z0#^\'G}!aH,\'PaGe&gt;zRWT:y5,irDj8bn,JQ5#m^B}VK,]\\Ro!?,H-X:joQ[_8K?5w,Pwh8$m\\G=&amp;,\"/[QE%X~ei	326698944:1667434880,1502079066:-1796451115:-434319537,-693963678:-1428668240,-1567382331,1120991771:61362482,902786551,-229680185:42.882538:-37.351513,-13.369278:96.234604:-57.21159,69.30682:-44.12949,41.216522,-10.266998:-60.65533:g:a,k:(:\\,b:`,Q,7:5,;:+&gt;PIuzu-_i:RLP,KRY69w,\'iXG~{U=g@:MB-{4AL20+:QsU|rsc|{-,2i|QeM-5Vp:R#4B*M!\'tY,)0l-=&gt;mPI},[j^RcKOVi,:2O&lt;:dz&amp;%=],fH45+,xhyq,1\\\\vh]r&lt;J\'	1419940183:-1548885431,1188147259:-1061203998:1600049196,-4212261:479487908,570443195,1624025678:-483195379:92.25282:-51.60575,-44.06626:-95.549416:-63.43329,75.52333:89.147766,62.908432,35.18953:-28.882408,68.80641,6.029129,-47.455452:c:O,z:^:Y,\":D,Z,&gt;:%,e:0LQfZXW\\&amp;|:1F\"Mac]*M},tl\\Q(+\'c!l:.4._EWsV48:0d~35QC?P%,b{sE1`)}J\\:$B#6Zh80;!,=7@3M\'up79,&amp;\\2QIy@r\\d:v#k#[w/k~k,rBiNb2w7E3,nUsxH~g&amp;t3
+chr1	54211728	.	T	.	106	filter_0	info_Integer_1=1869758145;info_Integer_2=-1415931557,-1291733190;info_Integer_A=1197283695;info_Integer_R=-99011153,184993022;info_Integer_G=-304006920,107027867,1129332211;info_Integer_.=-743591286,1298751868,-1870036205;info_Float_1=-15.466354;info_Float_2=13.643524,31.201965;info_Float_A=-83.97765;info_Float_R=87.02226,45.305634;info_Float_G=66.3873,-8.753494,-24.258568;info_Float_.=-49.719143,4.4375916,-30.54676,-71.69261;info_Character_1=];info_Character_2=3,X;info_Character_A=?;info_Character_R=5,w;info_Character_G=y,f,Y;info_Character_.=6,h,l;info_String_1=:rpZGtX=cz;info_String_2=|L9vu,vSS0,ejWTi\\b*=);info_String_A=nEIh3H8zPu;info_String_R=d&gt;uvMW\\BUc,])jO/rmL\'q;info_String_G=9JpHhY;r3\",#[[]ro.^+2,RU!msic)?-;info_String_.=7*9[Wp{,Zv,f3:i[eyT|#,aT9x&gt;/Dl6z	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-137429:-487188436,-696650746:-100643027:-1565615532,889622702:1413417352,1177023616,-753719288:-1842319770,490162555:57.16078:-57.2166,-34.35414:3.175949:90.32216,25.335693:-79.8594,-14.332291,-70.959496:3.832718:6:7,@:x:~,&lt;:),&gt;,g:F:Yj4SNTN@u_:\\$/G)|ce_=,#Fg(}a*&amp;Rj:xkJf&gt;]vdHG:SJqIu0tpm{,&gt;u/X+j3d?L:\\u&lt;L,h(+Kq,Q)Yi[KbGXM,2Ic4dNn8:d:j/?%_r(u%O,V+PcIWwrVj,0i0wT,c~s3,1tL{D;qQPc	-2101103516:1188925016,-942868546:272539360:-1647165337,-667287924:2042398819,-1530689155,2044961168:2133315971,1067580168:24.64869:-18.59977,-77.258606:7.3624115:84.90216,-50.00353:-94.99128,58.709763,-99.85483:-7.3968887,69.65532,18.196487,51.884888:&gt;:t,4:}:9,B:v,P,5:?,j,&lt;:/W)#\'O&lt;/vR:Ve%KtPW&gt;8a,+?K:JBJu?;:v0JyHoR?|&amp;:)SLKg@t{D7,i*6AC4fqFW:#:\\l#fHcST,}_/\\wMOWV*,79Z0g+okE|:A.}jkn&amp;*v?,shPW,{\'.h~	1079991824:-519580031,1032149541:1419545689:961959574,190899660:-1627312707,-1641157633,-100165881:1893933525,1446753029,-761397440:50.09677:-78.02365,71.46156:56.636353:81.90201,-30.47879:-37.61213,98.139435,31.63826:95.535065,20.02246:=:&gt;,d:g:u,c:f,;,@:E,V,N:4|Zdg|Fm5h:AH]$Z,mbN8,;nHC5v&amp;cl$:\'FAw\"KX74/:8/&gt;e6TA&amp;9r,^]Nv/jaalR:W(?v[m*Ri+,Q1k+H)]tuC,E)Y8!wx/Zb:%j=j0`x[A6
 "</span>;
-
-    <span class="kw">const </span>TRUTH_FILTER: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	a	ATg	6	Filter_0
-NC_016845.1	969988815	.	C	GTTA	97	.
-chr1	993087666	.	a	cAcg	122	Filter_0
-23	2071684354	.	a	cT	204	.
-23	1676586806	.	a	AG	248	Filter_1
-"</span>;
-
-    <span class="kw">const </span>TRUTH_INFO: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	a	ATg	6	Filter_0	info_Integer_1=-1867486102;info_Integer_2=1180908493,1041698941;info_Integer_A=-207506013;info_Integer_R=-1221871784,-1356802777;info_Integer_G=;info_Integer_.=2082620030,-344161839,-1022296779,-1007334133;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=;info_Float_.=1.5983124,-8.867523,77.741455,-86.29277;Flag_0info_Character_1=M;info_Character_2=i,r;info_Character_A=[;info_Character_R=g,M;info_Character_G=;info_Character_.=h;info_String_1=w\\voCGp]Zo;info_String_2=XMTgQouVGn,`JweVDDUYy;info_String_A=tzAny[_POs;info_String_R=hsqbSjAdbZ,cRFrrQ_[VS;info_String_G=;info_String_.=RtSvzMeTjo,nYVInjLIi`,oWogntTH\\Q
-X	550245579	.	A	aaa	81	Filter_1	info_Integer_1=1609643078;info_Integer_2=1793595268,-322605342;info_Integer_A=-1688173181;info_Integer_R=-1978954124,-1707772923;info_Integer_G=;info_Integer_.=511785259,-125870099;info_Float_1=-23.018097;info_Float_2=46.32849,5.9644012;info_Float_A=74.879486;info_Float_R=-78.288414,-87.38592;info_Float_G=;info_Float_.=-90.66701,19.76609,62.01201;info_Character_1=I;info_Character_2=G,E;info_Character_A=b;info_Character_R=c,n;info_Character_G=;info_Character_.=W,J;info_String_1=VaDBnQSHYN;info_String_2=m[QBCgL`Sc,xxXYm`NnOG;info_String_A=[K`QKgogYx;info_String_R=ZuNAMyDqpg,ZliSmUzRvG;info_String_G=;info_String_.=XBgqxa[aBw
-NC_000015.10	954002188	.	A	t	17	.	info_Integer_1=-1505124378;info_Integer_2=495082976,-1432749489;info_Integer_A=713077112;info_Integer_R=947225490,-250366933;info_Integer_G=;info_Integer_.=-761568963;info_Float_1=78.51788;info_Float_2=-62.416267,11.148003;info_Float_A=82.33461;info_Float_R=83.84645,78.85599;info_Float_G=;info_Float_.=-70.75128,35.715073,88.21924;info_Character_1=r;info_Character_2=I,g;info_Character_A=N;info_Character_R=X,c;info_Character_G=;info_Character_.=h,R,d;info_String_1=]QWyFOgukS;info_String_2=jBlBKigqzn,OIm[gGXi[j;info_String_A=\\RlwOmAiZP;info_String_R=wyAsKBssXJ,GMMK`HVkgo;info_String_G=;info_String_.=vkxarZoyTn,QFEntKUmna,DWuppugILw
-93	215948308	.	G	AG	34	Filter_0	info_Integer_1=1924651034;info_Integer_2=-473081454,2013874853;info_Integer_A=-937759504;info_Integer_R=-1524377977,-1501512929;info_Integer_G=;info_Integer_.=-1586974393;info_Float_1=80.58081;info_Float_2=-5.483078,-43.724228;info_Float_A=-41.917133;info_Float_R=65.731735,-44.021725;info_Float_G=;info_Float_.=7.376503,77.50084,-31.576347,56.736618;info_Character_1=`;info_Character_2=X,S;info_Character_A=q;info_Character_R=\\,I;info_Character_G=;info_Character_.=H,m,A;info_String_1=WXBIAyCL_`;info_String_2=ebjENFE`pN,SPd^wz^tZV;info_String_A=mq_oBYJgQ`;info_String_R=oPn^Z\\`bla,^yzIWtrgmo;info_String_G=;info_String_.=x]WbcWVPni
-1	733873271	.	a	gACT	210	Filter_1	info_Integer_1=1879698450;info_Integer_2=1870114592,1109294152;info_Integer_A=-1647348160;info_Integer_R=1565404410,1392446649;info_Integer_G=;info_Integer_.=-769169762,1921023442;info_Float_1=-6.7819138;info_Float_2=11.500885,-47.349976;info_Float_A=86.69888;info_Float_R=-0.38061523,-49.81668;info_Float_G=;info_Float_.=-85.17905;info_Character_1=b;info_Character_2=Z,v;info_Character_A=x;info_Character_R=F,j;info_Character_G=;info_Character_.=m;info_String_1=`YPfIFpIPN;info_String_2=evhOTNvrCw,SEWbLtHSUi;info_String_A=CnsIsSMCBy;info_String_R=^pRIQ\\eLD],QRzYyzV_sz;info_String_G=;info_String_.=gYJ`TzLKhH,WZiobiKndA,PiptpPRUQy,BPeNqLaRrP
-"</span>;
-
-    <span class="kw">const </span>TRUTH_SAMPLES: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	a	ATg	6	.	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.-686621067:1038318162,-1892038410:-1867486102:1180908493,1041698941:-207506013:2082620030,-344161839,-1022296779,-1007334133:68.286865:-96.154594,-23.433853:-48.782158:-46.15216,-92.639305:-7.5115204:1.5983124,-8.867523,77.741455,-86.29277:e:L,M:i:r,[:g:h:w\\voCGp]Zo:XMTgQouVGn,`JweVDDUYy:tzAny[_POs:hsqbSjAdbZ,cRFrrQ_[VS:^RtSvzMeTj:nYVInjLIi`,oWogntTH\\Q,XXOiALJLnu,Ptf`Sr^aaS
-X	1881454133	.	g	A	26	.	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.2139428471:993348561,-689633277:511785259:-125870099,-494309874:994897076:1608024901,-1681230419,-1876597949:32.911133:-11.732056,18.387054:-90.66701:19.76609,62.01201:-3.4341583:-84.75196:b:c,n:V:W,J:V:D,B,n:QSHYNm[QBC:gL`ScxxXYm,`NnOG[K`QK:gogYxZuNAM:yDqpgZliSm,UzRvGGXBgq:xa[aBw_Zxx:FA[o`OIdJg
-NC_016845.1	948558355	.	A	ggg	141	.	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.-1519372091:766975666,1894493800:1136886858:1132040702,1543188175:-1513714723:328933865,746721907,-865393810:23.349594:-3.3177109,-43.643593:-21.609734:-51.812767,94.04256:-81.78232:44.08844,-94.0187:l:B,K:i:g,q:z:O,I,m,[:gGXi[j\\Rlw:OmAiZPwyAs,KBssXJGMMK:`HVkgoY`vk:xarZoyTnQF,EntKUmnaDW:uppugILwOF:RxBZHMqOWy,QIIAHu\\QQq,QyZ`tTnZk`
-X	674622273	.	C	t	2	.	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.-500742528:-413948498,-2030006843:-1499608731:-1632847816,-2082516466:2048055005:-1289521416:4.3382645:9.063217,25.310585:-44.940376:14.317032,41.66844:-84.75847:-83.61602:`:p,N:S:P,d:^:t,Z,V:mq_oBYJgQ`:oPn^Z\\`bla,^yzIWtrgmo:Gx]WbcWVPn:iuT_IlSskB,LwLHlF_fww:GspJRS\\aPw:]JGEBbZvxF,jHGm`YPfIF
-YAR028W	318446305	.	T	gA	238	.	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.-770454388:-1786087909,-486130761:313139324:-1328850310,1676663853:-1621135315:-625454964,841201143:-92.52112:57.182693,74.828125:-69.70703:72.491745,-35.8011:-58.521343:-93.79444:y:^,p:R:I,Q:\\:L,D,]:QRzYyzV_sz:wqgYJ`TzLK,hHWZiobiKn:dAPiptpPRU:QyBPeNqLaR,rPFJcjVaEr:HHloMTrcoG:iA_WILkXIc,`ot_PZwl^\\,Uz^rcVndZg,_IpyMneGSa
-"</span>;
-
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>record() -&gt; error::Result&lt;()&gt; {
+    </span><span class="kw">fn </span>default() -&gt; error::Result&lt;()&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
 
         <span class="kw">let </span>generator = Vcf::builder().build().unwrap();
 
-        generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
+        generator.header(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
+        generator.records(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
 
-        <span class="macro">assert_eq!</span>(output, TRUTH[<span class="number">628</span>..<span class="number">657</span>]);
+        <span class="macro">assert_eq!</span>(output, DEFAULT);
 
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="comment">// #[test]
-    // fn record_filter() -&gt; error::Result&lt;()&gt; {
-    //     let mut output = Vec::new();
-    //     let mut rng = crate::rand();
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>create() -&gt; error::Result&lt;()&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
 
-    //     record(&amp;mut output, &amp;mut rng, Some(2), false, None)?;
+        <span class="kw">let </span>temp_dir = tempfile::tempdir()<span class="question-mark">?</span>;
+        <span class="kw">let </span>temp_path = temp_dir.path();
 
-    //     assert_eq!(output, TRUTH_FILTER[..36]);
+        <span class="kw">let </span>temp_file = temp_path.join(<span class="string">"tmp.vcf"</span>);
 
-    //     Ok(())
-    // }
+        <span class="kw">let </span>generator = Vcf::builder().build().unwrap();
 
-    // #[test]
-    // fn record_info() -&gt; error::Result&lt;()&gt; {
-    //     let mut output = Vec::new();
-    //     let mut rng = crate::rand();
+        generator.create(<span class="kw-2">&amp;</span>temp_file, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
 
-    //     record(&amp;mut output, &amp;mut rng, Some(2), true, None)?;
+        <span class="kw">let </span><span class="kw-2">mut </span>data = Vec::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>input = std::fs::File::open(<span class="kw-2">&amp;</span>temp_file)<span class="question-mark">?</span>;
+        input.read_to_end(<span class="kw-2">&amp;mut </span>data)<span class="question-mark">?</span>;
 
-    //     assert_eq!(output, TRUTH_INFO[..732]);
+        <span class="macro">assert_eq!</span>(data, DEFAULT.to_vec());
 
-    //     Ok(())
-    // }
-
-    // #[test]
-    // fn record_sample() -&gt; error::Result&lt;()&gt; {
-    //     let mut output = Vec::new();
-    //     let mut rng = crate::rand();
-
-    //     record(&amp;mut output, &amp;mut rng, None, false, Some(1))?;
-
-    //     assert_eq!(output, TRUTH_SAMPLES[..807]);
-
-    //     Ok(())
-    // }
-
-    // #[test]
-    // fn records_() -&gt; error::Result&lt;()&gt; {
-    //     let mut output = Vec::new();
-    //     let mut rng = crate::rand();
-
-    //     records(&amp;mut output, &amp;mut rng, 5, None, false, None)?;
-
-    //     assert_eq!(output, TRUTH[628..]);
-
-    //     Ok(())
-    // }
-
-    // #[test]
-    // fn records_filter() -&gt; error::Result&lt;()&gt; {
-    //     let mut output = Vec::new();
-    //     let mut rng = crate::rand();
-
-    //     records(&amp;mut output, &amp;mut rng, 5, Some(2), false, None)?;
-
-    //     assert_eq!(output, TRUTH_FILTER);
-
-    //     Ok(())
-    // }
-
-    // #[test]
-    // fn records_info() -&gt; error::Result&lt;()&gt; {
-    //     let mut output = Vec::new();
-    //     let mut rng = crate::rand();
-
-    //     records(&amp;mut output, &amp;mut rng, 5, Some(2), true, None)?;
-
-    //     assert_eq!(output, TRUTH_INFO);
-
-    //     Ok(())
-    // }
-
-    // #[test]
-    // fn records_sample() -&gt; error::Result&lt;()&gt; {
-    //     let mut output = Vec::new();
-    //     let mut rng = crate::rand();
-
-    //     records(&amp;mut output, &amp;mut rng, 5, None, false, Some(1))?;
-
-    //     assert_eq!(output, TRUTH_SAMPLES);
-
-    //     Ok(())
-    // }
-
-    // #[test]
-    // fn create_() -&gt; error::Result&lt;()&gt; {
-    //     let mut rng = crate::rand();
-
-    //     let temp_dir = tempfile::tempdir()?;
-    //     let temp_path = temp_dir.path();
-
-    //     let temp_file = temp_path.join("tmp.vcf");
-
-    //     create(&amp;temp_file, &amp;mut rng, 5, None, false, None)?;
-
-    //     let mut data = Vec::new();
-    //     let mut input = std::fs::File::open(&amp;temp_file)?;
-    //     input.read_to_end(&amp;mut data)?;
-
-    //     assert_eq!(data, TRUTH);
-
-    //     Ok(())
-    // }
-</span>}
+        <span class="prelude-val">Ok</span>(())
+    }
+}
 </code></pre></div></section></main></body></html>

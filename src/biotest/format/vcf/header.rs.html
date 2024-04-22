@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/format/vcf/header.rs`."><title>header.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="biotest" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/format/vcf/header.rs`."><title>header.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="biotest" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../biotest/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -322,6 +322,11 @@
 <a href="#320" id="320">320</a>
 <a href="#321" id="321">321</a>
 <a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! VCF header generation
 
 </span><span class="comment">/* std use */
@@ -331,59 +336,166 @@
 /* projet use */
 </span><span class="kw">use </span><span class="kw">crate</span>::constants;
 <span class="kw">use </span><span class="kw">crate</span>::error;
+<span class="kw">use </span><span class="kw">crate</span>::values;
 
-<span class="doccomment">/// Generate version
-</span><span class="kw">fn </span>version&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-{
-    output.write_all(<span class="string">b"##fileformat=VCFv4.3\n"</span>)<span class="question-mark">?</span>;
+<span class="attr">#[derive(derive_builder::Builder)]
+#[builder(pattern = <span class="string">"owned"</span>)]
+</span><span class="doccomment">/// Struct to generate header
+</span><span class="kw">pub struct </span>Header {
+    <span class="doccomment">/// Value use for chromosomes
+    </span><span class="attr">#[builder(default = <span class="string">"values::Chromosomes::Default"</span>)]
+    </span>contigs: values::Chromosomes,
 
-    <span class="prelude-val">Ok</span>(())
+    <span class="doccomment">/// vcf version number
+    </span><span class="attr">#[builder(default = <span class="string">"b\"VCFv4.3\".to_vec()"</span>)]
+    </span>version: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// contig species
+    </span><span class="attr">#[builder(default = <span class="string">"b\"random\".to_vec()"</span>)]
+    </span>contig_species: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// contig length
+    </span><span class="attr">#[builder(default = <span class="string">"u32::MAX"</span>)]
+    </span>contig_length: u32,
+
+    <span class="doccomment">/// filter range
+    </span><span class="attr">#[builder(default = <span class="string">"values::Integer::UserDefine(0..3)"</span>)]
+    </span>filter: values::Integer,
+
+    <span class="doccomment">/// filter prefix
+    </span><span class="attr">#[builder(default = <span class="string">"b\"filter_\".to_vec()"</span>)]
+    </span>filter_prefix: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// filter description
+    </span><span class="attr">#[builder(default = <span class="string">"b\"generated vcf filter field\".to_vec()"</span>)]
+    </span>filter_description: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// info prefix
+    </span><span class="attr">#[builder(default = <span class="string">"b\"info_\".to_vec()"</span>)]
+    </span>info_prefix: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// info description
+    </span><span class="attr">#[builder(default = <span class="string">"b\"generated vcf info field\".to_vec()"</span>)]
+    </span>info_description: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// InfoType
+    </span><span class="attr">#[builder(default = <span class="string">"values::VcfInfoType::All"</span>)]
+    </span>info_type: values::VcfInfoType,
+
+    <span class="doccomment">/// InfoNumber
+    </span><span class="attr">#[builder(default = <span class="string">"values::VcfInfoNumber::All"</span>)]
+    </span>info_number: values::VcfInfoNumber,
+
+    <span class="doccomment">/// format prefix
+    </span><span class="attr">#[builder(default = <span class="string">"b\"format_\".to_vec()"</span>)]
+    </span>format_prefix: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// format description
+    </span><span class="attr">#[builder(default = <span class="string">"b\"generated vcf format field\".to_vec()"</span>)]
+    </span>format_description: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// FormatType
+    </span><span class="attr">#[builder(default = <span class="string">"values::VcfFormatType::All"</span>)]
+    </span>format_type: values::VcfFormatType,
+
+    <span class="doccomment">/// FormatNumber
+    </span><span class="attr">#[builder(default = <span class="string">"values::VcfFormatNumber::All"</span>)]
+    </span>format_number: values::VcfFormatNumber,
+
+    <span class="doccomment">/// Number of sample
+    </span><span class="attr">#[builder(default = <span class="string">"3"</span>)]
+    </span>sample: usize,
+
+    <span class="doccomment">/// Sample prefix
+    </span><span class="attr">#[builder(default = <span class="string">"b\"sample_\".to_vec()"</span>)]
+    </span>sample_prefix: Vec&lt;u8&gt;,
+
+    <span class="doccomment">/// Sample suffix
+    </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
+    </span>sample_suffix: Vec&lt;u8&gt;,
 }
 
-<span class="doccomment">/// Generate contigs header
-</span><span class="kw">fn </span>contigs&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-{
-    <span class="kw">for </span>chr <span class="kw">in </span>constants::CHROMOSOMES {
-        output.write_all(<span class="string">b"##contig=&lt;ID="</span>)<span class="question-mark">?</span>;
-        output.write_all(chr)<span class="question-mark">?</span>;
-        output.write_all(<span class="string">b",length=2147483648,species=\"random\"&gt;\n"</span>)<span class="question-mark">?</span>;
+<span class="kw">impl </span>Header {
+    <span class="doccomment">/// Create a HeaderBuilder
+    </span><span class="kw">pub fn </span>builder() -&gt; HeaderBuilder {
+        HeaderBuilder::default()
     }
 
-    <span class="prelude-val">Ok</span>(())
-}
+    <span class="doccomment">/// Generate vcf header
+    </span><span class="kw">pub fn </span>generate(<span class="kw-2">&amp;</span><span class="self">self</span>, output: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>std::io::Write) -&gt; error::Result&lt;()&gt; {
+        <span class="comment">// version
+        </span>output.write_all(<span class="string">b"##fileformat="</span>)<span class="question-mark">?</span>;
+        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.version)<span class="question-mark">?</span>;
+        output.write_all(<span class="string">b"\n"</span>)<span class="question-mark">?</span>;
 
-<span class="doccomment">/// Generate all filter
-</span><span class="kw">fn </span>filters&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, number: u8) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-{
-    <span class="kw">for </span>n <span class="kw">in </span><span class="number">0</span>..number {
-        output.write_all(<span class="string">b"##FILTER=&lt;ID=Filter_"</span>)<span class="question-mark">?</span>;
-        output.write_all(n.to_string().as_bytes())<span class="question-mark">?</span>;
-        output.write_all(<span class="string">b",Description=\"generated vcf filter field\"&gt;\n"</span>)<span class="question-mark">?</span>;
-    }
-
-    <span class="prelude-val">Ok</span>(())
-}
-
-<span class="doccomment">/// Generate all possible info header
-</span><span class="kw">fn </span>infos&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-{
-    <span class="kw">for </span>vcf_type <span class="kw">in </span>constants::VCF_INFO_TYPE {
-        <span class="kw">if </span>vcf_type == <span class="string">b"Flag" </span>{
-            output.write_all(<span class="string">b"##INFO=&lt;ID=info_Flag_0,Number=0,Description=\"generated vcf info field\",Source=\"biotest\",Version=\""</span>)<span class="question-mark">?</span>;
-            output.write_all(constants::BIOTEST_VERSION)<span class="question-mark">?</span>;
+        <span class="comment">// contig
+        </span><span class="kw">for </span>chr <span class="kw">in </span><span class="self">self</span>.contigs.as_ref() {
+            output.write_all(<span class="string">b"##contig=&lt;ID="</span>)<span class="question-mark">?</span>;
+            output.write_all(chr)<span class="question-mark">?</span>;
+            output.write_all(<span class="string">b",length="</span>)<span class="question-mark">?</span>;
+            output.write_all(<span class="self">self</span>.contig_length.to_string().as_bytes())<span class="question-mark">?</span>;
+            output.write_all(<span class="string">b",species=\""</span>)<span class="question-mark">?</span>;
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.contig_species)<span class="question-mark">?</span>;
             output.write_all(<span class="string">b"\"&gt;\n"</span>)<span class="question-mark">?</span>;
-        } <span class="kw">else </span>{
-            <span class="kw">for </span>vcf_number <span class="kw">in </span>constants::VCF_INFO_NUMBER {
+        }
+
+        <span class="comment">// filters
+        </span><span class="kw">for </span>n <span class="kw">in </span>&lt;values::Integer <span class="kw">as </span>core::convert::Into&lt;core::ops::Range&lt;i32&gt;&gt;&gt;::into(
+            &lt;values::Integer <span class="kw">as </span>Clone&gt;::clone(<span class="kw-2">&amp;</span><span class="self">self</span>.filter),
+        ) {
+            output.write_all(<span class="string">b"##FILTER=&lt;ID="</span>)<span class="question-mark">?</span>;
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.filter_prefix)<span class="question-mark">?</span>;
+            output.write_all(n.to_string().as_bytes())<span class="question-mark">?</span>;
+            output.write_all(<span class="string">b",Description=\""</span>)<span class="question-mark">?</span>;
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.filter_description)<span class="question-mark">?</span>;
+            output.write_all(<span class="string">b"\"&gt;\n"</span>)<span class="question-mark">?</span>;
+        }
+
+        <span class="comment">// infos
+        </span><span class="kw">for </span>vcf_type <span class="kw">in </span><span class="self">self</span>.info_type.as_ref() {
+            <span class="kw">if </span>vcf_type == <span class="string">b"Flag" </span>{
+                output.write_all(<span class="string">b"##INFO=&lt;ID="</span>)<span class="question-mark">?</span>;
+                output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.info_prefix)<span class="question-mark">?</span>;
+                output.write_all(<span class="string">b"Flag_0,"</span>)<span class="question-mark">?</span>;
+                output.write_all(<span class="string">b"Number=0,Description=\""</span>)<span class="question-mark">?</span>;
+                output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.info_description)<span class="question-mark">?</span>;
+                output.write_all(<span class="string">b"\",Source=\"biotest\",Version=\""</span>)<span class="question-mark">?</span>;
+                output.write_all(constants::BIOTEST_VERSION)<span class="question-mark">?</span>;
+                output.write_all(<span class="string">b"\"&gt;\n"</span>)<span class="question-mark">?</span>;
+            } <span class="kw">else </span>{
+                <span class="kw">for </span>vcf_number <span class="kw">in </span><span class="self">self</span>.info_number.as_ref() {
+                    <span class="comment">// IDentifiant
+                    </span>output.write_all(<span class="string">b"##INFO=&lt;ID="</span>)<span class="question-mark">?</span>;
+                    output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.info_prefix)<span class="question-mark">?</span>;
+                    output.write_all(vcf_type)<span class="question-mark">?</span>;
+                    output.write_all(<span class="string">b"_"</span>)<span class="question-mark">?</span>;
+                    output.write_all(vcf_number)<span class="question-mark">?</span>;
+
+                    <span class="comment">// Number
+                    </span>output.write_all(<span class="string">b",Number="</span>)<span class="question-mark">?</span>;
+                    output.write_all(vcf_number)<span class="question-mark">?</span>;
+
+                    <span class="comment">// Type
+                    </span>output.write_all(<span class="string">b",Type="</span>)<span class="question-mark">?</span>;
+                    output.write_all(vcf_type)<span class="question-mark">?</span>;
+
+                    <span class="comment">// Other
+                    </span>output.write_all(<span class="string">b",Description=\""</span>)<span class="question-mark">?</span>;
+                    output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.format_description)<span class="question-mark">?</span>;
+                    output.write_all(<span class="string">b"\",Source=\"biotest\","</span>)<span class="question-mark">?</span>;
+                    output.write_all(<span class="string">b"Version=\""</span>)<span class="question-mark">?</span>;
+                    output.write_all(constants::BIOTEST_VERSION)<span class="question-mark">?</span>;
+                    output.write_all(<span class="string">b"\"&gt;\n"</span>)<span class="question-mark">?</span>;
+                }
+            }
+        }
+
+        <span class="comment">// formats
+        </span><span class="kw">for </span>vcf_type <span class="kw">in </span><span class="self">self</span>.format_type.as_ref() {
+            <span class="kw">for </span>vcf_number <span class="kw">in </span><span class="self">self</span>.format_number.as_ref() {
                 <span class="comment">// ID
-                </span>output.write_all(<span class="string">b"##INFO=&lt;ID=info_"</span>)<span class="question-mark">?</span>;
+                </span>output.write_all(<span class="string">b"##FORMAT=&lt;ID="</span>)<span class="question-mark">?</span>;
+                output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.format_prefix)<span class="question-mark">?</span>;
                 output.write_all(vcf_type)<span class="question-mark">?</span>;
                 output.write_all(<span class="string">b"_"</span>)<span class="question-mark">?</span>;
                 output.write_all(vcf_number)<span class="question-mark">?</span>;
@@ -397,95 +509,29 @@
                 output.write_all(vcf_type)<span class="question-mark">?</span>;
 
                 <span class="comment">// Other
-                </span>output.write_all(<span class="string">b",Description=\"generated vcf info field\","</span>)<span class="question-mark">?</span>;
-                output.write_all(<span class="string">b"Source=\"biotest\","</span>)<span class="question-mark">?</span>;
-                output.write_all(<span class="string">b"Version=\""</span>)<span class="question-mark">?</span>;
-                output.write_all(constants::BIOTEST_VERSION)<span class="question-mark">?</span>;
+                </span>output.write_all(<span class="string">b",Description=\""</span>)<span class="question-mark">?</span>;
+                output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.format_description)<span class="question-mark">?</span>;
                 output.write_all(<span class="string">b"\"&gt;\n"</span>)<span class="question-mark">?</span>;
             }
         }
-    }
 
-    <span class="prelude-val">Ok</span>(())
-}
+        <span class="comment">// column name
+        </span>output.write_all(<span class="string">b"#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO"</span>)<span class="question-mark">?</span>;
 
-<span class="doccomment">/// Generate all possible format header
-</span><span class="kw">fn </span>formats&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-{
-    <span class="kw">for </span>vcf_type <span class="kw">in </span>constants::VCF_FORMAT_TYPE {
-        <span class="kw">for </span>vcf_number <span class="kw">in </span>constants::VCF_FORMAT_NUMBER {
-            <span class="comment">// ID
-            </span>output.write_all(<span class="string">b"##FORMAT=&lt;ID=format_"</span>)<span class="question-mark">?</span>;
-            output.write_all(vcf_type)<span class="question-mark">?</span>;
-            output.write_all(<span class="string">b"_"</span>)<span class="question-mark">?</span>;
-            output.write_all(vcf_number)<span class="question-mark">?</span>;
-
-            <span class="comment">// Number
-            </span>output.write_all(<span class="string">b",Number="</span>)<span class="question-mark">?</span>;
-            output.write_all(vcf_number)<span class="question-mark">?</span>;
-
-            <span class="comment">// Type
-            </span>output.write_all(<span class="string">b",Type="</span>)<span class="question-mark">?</span>;
-            output.write_all(vcf_type)<span class="question-mark">?</span>;
-
-            <span class="comment">// Other
-            </span>output.write_all(<span class="string">b",Description=\"generated vcf info field\"&gt;\n"</span>)<span class="question-mark">?</span>;
+        <span class="kw">if </span><span class="self">self</span>.sample != <span class="number">0 </span>{
+            output.write_all(<span class="string">b"\tFORMAT"</span>)<span class="question-mark">?</span>;
+            <span class="kw">for </span>n <span class="kw">in </span><span class="number">0</span>..<span class="self">self</span>.sample {
+                output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
+                output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_prefix)<span class="question-mark">?</span>;
+                output.write_all(n.to_string().as_bytes())<span class="question-mark">?</span>;
+                output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_suffix)<span class="question-mark">?</span>;
+            }
         }
+
+        output.write_all(<span class="string">b"\n"</span>)<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(())
     }
-
-    <span class="prelude-val">Ok</span>(())
-}
-
-<span class="doccomment">/// Column name
-</span><span class="kw">fn </span>columns_name&lt;W&gt;(output: <span class="kw-2">&amp;mut </span>W, genotypes: <span class="prelude-ty">Option</span>&lt;u8&gt;) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-{
-    output.write_all(<span class="string">b"#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO"</span>)<span class="question-mark">?</span>;
-
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(number_genotype) = genotypes {
-        output.write_all(<span class="string">b"\tFORMAT"</span>)<span class="question-mark">?</span>;
-        <span class="kw">for </span>n <span class="kw">in </span><span class="number">0</span>..number_genotype {
-            output.write_all(<span class="string">b"\tsample_"</span>)<span class="question-mark">?</span>;
-            output.write_all(n.to_string().as_bytes())<span class="question-mark">?</span>;
-        }
-    }
-
-    output.write_all(<span class="string">b"\n"</span>)<span class="question-mark">?</span>;
-
-    <span class="prelude-val">Ok</span>(())
-}
-
-<span class="doccomment">/// Generate vcf header
-</span><span class="kw">pub fn </span>write&lt;W&gt;(
-    output: <span class="kw-2">&amp;mut </span>W,
-    nb_filters: <span class="prelude-ty">Option</span>&lt;u8&gt;,
-    add_infos: bool,
-    nb_samples: <span class="prelude-ty">Option</span>&lt;u8&gt;,
-) -&gt; error::Result&lt;()&gt;
-<span class="kw">where
-    </span>W: std::io::Write + <span class="question-mark">?</span>Sized,
-{
-    version(output)<span class="question-mark">?</span>;
-    contigs(output)<span class="question-mark">?</span>;
-
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(n) = nb_filters {
-        filters(output, n)<span class="question-mark">?</span>;
-    }
-
-    <span class="kw">if </span>add_infos {
-        infos(output)<span class="question-mark">?</span>;
-    }
-
-    <span class="kw">if </span>nb_samples.is_some() {
-        formats(output)<span class="question-mark">?</span>;
-    }
-
-    columns_name(output, nb_samples)<span class="question-mark">?</span>;
-
-    <span class="prelude-val">Ok</span>(())
 }
 
 <span class="attr">#[cfg(test)]
@@ -493,154 +539,118 @@
     <span class="comment">/* project use */
     </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="kw">const </span>TRUTH: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"##fileformat=VCFv4.3
-##contig=&lt;ID=chr1,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=23,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=93,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=chrMT,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=X,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=NC_000015.10,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=ENA|LT795502|LT795502.1,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=NC_016845.1,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=YAR028W,length=2147483648,species=\"random\"&gt;
-##contig=&lt;ID=1,length=2147483648,species=\"random\"&gt;
-##FILTER=&lt;ID=Filter_0,Description=\"generated vcf filter field\"&gt;
-##FILTER=&lt;ID=Filter_1,Description=\"generated vcf filter field\"&gt;
-##INFO=&lt;ID=info_Integer_1,Number=1,Type=Integer,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Integer_2,Number=2,Type=Integer,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Integer_A,Number=A,Type=Integer,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Integer_R,Number=R,Type=Integer,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Integer_G,Number=G,Type=Integer,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Integer_.,Number=.,Type=Integer,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Float_1,Number=1,Type=Float,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Float_2,Number=2,Type=Float,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Float_A,Number=A,Type=Float,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Float_R,Number=R,Type=Float,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Float_G,Number=G,Type=Float,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Float_.,Number=.,Type=Float,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+    <span class="kw">const </span>DEFAULT: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"##fileformat=VCFv4.3
+##contig=&lt;ID=chr1,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=23,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=93,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=chrMT,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=X,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=NC_000015.10,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=ENA|LT795502|LT795502.1,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=NC_016845.1,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=YAR028W,length=4294967295,species=\"random\"&gt;
+##contig=&lt;ID=1,length=4294967295,species=\"random\"&gt;
+##FILTER=&lt;ID=filter_0,Description=\"generated vcf filter field\"&gt;
+##FILTER=&lt;ID=filter_1,Description=\"generated vcf filter field\"&gt;
+##FILTER=&lt;ID=filter_2,Description=\"generated vcf filter field\"&gt;
+##INFO=&lt;ID=info_Integer_1,Number=1,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_2,Number=2,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_A,Number=A,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_R,Number=R,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_G,Number=G,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Integer_.,Number=.,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_1,Number=1,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_2,Number=2,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_A,Number=A,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
 ##INFO=&lt;ID=info_Flag_0,Number=0,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Character_1,Number=1,Type=Character,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Character_2,Number=2,Type=Character,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Character_A,Number=A,Type=Character,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Character_R,Number=R,Type=Character,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Character_G,Number=G,Type=Character,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Character_.,Number=.,Type=Character,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_String_1,Number=1,Type=String,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_String_2,Number=2,Type=String,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_String_A,Number=A,Type=String,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_String_R,Number=R,Type=String,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_String_G,Number=G,Type=String,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_String_.,Number=.,Type=String,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##FORMAT=&lt;ID=format_Integer_1,Number=1,Type=Integer,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Integer_2,Number=2,Type=Integer,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Integer_A,Number=A,Type=Integer,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Integer_R,Number=R,Type=Integer,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Integer_G,Number=G,Type=Integer,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Integer_.,Number=.,Type=Integer,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Float_1,Number=1,Type=Float,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Float_2,Number=2,Type=Float,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Float_A,Number=A,Type=Float,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Float_R,Number=R,Type=Float,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Float_G,Number=G,Type=Float,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Float_.,Number=.,Type=Float,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Character_1,Number=1,Type=Character,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Character_2,Number=2,Type=Character,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Character_A,Number=A,Type=Character,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Character_R,Number=R,Type=Character,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Character_G,Number=G,Type=Character,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_Character_.,Number=.,Type=Character,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_String_1,Number=1,Type=String,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_String_2,Number=2,Type=String,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_String_A,Number=A,Type=String,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_String_R,Number=R,Type=String,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_String_G,Number=G,Type=String,Description=\"generated vcf info field\"&gt;
-##FORMAT=&lt;ID=format_String_.,Number=.,Type=String,Description=\"generated vcf info field\"&gt;
-#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tsample_0\tsample_1\tsample_2
+##INFO=&lt;ID=info_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_R,Number=R,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_G,Number=G,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Character_.,Number=.,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_1,Number=1,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_2,Number=2,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_A,Number=A,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_R,Number=R,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_G,Number=G,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_String_.,Number=.,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##FORMAT=&lt;ID=format_Integer_1,Number=1,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_2,Number=2,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_A,Number=A,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_R,Number=R,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_G,Number=G,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Integer_.,Number=.,Type=Integer,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_1,Number=1,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_2,Number=2,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_A,Number=A,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_R,Number=R,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_G,Number=G,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_Character_.,Number=.,Type=Character,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_1,Number=1,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_2,Number=2,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_A,Number=A,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_R,Number=R,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_G,Number=G,Type=String,Description=\"generated vcf format field\"&gt;
+##FORMAT=&lt;ID=format_String_.,Number=.,Type=String,Description=\"generated vcf format field\"&gt;
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	sample_0	sample_1	sample_2
 "</span>;
 
-    <span class="kw">const </span>COLUMNS_NO_FORMAT: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"</span>;
+    <span class="kw">const </span>SET: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"##fileformat=VCFv4.3\n##contig=&lt;ID=A,length=4223,species=\"alphabet\"&gt;\n##contig=&lt;ID=B,length=4223,species=\"alphabet\"&gt;\n##contig=&lt;ID=C,length=4223,species=\"alphabet\"&gt;\n##INFO=&lt;ID=INFO_Integer_1,Number=1,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##INFO=&lt;ID=INFO_Integer_2,Number=2,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##INFO=&lt;ID=INFO_Float_1,Number=1,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##INFO=&lt;ID=INFO_Float_2,Number=2,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##FORMAT=&lt;ID=FORMAT_Integer_1,Number=1,Type=Integer,Description=\"description\"&gt;\n##FORMAT=&lt;ID=FORMAT_Integer_2,Number=2,Type=Integer,Description=\"description\"&gt;\n##FORMAT=&lt;ID=FORMAT_Float_1,Number=1,Type=Float,Description=\"description\"&gt;\n##FORMAT=&lt;ID=FORMAT_Float_2,Number=2,Type=Float,Description=\"description\"&gt;\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"</span>;
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>version_() -&gt; error::Result&lt;()&gt; {
+    </span><span class="kw">fn </span>default() -&gt; error::Result&lt;()&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
 
-        version(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
+        <span class="kw">let </span>generator = Header::builder().build().unwrap();
 
-        <span class="macro">assert_eq!</span>(output, TRUTH[..<span class="number">21</span>]);
+        generator.generate(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
+
+        <span class="macro">assert_eq!</span>(output, DEFAULT);
 
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>contigs_() -&gt; error::Result&lt;()&gt; {
+    </span><span class="kw">fn </span>set() -&gt; error::Result&lt;()&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
 
-        contigs(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(output, TRUTH[<span class="number">21</span>..<span class="number">589</span>]);
+        <span class="kw">let </span>generator = Header::builder()
+            .contigs(values::Chromosomes::UserDefine(<span class="macro">vec!</span>[<span class="string">b"A"</span>, <span class="string">b"B"</span>, <span class="string">b"C"</span>]))
+            .contig_species(<span class="string">b"alphabet"</span>.to_vec())
+            .contig_length(<span class="number">4223</span>)
+            .filter(values::Integer::UserDefine(<span class="number">0</span>..<span class="number">0</span>))
+            .filter_prefix(<span class="string">b"filter_"</span>.to_vec())
+            .filter_description(<span class="string">b"description"</span>.to_vec())
+            .info_prefix(<span class="string">b"INFO_"</span>.to_vec())
+            .info_description(<span class="string">b"description"</span>.to_vec())
+            .info_type(values::VcfInfoType::UserDefine(<span class="macro">vec!</span>[<span class="string">b"Integer"</span>, <span class="string">b"Float"</span>]))
+            .info_number(values::VcfInfoNumber::UserDefine(<span class="macro">vec!</span>[<span class="string">b"1"</span>, <span class="string">b"2"</span>]))
+            .format_prefix(<span class="string">b"FORMAT_"</span>.to_vec())
+            .format_description(<span class="string">b"description"</span>.to_vec())
+            .format_type(values::VcfFormatType::UserDefine(<span class="macro">vec!</span>[
+                <span class="string">b"Integer"</span>, <span class="string">b"Float"</span>,
+            ]))
+            .format_number(values::VcfFormatNumber::UserDefine(<span class="macro">vec!</span>[<span class="string">b"1"</span>, <span class="string">b"2"</span>]))
+            .sample(<span class="number">0</span>)
+            .sample_prefix(<span class="string">b"individual_"</span>.to_vec())
+            .sample_suffix(<span class="string">b" auie"</span>.to_vec())
+            .build()
+            .unwrap();
 
-        <span class="prelude-val">Ok</span>(())
-    }
+        generator.generate(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>filters_() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
+        <span class="macro">assert_eq!</span>(output, SET);
 
-        filters(<span class="kw-2">&amp;mut </span>output, <span class="number">2</span>)<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(output, TRUTH[<span class="number">589</span>..<span class="number">717</span>]);
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>infos_() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
-
-        infos(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(output, TRUTH[<span class="number">717</span>..<span class="number">3714</span>]);
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>formats_() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
-
-        formats(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
-
-        <span class="macro">assert_eq!</span>(output, TRUTH[<span class="number">3714</span>..<span class="number">5910</span>]);
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>columns_name_() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
-
-        columns_name(<span class="kw-2">&amp;mut </span>output, <span class="prelude-val">Some</span>(<span class="number">3</span>))<span class="question-mark">?</span>;
-
-        <span class="macro">assert_eq!</span>(output, TRUTH[<span class="number">5910</span>..]);
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>columns_name_no_format() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
-
-        columns_name(<span class="kw-2">&amp;mut </span>output, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
-
-        <span class="macro">assert_eq!</span>(output, COLUMNS_NO_FORMAT);
-
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>write_() -&gt; error::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
-
-        write(<span class="kw-2">&amp;mut </span>output, <span class="prelude-val">Some</span>(<span class="number">2</span>), <span class="bool-val">true</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>))<span class="question-mark">?</span>;
-
-        <span class="macro">assert_eq!</span>(output, TRUTH);
         <span class="prelude-val">Ok</span>(())
     }
 }
