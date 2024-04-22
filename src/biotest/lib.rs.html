@@ -39,6 +39,8 @@
 <a href="#37" id="37">37</a>
 <a href="#38" id="38">38</a>
 <a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Generate random test data for bioinformatics
 //!
 //! There's a feature for every file format that can be generated:
@@ -62,17 +64,19 @@
 <span class="kw">pub mod </span>values;
 <span class="attr">#[macro_use]
 </span><span class="kw">pub mod </span>error;
-<span class="kw">mod </span>format;
+<span class="kw">pub mod </span>format;
 
 <span class="comment">/* reexport */
-</span><span class="attr">#[cfg(feature = <span class="string">"fasta"</span>)]
-</span><span class="kw">pub use </span>format::fasta;
+</span><span class="kw">pub use </span>format::Format;
+
+<span class="attr">#[cfg(feature = <span class="string">"fasta"</span>)]
+</span><span class="kw">pub use </span>format::fasta::Fasta;
 
 <span class="attr">#[cfg(feature = <span class="string">"fastq"</span>)]
-</span><span class="kw">pub use </span>format::fastq;
+</span><span class="kw">pub use </span>format::fastq::Fastq;
 
 <span class="attr">#[cfg(feature = <span class="string">"vcf"</span>)]
-</span><span class="kw">pub use </span>format::vcf;
+</span><span class="kw">pub use </span>format::vcf::Vcf;
 
 <span class="doccomment">/// Create a random generator with [constants::SEED]
 </span><span class="kw">pub fn </span>rand() -&gt; rand::rngs::StdRng {

@@ -54,6 +54,31 @@
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
 <a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a>
+<a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Error struct of project biotest
 
 </span><span class="comment">/* crate use */
@@ -74,6 +99,31 @@
     <span class="doccomment">/// std::io::Error error
     </span><span class="attr">#[error(transparent)]
     </span>StdIo(<span class="attr">#[from] </span>std::io::Error),
+
+    <span class="attr">#[cfg(feature = <span class="string">"fasta"</span>)]
+    </span><span class="doccomment">/// biotest::format::fasta::FastaBuilderError
+    </span><span class="attr">#[error(transparent)]
+    </span>FastaBuilderError(<span class="kw">crate</span>::format::fasta::FastaBuilderError),
+
+    <span class="attr">#[cfg(feature = <span class="string">"fastq"</span>)]
+    </span><span class="doccomment">/// crate::format::fastq::FastqBuilderError
+    </span><span class="attr">#[error(transparent)]
+    </span>FastqBuilderError(<span class="kw">crate</span>::format::fastq::FastqBuilderError),
+
+    <span class="attr">#[cfg(feature = <span class="string">"vcf"</span>)]
+    </span><span class="doccomment">/// crate::format::vcf::VcfBuilderError
+    </span><span class="attr">#[error(transparent)]
+    </span>VcfBuilderError(<span class="kw">crate</span>::format::vcf::VcfBuilderError),
+
+    <span class="attr">#[cfg(feature = <span class="string">"vcf"</span>)]
+    </span><span class="doccomment">/// crate::format::vcf::record::RecordBuilderError
+    </span><span class="attr">#[error(transparent)]
+    </span>VcfRecordBuilderError(<span class="kw">crate</span>::format::vcf::record::RecordBuilderError),
+
+    <span class="attr">#[cfg(feature = <span class="string">"vcf"</span>)]
+    </span><span class="doccomment">/// crate::format::vcf::header::HeaderBuilderError
+    </span><span class="attr">#[error(transparent)]
+    </span>VcfHeaderBuilderError(<span class="kw">crate</span>::format::vcf::header::HeaderBuilderError),
 }
 
 <span class="macro">macro_rules! </span>create_unreachable {
@@ -97,7 +147,7 @@
         <span class="macro">assert_matches::assert_matches!</span>(
             <span class="macro">create_unreachable!</span>(),
             <span class="kw">crate</span>::error::Error::Unreachable {
-                line: <span class="number">42</span>,
+                line: <span class="number">67</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"windows"</span>)]
                 </span>file: <span class="string">"src\\error.rs"</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"unix"</span>)]
