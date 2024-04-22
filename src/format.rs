@@ -48,12 +48,10 @@ pub trait Format {
     }
 
     /// Create a file at path with header and multiple records
-    fn create(
-        &self,
-        path: &std::path::Path,
-        rng: &mut rand::rngs::StdRng,
-        number: usize,
-    ) -> error::Result<()> {
+    fn create<P>(&self, path: P, rng: &mut rand::rngs::StdRng, number: usize) -> error::Result<()>
+    where
+        P: core::convert::AsRef<std::path::Path>,
+    {
         let mut output = std::io::BufWriter::new(std::fs::File::create(path)?);
 
         self.header(&mut output, rng)?;

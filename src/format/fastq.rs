@@ -1,4 +1,60 @@
 //! Fastq generation
+//!
+//! Usage:
+//! ```
+//! use biotest::Format;
+//!
+//! # fn main() -> Result<(), biotest::error::Error> {
+//! let mut rng = biotest::rand(); // Create a random generator with a fixed seed
+//!
+//! let mut output = Vec::new();
+//! let generator = biotest::Fastq::builder().build().unwrap();
+//!
+//! generator.record(&mut output, &mut rng)?; // Write one fastq record in output
+//! generator.records(&mut output, &mut rng, 5)?; // Write five fastq records in output
+//!
+//! generator.create("test.fastq", &mut rng, 5)?; // Write five fastq record in "test.fasta"
+//! # Ok(())
+//! # }
+//! ```
+//!
+//! Read generate follow this template
+//! ```ignore
+//! >{id_prefix}{id}{id_suffix} {comment_prefix}{comment}{comment_suffix}
+//! {sequence}
+//! +{plus_prefix}{plus}{plus_suffix}
+//! {quality}
+//! ```
+//!
+//! Many think could be configurable with builder patern:
+//! ```
+//! use rand;
+//! use rand::SeedableRng;
+//! use biotest::Format;
+//!
+//! # fn main() -> Result<(), biotest::error::Error> {
+//! let mut rng = rand::rngs::StdRng::from_entropy(); // Create a random generator with a 'random' seed
+//!
+//! let generator = biotest::Fastq::builder()
+//!     .id(biotest::values::Alphabet::Lower) // Set alphabet use to generate sequence id
+//!     .id_len(10) // Set length of id
+//!     .id_prefix(b"prefix".to_vec()) // Set read id prefix
+//!     .id_suffix(b"suffix".to_vec()) // Set read id prefix
+//!     .comment(biotest::values::Alphabet::Upper) // Set alphabet use to generate sequence comment
+//!     .comment_len(0) // If comment length is set to 0 prefix and suffix isn't write
+//!     .comment_prefix(b"prefix".to_vec()) // Set read id prefix
+//!     .comment_suffix(b"suffix".to_vec()) // Set read id prefix
+//!     .plus(biotest::values::Alphabet::Upper) // Set alphabet use to generate sequence plus
+//!     .plus_len(0) // If plus length is set to 0 prefix and suffix isn't write
+//!     .plus_prefix(b"prefix".to_vec()) // Set read id prefix
+//!     .plus_suffix(b"suffix".to_vec()) // Set read id prefix
+//!     .build()
+//!     .unwrap();
+//!
+//! generator.create("test.fastq", &mut rng, 5)?; // Write five fasta record in "test.fastq"
+//! # Ok(())
+//! # }
+//! ```
 
 /* std use */
 

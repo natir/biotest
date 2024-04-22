@@ -1,4 +1,54 @@
 //! Fasta generation
+//!
+//! Usage:
+//! ```
+//! use biotest::Format as _; // import Format trait is required
+//!
+//! # fn main() -> Result<(), biotest::error::Error> {
+//! let mut rng = biotest::rand(); // Create a random generator with a fixed seed
+//!
+//! let mut output = Vec::new();
+//! let generator = biotest::Fasta::builder().build().unwrap();
+//!
+//! generator.record(&mut output, &mut rng)?; // Write one fasta record in output
+//! generator.records(&mut output, &mut rng, 5)?; // Write five fasta records in output
+//!
+//! generator.create("test.fasta", &mut rng, 5)?; // Write five fasta record in "test.fasta"
+//! # Ok(())
+//! # }
+//! ```
+//!
+//! Read generate follow this template
+//! ```ignore
+//! >{id_prefix}{id}{id_suffix} {comment_prefix}{comment}{comment_suffix}
+//! {sequence}
+//! ```
+//!
+//! Many think could be configurable with builder patern:
+//! ```
+//! use rand;
+//! use rand::SeedableRng;
+//! use biotest::Format;
+//!
+//! # fn main() -> Result<(), biotest::error::Error> {
+//! let mut rng = rand::rngs::StdRng::from_entropy(); // Create a random generator with a 'random' seed
+//!
+//! let generator = biotest::Fasta::builder()
+//!     .id(biotest::values::Alphabet::Lower) // Set alphabet use to generate sequence id
+//!     .id_len(10) // Set length of id
+//!     .id_prefix(b"prefix".to_vec()) // Set read id prefix
+//!     .id_suffix(b"suffix".to_vec()) // Set read id prefix
+//!     .comment(biotest::values::Alphabet::Upper) // Set alphabet use to generate sequence comment
+//!     .comment_len(0) // If comment length is set to 0 prefix and suffix isn't write
+//!     .comment_prefix(b"prefix".to_vec()) // Set read id prefix
+//!     .comment_suffix(b"suffix".to_vec()) // Set read id prefix
+//!     .build()
+//!     .unwrap();
+//!
+//! generator.create("test.fasta", &mut rng, 5)?; // Write five fasta record in "test.fasta"
+//! # Ok(())
+//! # }
+//! ```
 
 /* std use */
 

@@ -21,17 +21,19 @@ pub mod constants;
 pub mod values;
 #[macro_use]
 pub mod error;
-mod format;
+pub mod format;
 
 /* reexport */
+pub use format::Format;
+
 #[cfg(feature = "fasta")]
-pub use format::fasta;
+pub use format::fasta::Fasta;
 
 #[cfg(feature = "fastq")]
-pub use format::fastq;
+pub use format::fastq::Fastq;
 
 #[cfg(feature = "vcf")]
-pub use format::vcf;
+pub use format::vcf::Vcf;
 
 /// Create a random generator with [constants::SEED]
 pub fn rand() -> rand::rngs::StdRng {
