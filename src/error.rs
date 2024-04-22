@@ -18,6 +18,31 @@ pub enum Error {
     /// std::io::Error error
     #[error(transparent)]
     StdIo(#[from] std::io::Error),
+
+    #[cfg(feature = "fasta")]
+    /// biotest::format::fasta::FastaBuilderError
+    #[error(transparent)]
+    FastaBuilderError(crate::format::fasta::FastaBuilderError),
+
+    #[cfg(feature = "fastq")]
+    /// crate::format::fastq::FastqBuilderError
+    #[error(transparent)]
+    FastqBuilderError(crate::format::fastq::FastqBuilderError),
+
+    #[cfg(feature = "vcf")]
+    /// crate::format::vcf::VcfBuilderError
+    #[error(transparent)]
+    VcfBuilderError(crate::format::vcf::VcfBuilderError),
+
+    #[cfg(feature = "vcf")]
+    /// crate::format::vcf::record::RecordBuilderError
+    #[error(transparent)]
+    VcfRecordBuilderError(crate::format::vcf::record::RecordBuilderError),
+
+    #[cfg(feature = "vcf")]
+    /// crate::format::vcf::header::HeaderBuilderError
+    #[error(transparent)]
+    VcfHeaderBuilderError(crate::format::vcf::header::HeaderBuilderError),
 }
 
 macro_rules! create_unreachable {
@@ -41,7 +66,7 @@ mod tests {
         assert_matches::assert_matches!(
             create_unreachable!(),
             crate::error::Error::Unreachable {
-                line: 42,
+                line: 67,
                 #[cfg(target_family = "windows")]
                 file: "src\\error.rs",
                 #[cfg(target_family = "unix")]
