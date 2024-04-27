@@ -410,15 +410,19 @@ mod tests {
     #[test]
     fn interger() {
         assert_eq!(
-            <Integer as Into<core::ops::Range<i32>>>::into(Integer::Position),
+            core::ops::Range::<i32>::from(Integer::Position),
             0..i32::MAX
         );
         assert_eq!(
-            <Integer as Into<core::ops::Range<i32>>>::into(Integer::Full),
+            core::ops::Range::<i32>::from(Integer::Vcf),
+            (i32::MIN + 7)..i32::MAX
+        );
+        assert_eq!(
+            core::ops::Range::<i32>::from(Integer::Full),
             i32::MIN..i32::MAX
         );
         assert_eq!(
-            <Integer as Into<core::ops::Range<i32>>>::into(Integer::UserDefine(-92..108)),
+            core::ops::Range::<i32>::from(Integer::UserDefine(-92..108)),
             -92..108
         );
 

@@ -211,9 +211,9 @@ impl Record {
         output.write_all(&self.id.generate(rng, self.id_len)?)?;
         output.write_all(&self.id_suffix)?;
         if id_len == 0 {
-            output.write_all(&[b'.'])?;
+            output.write_all(b".")?;
         }
-        output.write_all(&[b'\t'])?;
+        output.write_all(b"\t")?;
 
         // reference
         output.write_all(&self.reference.generate(rng, self.reference_len)?)?;
@@ -445,6 +445,12 @@ mod tests {
 
     const NO_INFO_SAMPLE_FILTER: &[u8] = b"YAR028W	509242864	.	A	.	224	.";
 
+    const SET_ID: &[u8] = b"YAR028W	509242864	id_i_Pdz!	A	.	224	.";
+
+    const ID_0: &[u8] = b"YAR028W	509242864	.	a	.	114	.";
+
+    const LARGE_ALT: &[u8] = b"YAR028W\t509242864\t.\ta\tACA\t86\t.";
+
     #[test]
     fn default() -> error::Result<()> {
         let mut output = Vec::new();
@@ -524,6 +530,75 @@ mod tests {
         generator.generate(&mut output, &mut rng)?;
 
         assert_eq!(output, NO_INFO_SAMPLE_FILTER);
+
+        Ok(())
+    }
+
+    #[test]
+    fn set_id() -> error::Result<()> {
+        let mut output = Vec::new();
+        let mut rng = crate::rand();
+
+        let generator = Record::builder()
+            .filter(values::Integer::UserDefine(0..0))
+            .info_number(values::VcfInfoNumber::UserDefine(vec![]))
+            .format_number(values::VcfFormatNumber::UserDefine(vec![]))
+            .sample(0)
+            .id_len(5)
+            .id(values::Alphabet::A2z)
+            .id_prefix(b"id_".to_vec())
+            .id_suffix(b"!".to_vec())
+            .build()
+            .unwrap();
+
+        generator.generate(&mut output, &mut rng)?;
+
+        assert_eq!(output, SET_ID);
+
+        Ok(())
+    }
+
+    #[test]
+    fn id_0() -> error::Result<()> {
+        let mut output = Vec::new();
+        let mut rng = crate::rand();
+
+        let generator = Record::builder()
+            .filter(values::Integer::UserDefine(0..0))
+            .info_number(values::VcfInfoNumber::UserDefine(vec![]))
+            .format_number(values::VcfFormatNumber::UserDefine(vec![]))
+            .sample(0)
+            .id_len(0)
+            .id(values::Alphabet::A2z)
+            .build()
+            .unwrap();
+
+        generator.generate(&mut output, &mut rng)?;
+
+        assert_eq!(output, ID_0);
+
+        Ok(())
+    }
+
+    #[test]
+    fn large_alt() -> error::Result<()> {
+        let mut output = Vec::new();
+        let mut rng = crate::rand();
+
+        let generator = Record::builder()
+            .filter(values::Integer::UserDefine(0..0))
+            .info_number(values::VcfInfoNumber::UserDefine(vec![]))
+            .format_number(values::VcfFormatNumber::UserDefine(vec![]))
+            .alternative_len(6)
+            .sample(0)
+            .id_len(0)
+            .id(values::Alphabet::A2z)
+            .build()
+            .unwrap();
+
+        generator.generate(&mut output, &mut rng)?;
+
+        assert_eq!(output, LARGE_ALT);
 
         Ok(())
     }
