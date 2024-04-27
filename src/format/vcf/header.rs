@@ -128,7 +128,7 @@ impl Header {
                 output.write_all(b"##INFO=<ID=")?;
                 output.write_all(&self.info_prefix)?;
                 output.write_all(b"Flag_0,")?;
-                output.write_all(b"Number=0,Description=\"")?;
+                output.write_all(b"Number=0,Type=Flag,Description=\"")?;
                 output.write_all(&self.info_description)?;
                 output.write_all(b"\",Source=\"biotest\",Version=\"")?;
                 output.write_all(constants::BIOTEST_VERSION)?;
@@ -236,7 +236,7 @@ mod tests {
 ##INFO=<ID=info_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
 ##INFO=<ID=info_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
 ##INFO=<ID=info_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Flag_0,Number=0,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\">
+##INFO=<ID=info_Flag_0,Number=0,Type=Flag,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\">
 ##INFO=<ID=info_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
 ##INFO=<ID=info_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
 ##INFO=<ID=info_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
@@ -276,7 +276,20 @@ mod tests {
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	sample_0	sample_1	sample_2
 ";
 
-    const SET: &[u8] = b"##fileformat=VCFv4.3\n##contig=<ID=A,length=4223,species=\"alphabet\">\n##contig=<ID=B,length=4223,species=\"alphabet\">\n##contig=<ID=C,length=4223,species=\"alphabet\">\n##INFO=<ID=INFO_Integer_1,Number=1,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">\n##INFO=<ID=INFO_Integer_2,Number=2,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">\n##INFO=<ID=INFO_Float_1,Number=1,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">\n##INFO=<ID=INFO_Float_2,Number=2,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">\n##FORMAT=<ID=FORMAT_Integer_1,Number=1,Type=Integer,Description=\"description\">\n##FORMAT=<ID=FORMAT_Integer_2,Number=2,Type=Integer,Description=\"description\">\n##FORMAT=<ID=FORMAT_Float_1,Number=1,Type=Float,Description=\"description\">\n##FORMAT=<ID=FORMAT_Float_2,Number=2,Type=Float,Description=\"description\">\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n";
+    const SET: &[u8] = b"##fileformat=VCFv4.3
+##contig=<ID=A,length=4223,species=\"alphabet\">
+##contig=<ID=B,length=4223,species=\"alphabet\">
+##contig=<ID=C,length=4223,species=\"alphabet\">
+##INFO=<ID=INFO_Integer_1,Number=1,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
+##INFO=<ID=INFO_Integer_2,Number=2,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
+##INFO=<ID=INFO_Float_1,Number=1,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
+##INFO=<ID=INFO_Float_2,Number=2,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
+##FORMAT=<ID=FORMAT_Integer_1,Number=1,Type=Integer,Description=\"description\">
+##FORMAT=<ID=FORMAT_Integer_2,Number=2,Type=Integer,Description=\"description\">
+##FORMAT=<ID=FORMAT_Float_1,Number=1,Type=Float,Description=\"description\">
+##FORMAT=<ID=FORMAT_Float_2,Number=2,Type=Float,Description=\"description\">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+";
 
     #[test]
     fn default() -> error::Result<()> {

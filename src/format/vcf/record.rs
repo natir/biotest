@@ -7,6 +7,7 @@ use rand::seq::SliceRandom as _;
 use rand::Rng as _;
 
 /* projet use */
+use crate::constants;
 use crate::error;
 use crate::values;
 
@@ -251,13 +252,12 @@ impl Record {
         // info
         if !self.info_type.as_ref().is_empty() && !self.info_number.as_ref().is_empty() {
             self.info(output, rng)?;
-
-            // check end of line
-            if (!self.format_type.as_ref().is_empty() || !self.format_number.as_ref().is_empty())
-                && self.sample != 0
-            {
-                output.write_all(b"\t")?;
-            }
+        }
+        // check end of line
+        if (!self.format_type.as_ref().is_empty() || !self.format_number.as_ref().is_empty())
+            && self.sample != 0
+        {
+            output.write_all(b"\t")?;
         }
 
         // format
@@ -357,11 +357,11 @@ fn generate_value(
             _ => Err(create_unreachable!()),
         },
         b"Character" => match vcf_number {
-            b"1" | b"A" => Ok(values::Alphabet::default().generate(rng, 1)?),
+            b"1" | b"A" => Ok(values::Alphabet::A2z.generate(rng, 1)?),
             b"2" | b"R" => {
                 let mut ret = Vec::new();
                 for _ in 0..2 {
-                    ret.extend(values::Alphabet::default().generate(rng, 1)?);
+                    ret.extend(values::Alphabet::A2z.generate(rng, 1)?);
                     ret.push(b',');
                 }
                 ret.pop();
@@ -371,7 +371,7 @@ fn generate_value(
             b"G" => {
                 let mut ret = Vec::new();
                 for _ in 0..nb_samples {
-                    ret.extend(values::Alphabet::default().generate(rng, 1)?);
+                    ret.extend(values::Alphabet::A2z.generate(rng, 1)?);
                     ret.push(b',');
                 }
                 ret.pop();
@@ -381,7 +381,7 @@ fn generate_value(
             b"." => {
                 let mut ret = Vec::new();
                 for _ in 0..rng.gen_range(1..5) {
-                    ret.extend(values::Alphabet::default().generate(rng, 1)?);
+                    ret.extend(values::Alphabet::A2z.generate(rng, 1)?);
                     ret.push(b',');
                 }
                 ret.pop();
@@ -391,11 +391,11 @@ fn generate_value(
             _ => Err(create_unreachable!()),
         },
         b"String" => match vcf_number {
-            b"1" | b"A" => values::Alphabet::default().generate(rng, 10),
+            b"1" | b"A" => values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH),
             b"2" | b"R" => {
                 let mut ret = Vec::new();
                 for _ in 0..2 {
-                    ret.extend(values::Alphabet::default().generate(rng, 10)?);
+                    ret.extend(values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH)?);
                     ret.push(b',');
                 }
                 ret.pop();
@@ -405,7 +405,7 @@ fn generate_value(
             b"G" => {
                 let mut ret = Vec::new();
                 for _ in 0..nb_samples {
-                    ret.extend(values::Alphabet::default().generate(rng, 10)?);
+                    ret.extend(values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH)?);
                     ret.push(b',');
                 }
                 ret.pop();
@@ -415,7 +415,7 @@ fn generate_value(
             b"." => {
                 let mut ret = Vec::new();
                 for _ in 0..rng.gen_range(1..5) {
-                    ret.extend(values::Alphabet::default().generate(rng, 10)?);
+                    ret.extend(values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH)?);
                     ret.push(b',');
                 }
                 ret.pop();
@@ -435,11 +435,11 @@ mod tests {
     /* project use */
     use super::*;
 
-    const DEFAULT: &[u8] = b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=-496257857,2127853583,-1498117423;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=-7.5115204,74.78337,1.5983124;info_Float_.=26.825455;info_Flag_0;info_Character_1=b;info_Character_2=L,^;info_Character_A=4;info_Character_R=&,a;info_Character_G=N,k,%;info_Character_.={;info_String_1=nSOJk4@lC,;info_String_2=jS/\\D&BI|t,Y!R:7saso?;info_String_A=d!\"JhX)qQp;info_String_R=LD?P=?w~A),5[[@lIC.kc;info_String_G=3/bSljA-eF,F9c\"303:t],TqU?Kssw+$;info_String_.=[MEs+_JX%Y	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	1331697702:-73747613,1645597043:-1553292372:-1685240233,-1820034465:300184414,394747854,1197504288:-512239285,-1414044731:-26.444412:12.577988,-87.76228:-3.4822464:-95.66553,55.56636:-43.384956,-35.16729,6.755356:-9.445259,-43.99848,-94.4432,-92.06316:_:{,z:F:H,i:T,6,j:[,+:2;2l`>IYzJ:v7\"4m{_>h~,<G_oKV#{ze:!)!m\'S9/0_:dJ?2UvwuUy,^7GYW`=N;7:|)8^vf>dg#,1c`ok8Kh$S,_+GbKm=pyh:b:}\"s1f#s/	-1699207592:-1247215950,-1253877200:-1343277579:188169583,-1589761063:-532454402,989628108,295511500:1300868485:-14.547348:10.005661,82.95245:46.642517:90.124435,12.111877:69.43762,-11.427376,58.87137:-3.6344528,56.566788:e:),I:j:t,i:U,&,v:m,<,_,/:4y*`HYz#-o:9zE|;./\"-M,;<;|nStAje:SF>o/R,iE#:/,\"$RTVc(7,*(Sn6>ZQPD:ho#H0_<Tl9,PWg*UP~Esp,,{OVYEkbvA:.?sf#3gn*R,]yhrn0?zU8,N0+\"VIx*d-	-1697963895:1138852593,181408155:-317412374:-1000659906,1329247534:628009109,-1501500099,-1741170910:-1510591037,-995737568,2069116675,-1117969497:25.04361:84.79895,44.54808:36.19725:-48.734688,-33.58867:-54.331757,84.5206,69.88823:87.006195:?:E,t:,:?,B:b,$,s:?,4,%,}:Pm=/<N[3&;:=H>}~CRs}y,o^H0T~a31`:EJblc1Z!bn:tm9=sB<\":\\,7oU=q*dDU(:-k5AqYk|~^,o\"SF3e.$lt,R9J~QqXY_R:jI\\,>VLD1@,O#Bvp?rT;+,+]M$Tdqh7g,Qa;ou#<4,C";
+    const DEFAULT: &[u8] = b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=-496257857,2127853583,-1498117423;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=-7.5115204,74.78337,1.5983124;info_Float_.=26.825455;info_Flag_0;info_Character_1=i;info_Character_2=r,[;info_Character_A=g;info_Character_R=M,D;info_Character_G=h,w,\\;info_Character_.=C,G,p,];info_String_1=ZoXMT;info_String_2=gQouV,Gn`Jw;info_String_A=eVDDU;info_String_R=YytzA,ny[_P;info_String_G=Oshsq,bSjAd,bZcRF;info_String_.=rQ_[V,S^RtS,vzMeT,jonYV	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-1552897203:1249370088,894744660:-1298826907:-1500526673,846767901:154354090,1292630937,-513388490:730433769,-1782228224,1193004039,1639963889:-31.463745:-74.13223,44.792007:-4.5392303:-42.586063,-20.249939:-19.714546,-48.754406,40.519638:-27.838158:L:J,L:n:u,P:t,f,`:r,^:aaSsw:svYGC,zkT\\W:k_sGD:gZcCc,]tIGE:bcnVW,JVaDB,nQSHY:[QBCg,L`Scx,xXYm`,NnOG[	-1345745815:173280036,-939420073:-1365650667:679852521,1295053734:732715199,-819759668,-308523151:1942972144,-249711286,1737760149:-53.047443:-97.35165,-58.53014:93.27409:-89.49225,65.68997:62.677032,92.94722,32.79944:52.132156,-30.33149:z:R,v:G:G,X:B,g,q:[,a,B:w_Zxx:kAFA[,o`OId:JgjZD:StKau,vtaIh:wmmrI,gNXcb,hRd]Q:OgukS	946791943:-2019035904,1055813342:-2045085244:-1401538285,878536766:731752434,1439145027,-966674455:-1096509554,-1513894259,1176983779,-199713084:51.48242:-93.36465,6.6719513:32.869843:-77.50437,-17.745377:38.63495,-9.558914,42.16661:-6.823944,-39.047478,48.595016,68.83052:w:O,m:A:i,Z:P,w,y:s:KBssX:JGMMK,`HVkg:oY`vk:xarZo,yTnQF:EntKU,mnaDW,uppug:FhYRx,BZHMq";
 
-    const NO_SAMPLE: &[u8] = b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=;info_Float_.=1.5983124,-8.867523,77.741455,-86.29277;info_Flag_0;info_Character_1=5;info_Character_2=b,L;info_Character_A=^;info_Character_R=4,&;info_Character_G=;info_Character_.=%,{,n,S;info_String_1=OJk4@lC,jS;info_String_2=/\\D&BI|tY!,R:7saso?d!;info_String_A=\"JhX)qQpLD;info_String_R=?P=?w~A)5[,[@lIC.kc3/;info_String_G=;info_String_.=ljA-eFF9c\",303:t]TqU?,Kssw+$*[ME";
+    const NO_SAMPLE: &[u8] = b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=;info_Float_.=1.5983124,-8.867523,77.741455,-86.29277;info_Flag_0;info_Character_1=M;info_Character_2=i,r;info_Character_A=[;info_Character_R=g,M;info_Character_G=;info_Character_.=h;info_String_1=w\\voC;info_String_2=Gp]Zo,XMTgQ;info_String_A=ouVGn;info_String_R=`JweV,DDUYy;info_String_G=;info_String_.=zAny[,_POsh,sqbSj";
 
-    const NO_INFO: &[u8] = b"YAR028W	509242864	.	A	.	224	filter_0format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-1867486109:1180908492,1041698939:-207506017:-1221871790,-1356802783:-496257857,2127853583,-1498117423:2082620030,-344161843,-1022296784,-1007334138:68.286865:-96.154594,-23.433853:-48.782158:-46.15216,-92.639305:-7.5115204,74.78337,1.5983124:26.825455:5:b,L:^:4,&:a,N,k:{:nSOJk4@lC,:jS/\\D&BI|t,Y!R:7saso?:d!\"JhX)qQp:LD?P=?w~A),5[[@lIC.kc:3/bSljA-eF,F9c\"303:t],TqU?Kssw+$:[MEs+_JX%Y	1331697702:-73747613,1645597043:-1553292372:-1685240233,-1820034465:300184414,394747854,1197504288:-512239285,-1414044731:-26.444412:12.577988,-87.76228:-3.4822464:-95.66553,55.56636:-43.384956,-35.16729,6.755356:-9.445259,-43.99848,-94.4432,-92.06316:_:{,z:F:H,i:T,6,j:[,+:2;2l`>IYzJ:v7\"4m{_>h~,<G_oKV#{ze:!)!m\'S9/0_:dJ?2UvwuUy,^7GYW`=N;7:|)8^vf>dg#,1c`ok8Kh$S,_+GbKm=pyh:b:}\"s1f#s/	-1699207592:-1247215950,-1253877200:-1343277579:188169583,-1589761063:-532454402,989628108,295511500:1300868485:-14.547348:10.005661,82.95245:46.642517:90.124435,12.111877:69.43762,-11.427376,58.87137:-3.6344528,56.566788:e:),I:j:t,i:U,&,v:m,<,_,/:4y*`HYz#-o:9zE|;./\"-M,;<;|nStAje:SF>o/R,iE#:/,\"$RTVc(7,*(Sn6>ZQPD:ho#H0_<Tl9,PWg*UP~Esp,,{OVYEkbvA:.?sf#3gn*R,]yhrn0?zU8,N0+\"VIx*d-";
+    const NO_INFO: &[u8] = b"YAR028W	509242864	.	A	.	224	filter_0	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-1867486109:1180908492,1041698939:-207506017:-1221871790,-1356802783:-496257857,2127853583,-1498117423:2082620030,-344161843,-1022296784,-1007334138:68.286865:-96.154594,-23.433853:-48.782158:-46.15216,-92.639305:-7.5115204,74.78337,1.5983124:26.825455:L:M,i:r:[,g:M,D,h:C,G,p,]:ZoXMT:gQouV,Gn`Jw:eVDDU:YytzA,ny[_P:Oshsq,bSjAd,bZcRF:rQ_[V,S^RtS,vzMeT,jonYV	-1552897203:1249370088,894744660:-1298826907:-1500526673,846767901:154354090,1292630937,-513388490:730433769,-1782228224,1193004039,1639963889:-31.463745:-74.13223,44.792007:-4.5392303:-42.586063,-20.249939:-19.714546,-48.754406,40.519638:-27.838158:L:J,L:n:u,P:t,f,`:r,^:aaSsw:svYGC,zkT\\W:k_sGD:gZcCc,]tIGE:bcnVW,JVaDB,nQSHY:[QBCg,L`Scx,xXYm`,NnOG[	-1345745815:173280036,-939420073:-1365650667:679852521,1295053734:732715199,-819759668,-308523151:1942972144,-249711286,1737760149:-53.047443:-97.35165,-58.53014:93.27409:-89.49225,65.68997:62.677032,92.94722,32.79944:52.132156,-30.33149:z:R,v:G:G,X:B,g,q:[,a,B:w_Zxx:kAFA[,o`OId:JgjZD:StKau,vtaIh:wmmrI,gNXcb,hRd]Q:OgukS";
 
     const NO_INFO_SAMPLE: &[u8] = b"YAR028W	509242864	.	A	.	224	filter_0";
 

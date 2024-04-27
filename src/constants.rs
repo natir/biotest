@@ -55,6 +55,9 @@ pub static VCF_FORMAT_TYPE: [&[u8]; 4] = [b"Integer", b"Float", b"Character", b"
 /// All vcf info number
 pub static VCF_FORMAT_NUMBER: [&[u8]; 6] = [b"1", b"2", b"A", b"R", b"G", b"."];
 
+/// Length of vcf string
+pub static VCF_STRING_LENGTH: usize = 5;
+
 /// biotest version
 pub const BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
 
