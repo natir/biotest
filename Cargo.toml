@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Pierre Marijon <pierre@marijon.fr>"]
 edition = "2021"
 description = "Generate random test data for bioinformatics"
-rust-version = "1.63"
+rust-version = "1.74"
 
 homepage = "https://github.com/natir/biotest"
 repository = "https://github.com/natir/biotest"

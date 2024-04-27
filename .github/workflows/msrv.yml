@@ -14,11 +14,11 @@ jobs:
 
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.63
+          toolchain: 1.74
           override: true
 
       - name: check if Readme matches MSRV defined here
-        run: grep '1.63' Readme.md
+        run: grep '1.74' Readme.md
 
       - name: Run tests
         uses: actions-rs/cargo@v1
