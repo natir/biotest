@@ -36,6 +36,13 @@ log            = { version = "0.4" }
 tempfile       = { version = "3" }
 assert_matches = { version = "1" }
 
+# Examples
+clap           = { version = "4", features = ["derive"] }
+stderrlog      = { version = "0.6" }
+
+[[example]]
+name = "default"
+required-features = ["fasta", "fastq", "vcf"]
 
 [profile.release]
 lto = 'thin'
