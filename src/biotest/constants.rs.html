@@ -70,6 +70,9 @@
 <a href="#68" id="68">68</a>
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Declarations of some constants value
 
 </span><span class="comment">/* std use */
@@ -126,6 +129,9 @@
 
 <span class="doccomment">/// All vcf info number
 </span><span class="kw">pub static </span>VCF_FORMAT_NUMBER: [<span class="kw-2">&amp;</span>[u8]; <span class="number">6</span>] = [<span class="string">b"1"</span>, <span class="string">b"2"</span>, <span class="string">b"A"</span>, <span class="string">b"R"</span>, <span class="string">b"G"</span>, <span class="string">b"."</span>];
+
+<span class="doccomment">/// Length of vcf string
+</span><span class="kw">pub static </span>VCF_STRING_LENGTH: usize = <span class="number">5</span>;
 
 <span class="doccomment">/// biotest version
 </span><span class="kw">pub const </span>BIOTEST_VERSION: <span class="kw-2">&amp;</span>[u8] = <span class="macro">env!</span>(<span class="string">"CARGO_PKG_VERSION"</span>).as_bytes();

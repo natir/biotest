@@ -539,7 +539,8 @@
 <span class="kw">use </span>rand::Rng <span class="kw">as _</span>;
 
 <span class="comment">/* projet use */
-</span><span class="kw">use </span><span class="kw">crate</span>::error;
+</span><span class="kw">use </span><span class="kw">crate</span>::constants;
+<span class="kw">use </span><span class="kw">crate</span>::error;
 <span class="kw">use </span><span class="kw">crate</span>::values;
 
 <span class="kw">use </span><span class="kw">crate</span>::values::Generate <span class="kw">as _</span>;
@@ -783,13 +784,12 @@
         <span class="comment">// info
         </span><span class="kw">if </span>!<span class="self">self</span>.info_type.as_ref().is_empty() &amp;&amp; !<span class="self">self</span>.info_number.as_ref().is_empty() {
             <span class="self">self</span>.info(output, rng)<span class="question-mark">?</span>;
-
-            <span class="comment">// check end of line
-            </span><span class="kw">if </span>(!<span class="self">self</span>.format_type.as_ref().is_empty() || !<span class="self">self</span>.format_number.as_ref().is_empty())
-                &amp;&amp; <span class="self">self</span>.sample != <span class="number">0
-            </span>{
-                output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
-            }
+        }
+        <span class="comment">// check end of line
+        </span><span class="kw">if </span>(!<span class="self">self</span>.format_type.as_ref().is_empty() || !<span class="self">self</span>.format_number.as_ref().is_empty())
+            &amp;&amp; <span class="self">self</span>.sample != <span class="number">0
+        </span>{
+            output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
         }
 
         <span class="comment">// format
@@ -889,11 +889,11 @@
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">create_unreachable!</span>()),
         },
         <span class="string">b"Character" </span>=&gt; <span class="kw">match </span>vcf_number {
-            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; <span class="prelude-val">Ok</span>(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>),
+            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; <span class="prelude-val">Ok</span>(values::Alphabet::A2z.generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>),
             <span class="string">b"2" </span>| <span class="string">b"R" </span>=&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
                 <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
+                    ret.extend(values::Alphabet::A2z.generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
                     ret.push(<span class="string">b','</span>);
                 }
                 ret.pop();
@@ -903,7 +903,7 @@
             <span class="string">b"G" </span>=&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
                 <span class="kw">for _ in </span><span class="number">0</span>..nb_samples {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
+                    ret.extend(values::Alphabet::A2z.generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
                     ret.push(<span class="string">b','</span>);
                 }
                 ret.pop();
@@ -913,7 +913,7 @@
             <span class="string">b"." </span>=&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
                 <span class="kw">for _ in </span><span class="number">0</span>..rng.gen_range(<span class="number">1</span>..<span class="number">5</span>) {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
+                    ret.extend(values::Alphabet::A2z.generate(rng, <span class="number">1</span>)<span class="question-mark">?</span>);
                     ret.push(<span class="string">b','</span>);
                 }
                 ret.pop();
@@ -923,11 +923,11 @@
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">create_unreachable!</span>()),
         },
         <span class="string">b"String" </span>=&gt; <span class="kw">match </span>vcf_number {
-            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; values::Alphabet::default().generate(rng, <span class="number">10</span>),
+            <span class="string">b"1" </span>| <span class="string">b"A" </span>=&gt; values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH),
             <span class="string">b"2" </span>| <span class="string">b"R" </span>=&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
                 <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">10</span>)<span class="question-mark">?</span>);
+                    ret.extend(values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH)<span class="question-mark">?</span>);
                     ret.push(<span class="string">b','</span>);
                 }
                 ret.pop();
@@ -937,7 +937,7 @@
             <span class="string">b"G" </span>=&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
                 <span class="kw">for _ in </span><span class="number">0</span>..nb_samples {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">10</span>)<span class="question-mark">?</span>);
+                    ret.extend(values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH)<span class="question-mark">?</span>);
                     ret.push(<span class="string">b','</span>);
                 }
                 ret.pop();
@@ -947,7 +947,7 @@
             <span class="string">b"." </span>=&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>ret = Vec::new();
                 <span class="kw">for _ in </span><span class="number">0</span>..rng.gen_range(<span class="number">1</span>..<span class="number">5</span>) {
-                    ret.extend(values::Alphabet::default().generate(rng, <span class="number">10</span>)<span class="question-mark">?</span>);
+                    ret.extend(values::Alphabet::A2z.generate(rng, constants::VCF_STRING_LENGTH)<span class="question-mark">?</span>);
                     ret.push(<span class="string">b','</span>);
                 }
                 ret.pop();
@@ -967,11 +967,11 @@
     /* project use */
     </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="kw">const </span>DEFAULT: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=-496257857,2127853583,-1498117423;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=-7.5115204,74.78337,1.5983124;info_Float_.=26.825455;info_Flag_0;info_Character_1=b;info_Character_2=L,^;info_Character_A=4;info_Character_R=&amp;,a;info_Character_G=N,k,%;info_Character_.={;info_String_1=nSOJk4@lC,;info_String_2=jS/\\D&amp;BI|t,Y!R:7saso?;info_String_A=d!\"JhX)qQp;info_String_R=LD?P=?w~A),5[[@lIC.kc;info_String_G=3/bSljA-eF,F9c\"303:t],TqU?Kssw+$;info_String_.=[MEs+_JX%Y	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	1331697702:-73747613,1645597043:-1553292372:-1685240233,-1820034465:300184414,394747854,1197504288:-512239285,-1414044731:-26.444412:12.577988,-87.76228:-3.4822464:-95.66553,55.56636:-43.384956,-35.16729,6.755356:-9.445259,-43.99848,-94.4432,-92.06316:_:{,z:F:H,i:T,6,j:[,+:2;2l`&gt;IYzJ:v7\"4m{_&gt;h~,&lt;G_oKV#{ze:!)!m\'S9/0_:dJ?2UvwuUy,^7GYW`=N;7:|)8^vf&gt;dg#,1c`ok8Kh$S,_+GbKm=pyh:b:}\"s1f#s/	-1699207592:-1247215950,-1253877200:-1343277579:188169583,-1589761063:-532454402,989628108,295511500:1300868485:-14.547348:10.005661,82.95245:46.642517:90.124435,12.111877:69.43762,-11.427376,58.87137:-3.6344528,56.566788:e:),I:j:t,i:U,&amp;,v:m,&lt;,_,/:4y*`HYz#-o:9zE|;./\"-M,;&lt;;|nStAje:SF&gt;o/R,iE#:/,\"$RTVc(7,*(Sn6&gt;ZQPD:ho#H0_&lt;Tl9,PWg*UP~Esp,,{OVYEkbvA:.?sf#3gn*R,]yhrn0?zU8,N0+\"VIx*d-	-1697963895:1138852593,181408155:-317412374:-1000659906,1329247534:628009109,-1501500099,-1741170910:-1510591037,-995737568,2069116675,-1117969497:25.04361:84.79895,44.54808:36.19725:-48.734688,-33.58867:-54.331757,84.5206,69.88823:87.006195:?:E,t:,:?,B:b,$,s:?,4,%,}:Pm=/&lt;N[3&amp;;:=H&gt;}~CRs}y,o^H0T~a31`:EJblc1Z!bn:tm9=sB&lt;\":\\,7oU=q*dDU(:-k5AqYk|~^,o\"SF3e.$lt,R9J~QqXY_R:jI\\,&gt;VLD1@,O#Bvp?rT;+,+]M$Tdqh7g,Qa;ou#&lt;4,C"</span>;
+    <span class="kw">const </span>DEFAULT: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=-496257857,2127853583,-1498117423;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=-7.5115204,74.78337,1.5983124;info_Float_.=26.825455;info_Flag_0;info_Character_1=i;info_Character_2=r,[;info_Character_A=g;info_Character_R=M,D;info_Character_G=h,w,\\;info_Character_.=C,G,p,];info_String_1=ZoXMT;info_String_2=gQouV,Gn`Jw;info_String_A=eVDDU;info_String_R=YytzA,ny[_P;info_String_G=Oshsq,bSjAd,bZcRF;info_String_.=rQ_[V,S^RtS,vzMeT,jonYV	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-1552897203:1249370088,894744660:-1298826907:-1500526673,846767901:154354090,1292630937,-513388490:730433769,-1782228224,1193004039,1639963889:-31.463745:-74.13223,44.792007:-4.5392303:-42.586063,-20.249939:-19.714546,-48.754406,40.519638:-27.838158:L:J,L:n:u,P:t,f,`:r,^:aaSsw:svYGC,zkT\\W:k_sGD:gZcCc,]tIGE:bcnVW,JVaDB,nQSHY:[QBCg,L`Scx,xXYm`,NnOG[	-1345745815:173280036,-939420073:-1365650667:679852521,1295053734:732715199,-819759668,-308523151:1942972144,-249711286,1737760149:-53.047443:-97.35165,-58.53014:93.27409:-89.49225,65.68997:62.677032,92.94722,32.79944:52.132156,-30.33149:z:R,v:G:G,X:B,g,q:[,a,B:w_Zxx:kAFA[,o`OId:JgjZD:StKau,vtaIh:wmmrI,gNXcb,hRd]Q:OgukS	946791943:-2019035904,1055813342:-2045085244:-1401538285,878536766:731752434,1439145027,-966674455:-1096509554,-1513894259,1176983779,-199713084:51.48242:-93.36465,6.6719513:32.869843:-77.50437,-17.745377:38.63495,-9.558914,42.16661:-6.823944,-39.047478,48.595016,68.83052:w:O,m:A:i,Z:P,w,y:s:KBssX:JGMMK,`HVkg:oY`vk:xarZo,yTnQF:EntKU,mnaDW,uppug:FhYRx,BZHMq"</span>;
 
-    <span class="kw">const </span>NO_SAMPLE: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=;info_Float_.=1.5983124,-8.867523,77.741455,-86.29277;info_Flag_0;info_Character_1=5;info_Character_2=b,L;info_Character_A=^;info_Character_R=4,&amp;;info_Character_G=;info_Character_.=%,{,n,S;info_String_1=OJk4@lC,jS;info_String_2=/\\D&amp;BI|tY!,R:7saso?d!;info_String_A=\"JhX)qQpLD;info_String_R=?P=?w~A)5[,[@lIC.kc3/;info_String_G=;info_String_.=ljA-eFF9c\",303:t]TqU?,Kssw+$*[ME"</span>;
+    <span class="kw">const </span>NO_SAMPLE: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	A	.	224	filter_0	info_Integer_1=-1867486109;info_Integer_2=1180908492,1041698939;info_Integer_A=-207506017;info_Integer_R=-1221871790,-1356802783;info_Integer_G=;info_Integer_.=2082620030,-344161843,-1022296784,-1007334138;info_Float_1=68.286865;info_Float_2=-96.154594,-23.433853;info_Float_A=-48.782158;info_Float_R=-46.15216,-92.639305;info_Float_G=;info_Float_.=1.5983124,-8.867523,77.741455,-86.29277;info_Flag_0;info_Character_1=M;info_Character_2=i,r;info_Character_A=[;info_Character_R=g,M;info_Character_G=;info_Character_.=h;info_String_1=w\\voC;info_String_2=Gp]Zo,XMTgQ;info_String_A=ouVGn;info_String_R=`JweV,DDUYy;info_String_G=;info_String_.=zAny[,_POsh,sqbSj"</span>;
 
-    <span class="kw">const </span>NO_INFO: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	A	.	224	filter_0format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-1867486109:1180908492,1041698939:-207506017:-1221871790,-1356802783:-496257857,2127853583,-1498117423:2082620030,-344161843,-1022296784,-1007334138:68.286865:-96.154594,-23.433853:-48.782158:-46.15216,-92.639305:-7.5115204,74.78337,1.5983124:26.825455:5:b,L:^:4,&amp;:a,N,k:{:nSOJk4@lC,:jS/\\D&amp;BI|t,Y!R:7saso?:d!\"JhX)qQp:LD?P=?w~A),5[[@lIC.kc:3/bSljA-eF,F9c\"303:t],TqU?Kssw+$:[MEs+_JX%Y	1331697702:-73747613,1645597043:-1553292372:-1685240233,-1820034465:300184414,394747854,1197504288:-512239285,-1414044731:-26.444412:12.577988,-87.76228:-3.4822464:-95.66553,55.56636:-43.384956,-35.16729,6.755356:-9.445259,-43.99848,-94.4432,-92.06316:_:{,z:F:H,i:T,6,j:[,+:2;2l`&gt;IYzJ:v7\"4m{_&gt;h~,&lt;G_oKV#{ze:!)!m\'S9/0_:dJ?2UvwuUy,^7GYW`=N;7:|)8^vf&gt;dg#,1c`ok8Kh$S,_+GbKm=pyh:b:}\"s1f#s/	-1699207592:-1247215950,-1253877200:-1343277579:188169583,-1589761063:-532454402,989628108,295511500:1300868485:-14.547348:10.005661,82.95245:46.642517:90.124435,12.111877:69.43762,-11.427376,58.87137:-3.6344528,56.566788:e:),I:j:t,i:U,&amp;,v:m,&lt;,_,/:4y*`HYz#-o:9zE|;./\"-M,;&lt;;|nStAje:SF&gt;o/R,iE#:/,\"$RTVc(7,*(Sn6&gt;ZQPD:ho#H0_&lt;Tl9,PWg*UP~Esp,,{OVYEkbvA:.?sf#3gn*R,]yhrn0?zU8,N0+\"VIx*d-"</span>;
+    <span class="kw">const </span>NO_INFO: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	A	.	224	filter_0	format_Integer_1:format_Integer_2:format_Integer_A:format_Integer_R:format_Integer_G:format_Integer_.:format_Float_1:format_Float_2:format_Float_A:format_Float_R:format_Float_G:format_Float_.:format_Character_1:format_Character_2:format_Character_A:format_Character_R:format_Character_G:format_Character_.:format_String_1:format_String_2:format_String_A:format_String_R:format_String_G:format_String_.	-1867486109:1180908492,1041698939:-207506017:-1221871790,-1356802783:-496257857,2127853583,-1498117423:2082620030,-344161843,-1022296784,-1007334138:68.286865:-96.154594,-23.433853:-48.782158:-46.15216,-92.639305:-7.5115204,74.78337,1.5983124:26.825455:L:M,i:r:[,g:M,D,h:C,G,p,]:ZoXMT:gQouV,Gn`Jw:eVDDU:YytzA,ny[_P:Oshsq,bSjAd,bZcRF:rQ_[V,S^RtS,vzMeT,jonYV	-1552897203:1249370088,894744660:-1298826907:-1500526673,846767901:154354090,1292630937,-513388490:730433769,-1782228224,1193004039,1639963889:-31.463745:-74.13223,44.792007:-4.5392303:-42.586063,-20.249939:-19.714546,-48.754406,40.519638:-27.838158:L:J,L:n:u,P:t,f,`:r,^:aaSsw:svYGC,zkT\\W:k_sGD:gZcCc,]tIGE:bcnVW,JVaDB,nQSHY:[QBCg,L`Scx,xXYm`,NnOG[	-1345745815:173280036,-939420073:-1365650667:679852521,1295053734:732715199,-819759668,-308523151:1942972144,-249711286,1737760149:-53.047443:-97.35165,-58.53014:93.27409:-89.49225,65.68997:62.677032,92.94722,32.79944:52.132156,-30.33149:z:R,v:G:G,X:B,g,q:[,a,B:w_Zxx:kAFA[,o`OId:JgjZD:StKau,vtaIh:wmmrI,gNXcb,hRd]Q:OgukS"</span>;
 
     <span class="kw">const </span>NO_INFO_SAMPLE: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"YAR028W	509242864	.	A	.	224	filter_0"</span>;
 

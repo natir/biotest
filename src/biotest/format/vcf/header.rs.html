@@ -327,6 +327,19 @@
 <a href="#325" id="325">325</a>
 <a href="#326" id="326">326</a>
 <a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! VCF header generation
 
 </span><span class="comment">/* std use */
@@ -457,7 +470,7 @@
                 output.write_all(<span class="string">b"##INFO=&lt;ID="</span>)<span class="question-mark">?</span>;
                 output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.info_prefix)<span class="question-mark">?</span>;
                 output.write_all(<span class="string">b"Flag_0,"</span>)<span class="question-mark">?</span>;
-                output.write_all(<span class="string">b"Number=0,Description=\""</span>)<span class="question-mark">?</span>;
+                output.write_all(<span class="string">b"Number=0,Type=Flag,Description=\""</span>)<span class="question-mark">?</span>;
                 output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.info_description)<span class="question-mark">?</span>;
                 output.write_all(<span class="string">b"\",Source=\"biotest\",Version=\""</span>)<span class="question-mark">?</span>;
                 output.write_all(constants::BIOTEST_VERSION)<span class="question-mark">?</span>;
@@ -565,7 +578,7 @@
 ##INFO=&lt;ID=info_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
 ##INFO=&lt;ID=info_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
 ##INFO=&lt;ID=info_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
-##INFO=&lt;ID=info_Flag_0,Number=0,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=info_Flag_0,Number=0,Type=Flag,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
 ##INFO=&lt;ID=info_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
 ##INFO=&lt;ID=info_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
 ##INFO=&lt;ID=info_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\"&gt;
@@ -605,7 +618,20 @@
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	sample_0	sample_1	sample_2
 "</span>;
 
-    <span class="kw">const </span>SET: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"##fileformat=VCFv4.3\n##contig=&lt;ID=A,length=4223,species=\"alphabet\"&gt;\n##contig=&lt;ID=B,length=4223,species=\"alphabet\"&gt;\n##contig=&lt;ID=C,length=4223,species=\"alphabet\"&gt;\n##INFO=&lt;ID=INFO_Integer_1,Number=1,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##INFO=&lt;ID=INFO_Integer_2,Number=2,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##INFO=&lt;ID=INFO_Float_1,Number=1,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##INFO=&lt;ID=INFO_Float_2,Number=2,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;\n##FORMAT=&lt;ID=FORMAT_Integer_1,Number=1,Type=Integer,Description=\"description\"&gt;\n##FORMAT=&lt;ID=FORMAT_Integer_2,Number=2,Type=Integer,Description=\"description\"&gt;\n##FORMAT=&lt;ID=FORMAT_Float_1,Number=1,Type=Float,Description=\"description\"&gt;\n##FORMAT=&lt;ID=FORMAT_Float_2,Number=2,Type=Float,Description=\"description\"&gt;\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"</span>;
+    <span class="kw">const </span>SET: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"##fileformat=VCFv4.3
+##contig=&lt;ID=A,length=4223,species=\"alphabet\"&gt;
+##contig=&lt;ID=B,length=4223,species=\"alphabet\"&gt;
+##contig=&lt;ID=C,length=4223,species=\"alphabet\"&gt;
+##INFO=&lt;ID=INFO_Integer_1,Number=1,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=INFO_Integer_2,Number=2,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=INFO_Float_1,Number=1,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##INFO=&lt;ID=INFO_Float_2,Number=2,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\"&gt;
+##FORMAT=&lt;ID=FORMAT_Integer_1,Number=1,Type=Integer,Description=\"description\"&gt;
+##FORMAT=&lt;ID=FORMAT_Integer_2,Number=2,Type=Integer,Description=\"description\"&gt;
+##FORMAT=&lt;ID=FORMAT_Float_1,Number=1,Type=Float,Description=\"description\"&gt;
+##FORMAT=&lt;ID=FORMAT_Float_2,Number=2,Type=Float,Description=\"description\"&gt;
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+"</span>;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>default() -&gt; error::Result&lt;()&gt; {
