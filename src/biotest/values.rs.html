@@ -446,6 +446,10 @@
 <a href="#444" id="444">444</a>
 <a href="#445" id="445">445</a>
 <a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Declarations of many possible values
 
 </span><span class="comment">/* std use */
@@ -858,15 +862,19 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>interger() {
         <span class="macro">assert_eq!</span>(
-            &lt;Integer <span class="kw">as </span>Into&lt;core::ops::Range&lt;i32&gt;&gt;&gt;::into(Integer::Position),
+            core::ops::Range::&lt;i32&gt;::from(Integer::Position),
             <span class="number">0</span>..i32::MAX
         );
         <span class="macro">assert_eq!</span>(
-            &lt;Integer <span class="kw">as </span>Into&lt;core::ops::Range&lt;i32&gt;&gt;&gt;::into(Integer::Full),
+            core::ops::Range::&lt;i32&gt;::from(Integer::Vcf),
+            (i32::MIN + <span class="number">7</span>)..i32::MAX
+        );
+        <span class="macro">assert_eq!</span>(
+            core::ops::Range::&lt;i32&gt;::from(Integer::Full),
             i32::MIN..i32::MAX
         );
         <span class="macro">assert_eq!</span>(
-            &lt;Integer <span class="kw">as </span>Into&lt;core::ops::Range&lt;i32&gt;&gt;&gt;::into(Integer::UserDefine(-<span class="number">92</span>..<span class="number">108</span>)),
+            core::ops::Range::&lt;i32&gt;::from(Integer::UserDefine(-<span class="number">92</span>..<span class="number">108</span>)),
             -<span class="number">92</span>..<span class="number">108
         </span>);
 
