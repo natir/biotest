@@ -1,4 +1,25 @@
 //! VCF generation
+//!
+//! Usage:
+//! ```
+//! use biotest::Format as _; // import Format trait is required
+//!
+//! # fn main() -> Result<(), biotest::error::Error> {
+//! let mut rng = biotest::rand(); // Create a random generator with a fixed seed
+//!
+//! let mut output = Vec::new();
+//! let generator = biotest::Vcf::default();
+//!
+//! // Write one vcf record in output with 3 samples and all possible INFO and FORMAT
+//! generator.record(&mut output, &mut rng)?;
+//! generator.records(&mut output, &mut rng, 5)?; // Write five vcf records in output
+//!
+//! // Write five vcf record in "test.vcf" with complete header
+//! generator.create("test.vcf", &mut rng, 5)?;
+//! # Ok(())
+//! # }
+//! ```
+//!
 
 /* std use */
 
