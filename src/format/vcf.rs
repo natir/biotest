@@ -16,11 +16,11 @@ pub mod record;
 #[builder(pattern = "owned")]
 pub struct Vcf {
     /// Structure to define header
-    #[builder(default = "header::Header::builder().build().unwrap()")]
+    #[builder(default = "header::Header::default()")]
     header: header::Header,
 
     /// Structure to define record
-    #[builder(default = "record::Record::builder().build().unwrap()")]
+    #[builder(default = "record::Record::default()")]
     record: record::Record,
 }
 
@@ -71,7 +71,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Vcf::builder().build().unwrap();
+        let generator = Vcf::builder().build()?;
 
         generator.header(&mut output, &mut rng)?;
         generator.records(&mut output, &mut rng, 5)?;
@@ -90,7 +90,7 @@ mod tests {
 
         let temp_file = temp_path.join("tmp.vcf");
 
-        let generator = Vcf::builder().build().unwrap();
+        let generator = Vcf::builder().build()?;
 
         generator.create(&temp_file, &mut rng, 5)?;
 

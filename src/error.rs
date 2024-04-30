@@ -22,27 +22,27 @@ pub enum Error {
     /// biotest::format::fasta::FastaBuilderError
     #[cfg(feature = "fasta")]
     #[error(transparent)]
-    FastaBuilderError(crate::format::fasta::FastaBuilderError),
+    FastaBuilderError(#[from] crate::format::fasta::FastaBuilderError),
 
     /// crate::format::fastq::FastqBuilderError
     #[cfg(feature = "fastq")]
     #[error(transparent)]
-    FastqBuilderError(crate::format::fastq::FastqBuilderError),
+    FastqBuilderError(#[from] crate::format::fastq::FastqBuilderError),
 
     /// crate::format::vcf::VcfBuilderError
     #[cfg(feature = "vcf")]
     #[error(transparent)]
-    VcfBuilderError(crate::format::vcf::VcfBuilderError),
+    VcfBuilderError(#[from] crate::format::vcf::VcfBuilderError),
 
     /// crate::format::vcf::record::RecordBuilderError
     #[cfg(feature = "vcf")]
     #[error(transparent)]
-    VcfRecordBuilderError(crate::format::vcf::record::RecordBuilderError),
+    VcfRecordBuilderError(#[from] crate::format::vcf::record::RecordBuilderError),
 
     /// crate::format::vcf::header::HeaderBuilderError
     #[cfg(feature = "vcf")]
     #[error(transparent)]
-    VcfHeaderBuilderError(crate::format::vcf::header::HeaderBuilderError),
+    VcfHeaderBuilderError(#[from] crate::format::vcf::header::HeaderBuilderError),
 }
 
 macro_rules! create_unreachable {

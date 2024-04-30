@@ -428,6 +428,12 @@ fn generate_value(
     }
 }
 
+impl core::default::Default for Record {
+    fn default() -> Self {
+        RecordBuilder::default().build().unwrap() // it's default no error
+    }
+}
+
 #[cfg(test)]
 mod tests {
     /* std use */
@@ -456,7 +462,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Record::builder().build().unwrap();
+        let generator = Record::builder().build()?;
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -470,7 +476,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Record::builder().sample(0).build().unwrap();
+        let generator = Record::builder().sample(0).build()?;
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -486,8 +492,7 @@ mod tests {
 
         let generator = Record::builder()
             .info_number(values::VcfInfoNumber::UserDefine(vec![]))
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -504,8 +509,7 @@ mod tests {
         let generator = Record::builder()
             .info_number(values::VcfInfoNumber::UserDefine(vec![]))
             .sample(0)
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -524,8 +528,7 @@ mod tests {
             .info_number(values::VcfInfoNumber::UserDefine(vec![]))
             .format_number(values::VcfFormatNumber::UserDefine(vec![]))
             .sample(0)
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -548,8 +551,7 @@ mod tests {
             .id(values::Alphabet::A2z)
             .id_prefix(b"id_".to_vec())
             .id_suffix(b"!".to_vec())
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -570,8 +572,7 @@ mod tests {
             .sample(0)
             .id_len(0)
             .id(values::Alphabet::A2z)
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -593,8 +594,7 @@ mod tests {
             .sample(0)
             .id_len(0)
             .id(values::Alphabet::A2z)
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.generate(&mut output, &mut rng)?;
 

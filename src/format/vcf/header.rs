@@ -205,6 +205,12 @@ impl Header {
     }
 }
 
+impl core::default::Default for Header {
+    fn default() -> Self {
+        HeaderBuilder::default().build().unwrap() // it's default no error
+    }
+}
+
 #[cfg(test)]
 mod tests {
     /* project use */
@@ -295,7 +301,7 @@ mod tests {
     fn default() -> error::Result<()> {
         let mut output = Vec::new();
 
-        let generator = Header::builder().build().unwrap();
+        let generator = Header::builder().build()?;
 
         generator.generate(&mut output)?;
 
@@ -328,8 +334,7 @@ mod tests {
             .sample(0)
             .sample_prefix(b"individual_".to_vec())
             .sample_suffix(b" auie".to_vec())
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.generate(&mut output)?;
 

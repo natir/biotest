@@ -315,7 +315,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn alphabet() {
+    fn alphabet() -> error::Result<()> {
         assert_eq!(Alphabet::Visible.as_ref(), b"!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
         assert_eq!(Alphabet::Upper.as_ref(), b"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         assert_eq!(Alphabet::Lower.as_ref(), b"abcdefghijklmnopqrstuvwxyz");
@@ -326,14 +326,13 @@ mod tests {
         assert_eq!(Alphabet::VcfDefault.as_ref(), b".");
 
         let mut rng = crate::rand();
-        assert_eq!(
-            Alphabet::Visible.generate(&mut rng, 5).unwrap(),
-            b"l7bR:".to_vec()
-        );
+        assert_eq!(Alphabet::Visible.generate(&mut rng, 5)?, b"l7bR:".to_vec());
+
+        Ok(())
     }
 
     #[test]
-    fn quality() {
+    fn quality() -> error::Result<()> {
         assert_eq!(
             Quality::Sanger.as_ref(),
             b"!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGH"
@@ -360,14 +359,13 @@ mod tests {
         );
 
         let mut rng = crate::rand();
-        assert_eq!(
-            Quality::Illumina.generate(&mut rng, 5).unwrap(),
-            b"=DI3E".to_vec()
-        );
+        assert_eq!(Quality::Illumina.generate(&mut rng, 5)?, b"=DI3E".to_vec());
+
+        Ok(())
     }
 
     #[test]
-    fn nucleotides() {
+    fn nucleotides() -> error::Result<()> {
         assert_eq!(Nucleotides::Dna.as_ref(), b"ACTGactg");
         assert_eq!(Nucleotides::DnaLower.as_ref(), b"actg");
         assert_eq!(Nucleotides::DnaUpper.as_ref(), b"ACTG");
@@ -378,9 +376,11 @@ mod tests {
 
         let mut rng = crate::rand();
         assert_eq!(
-            Nucleotides::RnaUpper.generate(&mut rng, 5).unwrap(),
+            Nucleotides::RnaUpper.generate(&mut rng, 5)?,
             b"GGUCU".to_vec()
         );
+
+        Ok(())
     }
 
     #[test]

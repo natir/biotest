@@ -48,8 +48,7 @@
 //!     .plus_len(0) // If plus length is set to 0 prefix and suffix isn't write
 //!     .plus_prefix(b"prefix".to_vec()) // Set read id prefix
 //!     .plus_suffix(b"suffix".to_vec()) // Set read id prefix
-//!     .build()
-//!     .unwrap();
+//!     .build()?;
 //!
 //! generator.create("test.fastq", &mut rng, 5)?; // Write five fasta record in "test.fastq"
 //! # Ok(())
@@ -232,8 +231,7 @@ E(1)(8E,\'HC4<55;&3!,*$G>A)@H149G@/7.D$$6-CGI5#@$F=
             .comment_len(10)
             .plus_len(0)
             .sequence_len(50)
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.record(&mut output, &mut rng)?;
 
@@ -258,8 +256,7 @@ E(1)(8E,\'HC4<55;&3!,*$G>A)@H149G@/7.D$$6-CGI5#@$F=
             .comment_suffix(b"_comment_suffix".to_vec())
             .plus_prefix(b"plus_prefix_".to_vec())
             .plus_suffix(b"_plus_suffix".to_vec())
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.record(&mut output, &mut rng)?;
 
@@ -285,8 +282,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT
             .comment_len(10)
             .plus_len(0)
             .sequence_len(50)
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.records(&mut output, &mut rng, 5)?;
 
@@ -309,8 +305,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT
             .comment_len(10)
             .plus_len(0)
             .sequence_len(50)
-            .build()
-            .unwrap();
+            .build()?;
 
         generator.create(&temp_file, &mut rng, 5)?;
 
