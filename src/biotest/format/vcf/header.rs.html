@@ -340,6 +340,11 @@
 <a href="#338" id="338">338</a>
 <a href="#339" id="339">339</a>
 <a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! VCF header generation
 
 </span><span class="comment">/* std use */
@@ -547,6 +552,12 @@
     }
 }
 
+<span class="kw">impl </span>core::default::Default <span class="kw">for </span>Header {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        HeaderBuilder::default().build().unwrap() <span class="comment">// it's default no error
+    </span>}
+}
+
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="comment">/* project use */
@@ -637,7 +648,7 @@
     </span><span class="kw">fn </span>default() -&gt; error::Result&lt;()&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
 
-        <span class="kw">let </span>generator = Header::builder().build().unwrap();
+        <span class="kw">let </span>generator = Header::builder().build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
 
@@ -670,8 +681,7 @@
             .sample(<span class="number">0</span>)
             .sample_prefix(<span class="string">b"individual_"</span>.to_vec())
             .sample_suffix(<span class="string">b" auie"</span>.to_vec())
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output)<span class="question-mark">?</span>;
 

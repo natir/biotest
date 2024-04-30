@@ -1035,6 +1035,12 @@
     }
 }
 
+<span class="kw">impl </span>core::default::Default <span class="kw">for </span>Record {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        RecordBuilder::default().build().unwrap() <span class="comment">// it's default no error
+    </span>}
+}
+
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="comment">/* std use */
@@ -1063,7 +1069,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
 
-        <span class="kw">let </span>generator = Record::builder().build().unwrap();
+        <span class="kw">let </span>generator = Record::builder().build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -1077,7 +1083,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
 
-        <span class="kw">let </span>generator = Record::builder().sample(<span class="number">0</span>).build().unwrap();
+        <span class="kw">let </span>generator = Record::builder().sample(<span class="number">0</span>).build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -1093,8 +1099,7 @@
 
         <span class="kw">let </span>generator = Record::builder()
             .info_number(values::VcfInfoNumber::UserDefine(<span class="macro">vec!</span>[]))
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -1111,8 +1116,7 @@
         <span class="kw">let </span>generator = Record::builder()
             .info_number(values::VcfInfoNumber::UserDefine(<span class="macro">vec!</span>[]))
             .sample(<span class="number">0</span>)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -1131,8 +1135,7 @@
             .info_number(values::VcfInfoNumber::UserDefine(<span class="macro">vec!</span>[]))
             .format_number(values::VcfFormatNumber::UserDefine(<span class="macro">vec!</span>[]))
             .sample(<span class="number">0</span>)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -1155,8 +1158,7 @@
             .id(values::Alphabet::A2z)
             .id_prefix(<span class="string">b"id_"</span>.to_vec())
             .id_suffix(<span class="string">b"!"</span>.to_vec())
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -1177,8 +1179,7 @@
             .sample(<span class="number">0</span>)
             .id_len(<span class="number">0</span>)
             .id(values::Alphabet::A2z)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -1200,8 +1201,7 @@
             .sample(<span class="number">0</span>)
             .id_len(<span class="number">0</span>)
             .id(values::Alphabet::A2z)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.generate(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 

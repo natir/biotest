@@ -320,11 +320,6 @@
 <a href="#318" id="318">318</a>
 <a href="#319" id="319">319</a>
 <a href="#320" id="320">320</a>
-<a href="#321" id="321">321</a>
-<a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
-<a href="#324" id="324">324</a>
-<a href="#325" id="325">325</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Fastq generation
 //!
 //! Usage:
@@ -375,8 +370,7 @@
 //!     .plus_len(0) // If plus length is set to 0 prefix and suffix isn't write
 //!     .plus_prefix(b"prefix".to_vec()) // Set read id prefix
 //!     .plus_suffix(b"suffix".to_vec()) // Set read id prefix
-//!     .build()
-//!     .unwrap();
+//!     .build()?;
 //!
 //! generator.create("test.fastq", &amp;mut rng, 5)?; // Write five fasta record in "test.fastq"
 //! # Ok(())
@@ -559,8 +553,7 @@ E(1)(8E,\'HC4&lt;55;&amp;3!,*$G&gt;A)@H149G@/7.D$$6-CGI5#@$F=
             .comment_len(<span class="number">10</span>)
             .plus_len(<span class="number">0</span>)
             .sequence_len(<span class="number">50</span>)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -585,8 +578,7 @@ E(1)(8E,\'HC4&lt;55;&amp;3!,*$G&gt;A)@H149G@/7.D$$6-CGI5#@$F=
             .comment_suffix(<span class="string">b"_comment_suffix"</span>.to_vec())
             .plus_prefix(<span class="string">b"plus_prefix_"</span>.to_vec())
             .plus_suffix(<span class="string">b"_plus_suffix"</span>.to_vec())
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -612,8 +604,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT
             .comment_len(<span class="number">10</span>)
             .plus_len(<span class="number">0</span>)
             .sequence_len(<span class="number">50</span>)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.records(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
 
@@ -636,8 +627,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT
             .comment_len(<span class="number">10</span>)
             .plus_len(<span class="number">0</span>)
             .sequence_len(<span class="number">50</span>)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.create(<span class="kw-2">&amp;</span>temp_file, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
 

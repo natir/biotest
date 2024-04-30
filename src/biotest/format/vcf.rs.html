@@ -123,11 +123,11 @@
 #[builder(pattern = <span class="string">"owned"</span>)]
 </span><span class="kw">pub struct </span>Vcf {
     <span class="doccomment">/// Structure to define header
-    </span><span class="attr">#[builder(default = <span class="string">"header::Header::builder().build().unwrap()"</span>)]
+    </span><span class="attr">#[builder(default = <span class="string">"header::Header::default()"</span>)]
     </span>header: header::Header,
 
     <span class="doccomment">/// Structure to define record
-    </span><span class="attr">#[builder(default = <span class="string">"record::Record::builder().build().unwrap()"</span>)]
+    </span><span class="attr">#[builder(default = <span class="string">"record::Record::default()"</span>)]
     </span>record: record::Record,
 }
 
@@ -178,7 +178,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
 
-        <span class="kw">let </span>generator = Vcf::builder().build().unwrap();
+        <span class="kw">let </span>generator = Vcf::builder().build()<span class="question-mark">?</span>;
 
         generator.header(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
         generator.records(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
@@ -197,7 +197,7 @@
 
         <span class="kw">let </span>temp_file = temp_path.join(<span class="string">"tmp.vcf"</span>);
 
-        <span class="kw">let </span>generator = Vcf::builder().build().unwrap();
+        <span class="kw">let </span>generator = Vcf::builder().build()<span class="question-mark">?</span>;
 
         generator.create(<span class="kw-2">&amp;</span>temp_file, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
 

@@ -266,11 +266,6 @@
 <a href="#264" id="264">264</a>
 <a href="#265" id="265">265</a>
 <a href="#266" id="266">266</a>
-<a href="#267" id="267">267</a>
-<a href="#268" id="268">268</a>
-<a href="#269" id="269">269</a>
-<a href="#270" id="270">270</a>
-<a href="#271" id="271">271</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Fasta generation
 //!
 //! Usage:
@@ -315,8 +310,7 @@
 //!     .comment_len(0) // If comment length is set to 0 prefix and suffix isn't write
 //!     .comment_prefix(b"prefix".to_vec()) // Set read id prefix
 //!     .comment_suffix(b"suffix".to_vec()) // Set read id prefix
-//!     .build()
-//!     .unwrap();
+//!     .build()?;
 //!
 //! generator.create("test.fasta", &amp;mut rng, 5)?; // Write five fasta record in "test.fasta"
 //! # Ok(())
@@ -458,8 +452,7 @@ TCCACgTTTGagtGaGCatAGGACAAaacTaTTagagGtatAGCcTatTt
             .id_len(<span class="number">5</span>)
             .comment_len(<span class="number">10</span>)
             .sequence_len(<span class="number">50</span>)
-            .build()
-            .map_err(error::Error::FastaBuilderError)<span class="question-mark">?</span>;
+            .build()<span class="question-mark">?</span>;
 
         generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -481,8 +474,7 @@ TCCACgTTTGagtGaGCatAGGACAAaacTaTTagagGtatAGCcTatTt
             .id_suffix(<span class="string">b"_id_suffix"</span>.to_vec())
             .comment_prefix(<span class="string">b"comment_prefix_"</span>.to_vec())
             .comment_suffix(<span class="string">b"_comment_suffix"</span>.to_vec())
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
@@ -505,8 +497,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT"
             .id_len(<span class="number">5</span>)
             .comment_len(<span class="number">10</span>)
             .sequence_len(<span class="number">50</span>)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.records(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
 
@@ -528,8 +519,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT"
             .id_len(<span class="number">5</span>)
             .comment_len(<span class="number">10</span>)
             .sequence_len(<span class="number">50</span>)
-            .build()
-            .unwrap();
+            .build()<span class="question-mark">?</span>;
 
         generator.create(<span class="kw-2">&amp;</span>temp_file, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;
 
