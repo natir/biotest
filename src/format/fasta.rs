@@ -8,7 +8,7 @@
 //! let mut rng = biotest::rand(); // Create a random generator with a fixed seed
 //!
 //! let mut output = Vec::new();
-//! let generator = biotest::Fasta::builder().build().unwrap();
+//! let generator = biotest::Fasta::default();
 //!
 //! generator.record(&mut output, &mut rng)?; // Write one fasta record in output
 //! generator.records(&mut output, &mut rng, 5)?; // Write five fasta records in output
@@ -113,6 +113,12 @@ impl Fasta {
     }
 }
 
+impl core::default::Default for Fasta {
+    fn default() -> Self {
+        FastaBuilder::default().build().unwrap() // it's default no error
+    }
+}
+
 impl format::Format for Fasta {
     fn header(
         &self,
@@ -180,7 +186,7 @@ TCCACgTTTGagtGaGCatAGGACAAaacTaTTagagGtatAGCcTatTt
             .comment_len(10)
             .sequence_len(50)
             .build()
-            .unwrap();
+            .map_err(error::Error::FastaBuilderError)?;
 
         generator.record(&mut output, &mut rng)?;
 

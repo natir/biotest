@@ -31,6 +31,12 @@ impl Vcf {
     }
 }
 
+impl core::default::Default for Vcf {
+    fn default() -> Self {
+        VcfBuilder::default().build().unwrap() // it's default no error
+    }
+}
+
 impl crate::format::Format for Vcf {
     fn header(
         &self,

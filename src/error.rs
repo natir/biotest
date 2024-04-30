@@ -19,28 +19,28 @@ pub enum Error {
     #[error(transparent)]
     StdIo(#[from] std::io::Error),
 
-    #[cfg(feature = "fasta")]
     /// biotest::format::fasta::FastaBuilderError
+    #[cfg(feature = "fasta")]
     #[error(transparent)]
     FastaBuilderError(crate::format::fasta::FastaBuilderError),
 
-    #[cfg(feature = "fastq")]
     /// crate::format::fastq::FastqBuilderError
+    #[cfg(feature = "fastq")]
     #[error(transparent)]
     FastqBuilderError(crate::format::fastq::FastqBuilderError),
 
-    #[cfg(feature = "vcf")]
     /// crate::format::vcf::VcfBuilderError
+    #[cfg(feature = "vcf")]
     #[error(transparent)]
     VcfBuilderError(crate::format::vcf::VcfBuilderError),
 
-    #[cfg(feature = "vcf")]
     /// crate::format::vcf::record::RecordBuilderError
+    #[cfg(feature = "vcf")]
     #[error(transparent)]
     VcfRecordBuilderError(crate::format::vcf::record::RecordBuilderError),
 
-    #[cfg(feature = "vcf")]
     /// crate::format::vcf::header::HeaderBuilderError
+    #[cfg(feature = "vcf")]
     #[error(transparent)]
     VcfHeaderBuilderError(crate::format::vcf::header::HeaderBuilderError),
 }

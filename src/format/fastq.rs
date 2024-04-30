@@ -8,7 +8,7 @@
 //! let mut rng = biotest::rand(); // Create a random generator with a fixed seed
 //!
 //! let mut output = Vec::new();
-//! let generator = biotest::Fastq::builder().build().unwrap();
+//! let generator = biotest::Fastq::default();
 //!
 //! generator.record(&mut output, &mut rng)?; // Write one fastq record in output
 //! generator.records(&mut output, &mut rng, 5)?; // Write five fastq records in output
@@ -135,6 +135,12 @@ impl Fastq {
     /// Create a FastqBuilder
     pub fn builder() -> FastqBuilder {
         FastqBuilder::default()
+    }
+}
+
+impl core::default::Default for Fastq {
+    fn default() -> Self {
+        FastqBuilder::default().build().unwrap() // it's default no error
     }
 }
 
