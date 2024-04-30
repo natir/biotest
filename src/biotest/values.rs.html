@@ -767,7 +767,7 @@
     </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>alphabet() {
+    </span><span class="kw">fn </span>alphabet() -&gt; error::Result&lt;()&gt; {
         <span class="macro">assert_eq!</span>(Alphabet::Visible.as_ref(), <span class="string">b"!\"#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"</span>);
         <span class="macro">assert_eq!</span>(Alphabet::Upper.as_ref(), <span class="string">b"ABCDEFGHIJKLMNOPQRSTUVWXYZ"</span>);
         <span class="macro">assert_eq!</span>(Alphabet::Lower.as_ref(), <span class="string">b"abcdefghijklmnopqrstuvwxyz"</span>);
@@ -778,14 +778,13 @@
         <span class="macro">assert_eq!</span>(Alphabet::VcfDefault.as_ref(), <span class="string">b"."</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
-        <span class="macro">assert_eq!</span>(
-            Alphabet::Visible.generate(<span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>).unwrap(),
-            <span class="string">b"l7bR:"</span>.to_vec()
-        );
+        <span class="macro">assert_eq!</span>(Alphabet::Visible.generate(<span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>, <span class="string">b"l7bR:"</span>.to_vec());
+
+        <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>quality() {
+    </span><span class="kw">fn </span>quality() -&gt; error::Result&lt;()&gt; {
         <span class="macro">assert_eq!</span>(
             Quality::Sanger.as_ref(),
             <span class="string">b"!\"#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGH"
@@ -812,14 +811,13 @@
         </span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
-        <span class="macro">assert_eq!</span>(
-            Quality::Illumina.generate(<span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>).unwrap(),
-            <span class="string">b"=DI3E"</span>.to_vec()
-        );
+        <span class="macro">assert_eq!</span>(Quality::Illumina.generate(<span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>, <span class="string">b"=DI3E"</span>.to_vec());
+
+        <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>nucleotides() {
+    </span><span class="kw">fn </span>nucleotides() -&gt; error::Result&lt;()&gt; {
         <span class="macro">assert_eq!</span>(Nucleotides::Dna.as_ref(), <span class="string">b"ACTGactg"</span>);
         <span class="macro">assert_eq!</span>(Nucleotides::DnaLower.as_ref(), <span class="string">b"actg"</span>);
         <span class="macro">assert_eq!</span>(Nucleotides::DnaUpper.as_ref(), <span class="string">b"ACTG"</span>);
@@ -830,9 +828,11 @@
 
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
         <span class="macro">assert_eq!</span>(
-            Nucleotides::RnaUpper.generate(<span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>).unwrap(),
+            Nucleotides::RnaUpper.generate(<span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>,
             <span class="string">b"GGUCU"</span>.to_vec()
         );
+
+        <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
