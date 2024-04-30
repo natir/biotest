@@ -265,6 +265,12 @@
 <a href="#263" id="263">263</a>
 <a href="#264" id="264">264</a>
 <a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Fasta generation
 //!
 //! Usage:
@@ -275,7 +281,7 @@
 //! let mut rng = biotest::rand(); // Create a random generator with a fixed seed
 //!
 //! let mut output = Vec::new();
-//! let generator = biotest::Fasta::builder().build().unwrap();
+//! let generator = biotest::Fasta::default();
 //!
 //! generator.record(&amp;mut output, &amp;mut rng)?; // Write one fasta record in output
 //! generator.records(&amp;mut output, &amp;mut rng, 5)?; // Write five fasta records in output
@@ -380,6 +386,12 @@
     }
 }
 
+<span class="kw">impl </span>core::default::Default <span class="kw">for </span>Fasta {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        FastaBuilder::default().build().unwrap() <span class="comment">// it's default no error
+    </span>}
+}
+
 <span class="kw">impl </span>format::Format <span class="kw">for </span>Fasta {
     <span class="kw">fn </span>header(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -447,7 +459,7 @@ TCCACgTTTGagtGaGCatAGGACAAaacTaTTagagGtatAGCcTatTt
             .comment_len(<span class="number">10</span>)
             .sequence_len(<span class="number">50</span>)
             .build()
-            .unwrap();
+            .map_err(error::Error::FastaBuilderError)<span class="question-mark">?</span>;
 
         generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 

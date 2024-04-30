@@ -99,6 +99,12 @@
 <a href="#97" id="97">97</a>
 <a href="#98" id="98">98</a>
 <a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! VCF generation
 
 </span><span class="comment">/* std use */
@@ -130,6 +136,12 @@
     </span><span class="kw">pub fn </span>builder() -&gt; VcfBuilder {
         VcfBuilder::default()
     }
+}
+
+<span class="kw">impl </span>core::default::Default <span class="kw">for </span>Vcf {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        VcfBuilder::default().build().unwrap() <span class="comment">// it's default no error
+    </span>}
 }
 
 <span class="kw">impl </span><span class="kw">crate</span>::format::Format <span class="kw">for </span>Vcf {

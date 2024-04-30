@@ -319,6 +319,12 @@
 <a href="#317" id="317">317</a>
 <a href="#318" id="318">318</a>
 <a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Fastq generation
 //!
 //! Usage:
@@ -329,7 +335,7 @@
 //! let mut rng = biotest::rand(); // Create a random generator with a fixed seed
 //!
 //! let mut output = Vec::new();
-//! let generator = biotest::Fastq::builder().build().unwrap();
+//! let generator = biotest::Fastq::default();
 //!
 //! generator.record(&amp;mut output, &amp;mut rng)?; // Write one fastq record in output
 //! generator.records(&amp;mut output, &amp;mut rng, 5)?; // Write five fastq records in output
@@ -457,6 +463,12 @@
     </span><span class="kw">pub fn </span>builder() -&gt; FastqBuilder {
         FastqBuilder::default()
     }
+}
+
+<span class="kw">impl </span>core::default::Default <span class="kw">for </span>Fastq {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        FastqBuilder::default().build().unwrap() <span class="comment">// it's default no error
+    </span>}
 }
 
 <span class="kw">impl </span>format::Format <span class="kw">for </span>Fastq {
