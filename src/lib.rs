@@ -1,9 +1,9 @@
 //! Generate random test data for bioinformatics
 //!
 //! There's a feature for every file format that can be generated:
-//! - fasta
-//! - fastq
-//! - vcf
+//! - [`fasta`](module@format::fasta)
+//! - [`fastq`](module@format::fastq)
+//! - [`vcf`](module@format::vcf)
 
 #![warn(missing_docs)]
 
