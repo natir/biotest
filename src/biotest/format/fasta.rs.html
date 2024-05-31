@@ -266,6 +266,62 @@
 <a href="#264" id="264">264</a>
 <a href="#265" id="265">265</a>
 <a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Fasta generation
 //!
 //! Usage:
@@ -348,6 +404,10 @@
     </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
     </span>id_suffix: Vec&lt;u8&gt;,
 
+    <span class="doccomment">/// Id weights
+    </span><span class="attr">#[builder(default = <span class="string">"vec![1; 0]"</span>)]
+    </span>id_weights: Vec&lt;u8&gt;,
+
     <span class="doccomment">/// Alphapet use for comment generation
     </span><span class="attr">#[builder(default = <span class="string">"values::Alphabet::Lower"</span>)]
     </span>comment: values::Alphabet,
@@ -364,6 +424,10 @@
     </span><span class="attr">#[builder(default = <span class="string">"b\"\".to_vec()"</span>)]
     </span>comment_suffix: Vec&lt;u8&gt;,
 
+    <span class="doccomment">/// Comment weights
+    </span><span class="attr">#[builder(default = <span class="string">"vec![1; 0]"</span>)]
+    </span>comment_weights: Vec&lt;u8&gt;,
+
     <span class="doccomment">/// Alphabet use for sequence generation
     </span><span class="attr">#[builder(default = <span class="string">"values::Nucleotides::Dna"</span>)]
     </span>sequence: values::Nucleotides,
@@ -371,6 +435,10 @@
     <span class="doccomment">/// Sequence length
     </span><span class="attr">#[builder(default = <span class="string">"150"</span>)]
     </span>sequence_len: usize,
+
+    <span class="doccomment">/// Sequence weights
+    </span><span class="attr">#[builder(default = <span class="string">"vec![1; 0]"</span>)]
+    </span>sequence_weights: Vec&lt;u8&gt;,
 }
 
 <span class="kw">impl </span>Fasta {
@@ -403,7 +471,11 @@
         <span class="comment">// id
         </span>output.write_all(<span class="kw-2">&amp;</span>[<span class="string">b'&gt;'</span>])<span class="question-mark">?</span>;
         output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id_prefix)<span class="question-mark">?</span>;
-        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id.generate(rng, <span class="self">self</span>.id_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        <span class="kw">if </span><span class="self">self</span>.id_weights.is_empty() {
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id.generate(rng, <span class="self">self</span>.id_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        } <span class="kw">else </span>{
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id.weighted(rng, <span class="self">self</span>.id_len, <span class="kw-2">&amp;</span><span class="self">self</span>.id_weights)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        }
         output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.id_suffix)<span class="question-mark">?</span>;
         <span class="kw">if </span><span class="self">self</span>.id_prefix.len() + <span class="self">self</span>.id_len + <span class="self">self</span>.id_suffix.len() != <span class="number">0 </span>{
             output.write_all(<span class="kw-2">&amp;</span>[<span class="string">b' '</span>])<span class="question-mark">?</span>;
@@ -411,12 +483,28 @@
 
         <span class="comment">// comment
         </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment_prefix)<span class="question-mark">?</span>;
-        output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment.generate(rng, <span class="self">self</span>.comment_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        <span class="kw">if </span><span class="self">self</span>.comment_weights.is_empty() {
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment.generate(rng, <span class="self">self</span>.comment_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        } <span class="kw">else </span>{
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment.weighted(
+                rng,
+                <span class="self">self</span>.comment_len,
+                <span class="kw-2">&amp;</span><span class="self">self</span>.comment_weights,
+            )<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        }
         output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.comment_suffix)<span class="question-mark">?</span>;
         output.write_all(<span class="string">b"\n"</span>)<span class="question-mark">?</span>;
 
         <span class="comment">// sequence
-        </span>output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.sequence.generate(rng, <span class="self">self</span>.sequence_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        </span><span class="kw">if </span><span class="self">self</span>.sequence_weights.is_empty() {
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.sequence.generate(rng, <span class="self">self</span>.sequence_len)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        } <span class="kw">else </span>{
+            output.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.sequence.weighted(
+                rng,
+                <span class="self">self</span>.sequence_len,
+                <span class="kw-2">&amp;</span><span class="self">self</span>.sequence_weights,
+            )<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        }
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -443,6 +531,9 @@ TtCttAacGtTtAtGTgACAGCCaCGctGagattTGtgCttaAGggTcCT
 TCCACgTTTGagtGaGCatAGGACAAaacTaTTagagGtatAGCcTatTt
 "</span>;
 
+    <span class="kw">const </span>WEIGHTED_TRUTH: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"&gt;ECEED cdeeacdeac
+GAAGGTCCTGCTGGGTCCGATCCATGTTGAGCCGGTGCAGGTGGACGGTT"</span>;
+
     <span class="attr">#[test]
     </span><span class="kw">fn </span>record() -&gt; error::Result&lt;()&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
@@ -457,6 +548,27 @@ TCCACgTTTGagtGaGCatAGGACAAaacTaTTagagGtatAGCcTatTt
         generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
 
         <span class="macro">assert_eq!</span>(output, TRUTH.to_vec()[..<span class="number">68</span>]);
+
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>weigthed_record() -&gt; error::Result&lt;()&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
+
+        <span class="kw">let </span>generator = Fasta::builder()
+            .id_len(<span class="number">5</span>)
+            .id_weights(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+            .comment_len(<span class="number">10</span>)
+            .comment_weights(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+            .sequence_len(<span class="number">50</span>)
+            .sequence_weights(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])
+            .build()<span class="question-mark">?</span>;
+
+        generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
+
+        <span class="macro">assert_eq!</span>(output, WEIGHTED_TRUTH.to_vec());
 
         <span class="prelude-val">Ok</span>(())
     }
