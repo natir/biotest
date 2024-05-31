@@ -79,6 +79,14 @@
 <a href="#77" id="77">77</a>
 <a href="#78" id="78">78</a>
 <a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Error struct of project biotest
 
 </span><span class="comment">/* crate use */
@@ -87,6 +95,10 @@
 <span class="doccomment">/// Enum to manage error
 </span><span class="attr">#[derive(std::fmt::Debug, thiserror::Error)]
 </span><span class="kw">pub enum </span>Error {
+    <span class="doccomment">/// WeightedDistribution is larger than value
+    </span><span class="attr">#[error(<span class="string">"Weight array is larger than value array"</span>)]
+    </span>WeightArrayLargerValueArray,
+
     <span class="doccomment">/// unreachable
     </span><span class="attr">#[error(<span class="string">"Unreachable error from file {file} in line {line}"</span>)]
     </span>Unreachable {
@@ -99,6 +111,10 @@
     <span class="doccomment">/// std::io::Error error
     </span><span class="attr">#[error(transparent)]
     </span>StdIo(<span class="attr">#[from] </span>std::io::Error),
+
+    <span class="doccomment">/// rand::distributions::weighted::WeightedError
+    </span><span class="attr">#[error(transparent)]
+    </span>RandWeightedError(<span class="attr">#[from] </span>rand::distributions::weighted::WeightedError),
 
     <span class="doccomment">/// biotest::format::fasta::FastaBuilderError
     </span><span class="attr">#[cfg(feature = <span class="string">"fasta"</span>)]
@@ -147,7 +163,7 @@
         <span class="macro">assert_matches::assert_matches!</span>(
             <span class="macro">create_unreachable!</span>(),
             <span class="kw">crate</span>::error::Error::Unreachable {
-                line: <span class="number">67</span>,
+                line: <span class="number">75</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"windows"</span>)]
                 </span>file: <span class="string">"src\\error.rs"</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"unix"</span>)]
