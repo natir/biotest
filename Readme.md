@@ -13,7 +13,7 @@ Generate random test data for bioinformatics
 
 In your Cargo.toml add
 ```toml
-biotest = { url = "https://github.com/natir/biotest.git" }
+biotest = { version = "0.1", features = ["fasta", "fastq", "vcf"] }
 ```
 
 ## Minimum supported Rust version
