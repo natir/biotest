@@ -39,3 +39,8 @@ pub use format::vcf::Vcf;
 pub fn rand() -> rand::rngs::StdRng {
     rand::rngs::StdRng::from_seed(constants::SEED)
 }
+
+/// Create a random generator with a user seed
+pub fn seeded_rand(seed: u64) -> rand::rngs::StdRng {
+    rand::rngs::StdRng::seed_from_u64(seed)
+}
