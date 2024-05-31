@@ -24,8 +24,6 @@ pub static SEED: [u8; 32] = [42; 32];
 pub(crate) const ASCII_VISIBLE: [u8; 94] = gen_array::<94, 33>();
 
 /// Nucleotides with any case
-pub static NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
-
 pub(crate) const DNA_NUCLEOTIDES: [u8; 8] = *b"ACTGactg";
 pub(crate) const RNA_NUCLEOTIDES: [u8; 8] = *b"ACUGacug";
 

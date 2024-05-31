@@ -6,6 +6,10 @@ use thiserror;
 /// Enum to manage error
 #[derive(std::fmt::Debug, thiserror::Error)]
 pub enum Error {
+    /// WeightedDistribution is larger than value
+    #[error("Weight array is larger than value array")]
+    WeightArrayLargerValueArray,
+
     /// unreachable
     #[error("Unreachable error from file {file} in line {line}")]
     Unreachable {
@@ -18,6 +22,10 @@ pub enum Error {
     /// std::io::Error error
     #[error(transparent)]
     StdIo(#[from] std::io::Error),
+
+    /// rand::distributions::weighted::WeightedError
+    #[error(transparent)]
+    RandWeightedError(#[from] rand::distributions::weighted::WeightedError),
 
     /// biotest::format::fasta::FastaBuilderError
     #[cfg(feature = "fasta")]
@@ -66,7 +74,7 @@ mod tests {
         assert_matches::assert_matches!(
             create_unreachable!(),
             crate::error::Error::Unreachable {
-                line: 67,
+                line: 75,
                 #[cfg(target_family = "windows")]
                 file: "src\\error.rs",
                 #[cfg(target_family = "unix")]

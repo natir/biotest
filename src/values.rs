@@ -1,10 +1,11 @@
 //! Declarations of many possible values
 
 /* std use */
-use rand::seq::SliceRandom as _;
-use rand::Rng as _;
 
 /* crates use */
+use rand::distributions::Distribution as _;
+use rand::seq::SliceRandom as _;
+use rand::Rng as _;
 
 /* projet use */
 use crate::constants;
@@ -129,6 +130,34 @@ where
             })
             .collect::<error::Result<Vec<u8>>>()
     }
+
+    /// Generate n bytes with a weigthed distributions
+    fn weighted<I, X>(
+        &self,
+        rng: &mut rand::rngs::StdRng,
+        n: usize,
+        weights: I,
+    ) -> error::Result<Vec<u8>>
+    where
+        I: core::iter::IntoIterator,
+        I::Item: rand::distributions::uniform::SampleBorrow<X>,
+        X: rand::distributions::uniform::SampleUniform
+            + PartialOrd
+            + for<'a> core::ops::AddAssign<&'a X>
+            + Clone
+            + Default,
+    {
+        let dist = rand::distributions::WeightedIndex::new(weights)?;
+
+        (0..n)
+            .map(|_| {
+                self.as_ref()
+                    .get(dist.sample(rng))
+                    .cloned()
+                    .ok_or(error::Error::WeightArrayLargerValueArray)
+            })
+            .collect::<error::Result<Vec<u8>>>()
+    }
 }
 
 impl Generate for Alphabet {}
@@ -197,7 +226,7 @@ where
     Self: core::convert::Into<core::ops::Range<T>>,
     T: std::string::ToString + rand::distributions::uniform::SampleUniform + core::cmp::PartialOrd,
 {
-    /// Get a number
+    /// Get a value
     fn get(self, rng: &mut rand::rngs::StdRng) -> Vec<u8> {
         rng.gen_range::<T, core::ops::Range<T>>(self.into())
             .to_string()
@@ -328,6 +357,11 @@ mod tests {
         let mut rng = crate::rand();
         assert_eq!(Alphabet::Visible.generate(&mut rng, 5)?, b"l7bR:".to_vec());
 
+        assert_eq!(
+            Alphabet::Visible.weighted(&mut rng, 5, [1, 1, 1, 1])?,
+            b"#$$!\"".to_vec()
+        );
+
         Ok(())
     }
 
@@ -361,6 +395,31 @@ mod tests {
         let mut rng = crate::rand();
         assert_eq!(Quality::Illumina.generate(&mut rng, 5)?, b"=DI3E".to_vec());
 
+        assert_eq!(
+            Quality::Sanger.weighted(&mut rng, 5, [2, 0, 2, 1, 1])?,
+            b"!#$!!".to_vec()
+        );
+        assert_eq!(
+            Quality::Solexa.weighted(&mut rng, 5, [1, 0, 1, 0, 1])?,
+            b"??=;;".to_vec()
+        );
+        assert_eq!(
+            Quality::Illumina13.weighted(&mut rng, 5, [5, 2, 1, 3, 1])?,
+            b"@D@AC".to_vec()
+        );
+        assert_eq!(
+            Quality::Illumina15.weighted(&mut rng, 5, [50, 25, 10, 1, 2])?,
+            b"DGCCC".to_vec()
+        );
+        assert_eq!(
+            Quality::Illumina18.weighted(&mut rng, 5, [1, 2, 3, 4, 5])?,
+            b"%!###".to_vec()
+        );
+        assert_eq!(
+            Quality::Illumina.weighted(&mut rng, 5, [1, 0, 2, 1, 1])?,
+            b"!#%##".to_vec()
+        );
+
         Ok(())
     }
 
@@ -378,6 +437,36 @@ mod tests {
         assert_eq!(
             Nucleotides::RnaUpper.generate(&mut rng, 5)?,
             b"GGUCU".to_vec()
+        );
+
+        assert!(matches!(
+            Nucleotides::DnaUpper.weighted(&mut rng, 1, [0, 0, 0, 0, 1]),
+            Err(error::Error::WeightArrayLargerValueArray)
+        ));
+
+        assert_eq!(
+            Nucleotides::Dna.weighted(&mut rng, 5, [1, 1, 1, 1, 2, 2, 2, 2])?,
+            b"gAGag".to_vec()
+        );
+        assert_eq!(
+            Nucleotides::DnaLower.weighted(&mut rng, 5, [1, 1, 1, 1])?,
+            b"actaa".to_vec()
+        );
+        assert_eq!(
+            Nucleotides::DnaUpper.weighted(&mut rng, 5, [1, 1, 5, 5])?,
+            b"GGTTT".to_vec()
+        );
+        assert_eq!(
+            Nucleotides::Rna.weighted(&mut rng, 5, [1, 1, 1, 1, 2, 2, 2, 2])?,
+            b"agCag".to_vec()
+        );
+        assert_eq!(
+            Nucleotides::RnaLower.weighted(&mut rng, 5, [1, 5, 5, 1])?,
+            b"ugccc".to_vec()
+        );
+        assert_eq!(
+            Nucleotides::RnaUpper.weighted(&mut rng, 5, [1, 1, 5, 5])?,
+            b"GAUUU".to_vec()
         );
 
         Ok(())
