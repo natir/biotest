@@ -273,10 +273,29 @@ atcaCtGcTAGCCAgaTTgcAaTtaTGgACTTagGgtATACCtcTctCAt
 E(1)(8E,\'HC4<55;&3!,*$G>A)@H149G@/7.D$$6-CGI5#@$F=
 ";
 
+    const DEFAULT: &[u8] = b"@GSWNPZYBHL atbbutlfemxuzgaghmwn
+gccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaTaGaTggttGCtCatGtctgCTGGTACtgTgcaaaagggGAGacAtgCtGCAAtTacCGtTAAcaGGtatTCaTCctcTGgAActTgCGAcaAgaAAtaTCCcAgagggaCcttC
++gNXcb
+<-:,1+F?>\"?(<C,IA+\'3@\"<%=3>B4-?CG@!GI!(?\"1\'%))7&08<27F?3AA$E(/@A#FBBF<\')G+%2-\"&*C+,\'!&F4,,7E/A71C4\'6&!1\"\'!I\")67,8>$$*,:6GIE0@C6B2<7A53478?%I\'E<@AH5189";
+
     const WEIGHTED_TRUTH: &[u8] = b"@ECEED cdeeacdeac
 GAAGGTCCTGCTGGGTCCGATCCATGTTGAGCCGGTGCAGGTGGACGGTT
 +DEDCC
 (%))&$)'$)(&##&'*)(*!)*''%%)())'&(!(!'')(&$)')%''&";
+
+    #[test]
+    fn default() -> error::Result<()> {
+        let mut output = Vec::new();
+        let mut rng = crate::rand();
+
+        let generator = Fastq::default();
+
+        generator.record(&mut output, &mut rng)?;
+
+        assert_eq!(output, DEFAULT);
+
+        Ok(())
+    }
 
     #[test]
     fn record() -> error::Result<()> {

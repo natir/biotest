@@ -207,8 +207,25 @@ TtCttAacGtTtAtGTgACAGCCaCGctGagattTGtgCttaAGggTcCT
 TCCACgTTTGagtGaGCatAGGACAAaacTaTTagagGtatAGCcTatTt
 ";
 
+    const DEFAULT: &[u8] = b">GSWNPZYBHL atbbutlfemxuzgaghmwn
+gccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaTaGaTggttGCtCatGtctgCTGGTACtgTgcaaaagggGAGacAtgCtGCAAtTacCGtTAAcaGGtatTCaTCctcTGgAActTgCGAcaAgaAAtaTCCcAgagggaCcttC";
+
     const WEIGHTED_TRUTH: &[u8] = b">ECEED cdeeacdeac
 GAAGGTCCTGCTGGGTCCGATCCATGTTGAGCCGGTGCAGGTGGACGGTT";
+
+    #[test]
+    fn default() -> error::Result<()> {
+        let mut output = Vec::new();
+        let mut rng = crate::rand();
+
+        let generator = Fasta::default();
+
+        generator.record(&mut output, &mut rng)?;
+
+        assert_eq!(output, DEFAULT);
+
+        Ok(())
+    }
 
     #[test]
     fn record() -> error::Result<()> {

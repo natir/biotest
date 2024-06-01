@@ -69,12 +69,15 @@ pub type Result<T> = core::result::Result<T, Error>;
 
 #[cfg(test)]
 mod tests {
+    /* local use */
+    use super::*;
+
     #[test]
     fn unreachable_macro() {
         assert_matches::assert_matches!(
             create_unreachable!(),
             crate::error::Error::Unreachable {
-                line: 75,
+                line: 78,
                 #[cfg(target_family = "windows")]
                 file: "src\\error.rs",
                 #[cfg(target_family = "unix")]

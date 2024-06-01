@@ -92,7 +92,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Vcf::builder().build()?;
+        let generator = Vcf::default();
 
         generator.header(&mut output, &mut rng)?;
         generator.records(&mut output, &mut rng, 5)?;

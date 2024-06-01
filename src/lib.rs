@@ -13,8 +13,6 @@
 use rand::SeedableRng;
 
 /* project use */
-//#[cfg(feature = "derive")]
-//pub use biotest_derive as derive;
 
 /* mod declaration */
 pub mod constants;
@@ -43,4 +41,27 @@ pub fn rand() -> rand::rngs::StdRng {
 /// Create a random generator with a user seed
 pub fn seeded_rand(seed: u64) -> rand::rngs::StdRng {
     rand::rngs::StdRng::seed_from_u64(seed)
+}
+
+#[cfg(test)]
+mod tests {
+    /* crate use */
+    use rand::Rng;
+
+    /* local use */
+    use super::*;
+
+    #[test]
+    fn check_rand() {
+        let mut rng = rand();
+
+        assert_eq!(rng.gen::<u8>(), 27);
+    }
+
+    #[test]
+    fn check_seeded_rand() {
+        let mut rng = seeded_rand(42);
+
+        assert_eq!(rng.gen::<u8>(), 162);
+    }
 }
