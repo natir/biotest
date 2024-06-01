@@ -14,11 +14,11 @@ generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&
 
 </span>generator.create(<span class="string">"test.fastq"</span>, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>; <span class="comment">// Write five fastq record in "test.fasta"</span></code></pre></div>
 <p>Read generate follow this template</p>
-
-<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code>&gt;{id_prefix}{id}{id_suffix} {comment_prefix}{comment}{comment_suffix}
+<div class="example-wrap"><pre class="language-no_compile"><code>&gt;{id_prefix}{id}{id_suffix} {comment_prefix}{comment}{comment_suffix}
 {sequence}
 +{plus_prefix}{plus}{plus_suffix}
-{quality}</code></pre></div>
+{quality}
+</code></pre></div>
 <p>Many think could be configurable with builder patern:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>rand;
