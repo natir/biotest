@@ -4,7 +4,7 @@
 ![Test](https://github.com/natir/biotest/workflows/Test/badge.svg)
 ![Lints](https://github.com/natir/biotest/workflows/Lints/badge.svg)
 ![MSRV](https://github.com/natir/biotest/workflows/MSRV/badge.svg)
-[![CodeCov](https://codecov.io/gh/natir/natir/branch/master/graph/badge.svg)](https://codecov.io/gh/natir/biotest)
+[![codecov](https://codecov.io/gh/natir/biotest/graph/badge.svg?token=7KY1Z4RHDB)](https://codecov.io/gh/natir/biotest)
 [![Documentation](https://github.com/natir/biotest/workflows/Documentation/badge.svg)](https://natir.github.io/biotest/biotest)
 
 Generate random test data for bioinformatics
