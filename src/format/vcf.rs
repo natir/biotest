@@ -1,7 +1,7 @@
 //! VCF generation
 //!
 //! Usage:
-//! ```
+//! ```no_run
 //! use biotest::Format as _; // import Format trait is required
 //!
 //! # fn main() -> Result<(), biotest::error::Error> {

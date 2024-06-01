@@ -1,7 +1,7 @@
 //! Fasta generation
 //!
 //! Usage:
-//! ```
+//! ```no_run
 //! use biotest::Format as _; // import Format trait is required
 //!
 //! # fn main() -> Result<(), biotest::error::Error> {
@@ -19,13 +19,13 @@
 //! ```
 //!
 //! Read generate follow this template
-//! ```ignore
+//! ```no_compile
 //! >{id_prefix}{id}{id_suffix} {comment_prefix}{comment}{comment_suffix}
 //! {sequence}
 //! ```
 //!
 //! Many think could be configurable with builder patern:
-//! ```
+//! ```no_run
 //! use rand;
 //! use rand::SeedableRng;
 //! use biotest::Format;

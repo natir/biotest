@@ -55,3 +55,6 @@ incremental = false
 [profile.profiling]
 inherits = "release"
 debug = true
+
+[package.metadata.docs.rs]
+all-features = true
