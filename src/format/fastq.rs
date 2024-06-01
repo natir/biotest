@@ -86,6 +86,10 @@ pub struct Fastq {
     #[builder(default = "b\"\".to_vec()")]
     id_suffix: Vec<u8>,
 
+    /// Id weights
+    #[builder(default = "vec![1; 0]")]
+    id_weights: Vec<u8>,
+
     /// Alphapet use for comment generation
     #[builder(default = "values::Alphabet::Lower")]
     comment: values::Alphabet,
@@ -101,6 +105,10 @@ pub struct Fastq {
     #[builder(default = "b\"\".to_vec()")]
     comment_suffix: Vec<u8>,
 
+    /// Comment weights
+    #[builder(default = "vec![1; 0]")]
+    comment_weights: Vec<u8>,
+
     /// Alphabet use for sequence generation
     #[builder(default = "values::Nucleotides::Dna")]
     sequence: values::Nucleotides,
@@ -108,6 +116,10 @@ pub struct Fastq {
     /// Sequence length
     #[builder(default = "150")]
     sequence_len: usize,
+
+    /// Sequence weights
+    #[builder(default = "vec![1; 0]")]
+    sequence_weights: Vec<u8>,
 
     /// Alphabet use for plus comment generation
     #[builder(default = "values::Alphabet::A2z")]
@@ -125,9 +137,17 @@ pub struct Fastq {
     #[builder(default = "b\"\".to_vec()")]
     plus_suffix: Vec<u8>,
 
+    /// Plus weights
+    #[builder(default = "vec![1; 0]")]
+    plus_weights: Vec<u8>,
+
     /// Alphabet use for quality generation
     #[builder(default = "values::Quality::Illumina")]
     quality: values::Quality,
+
+    /// Quality weights
+    #[builder(default = "vec![1; 0]")]
+    quality_weights: Vec<u8>,
 }
 
 impl Fastq {
@@ -160,7 +180,11 @@ impl format::Format for Fastq {
         // id
         output.write_all(&[b'@'])?;
         output.write_all(&self.id_prefix)?;
-        output.write_all(&self.id.generate(rng, self.id_len)?)?;
+        if self.id_weights.is_empty() {
+            output.write_all(&self.id.generate(rng, self.id_len)?)?;
+        } else {
+            output.write_all(&self.id.weighted(rng, self.id_len, &self.id_weights)?)?;
+        }
         output.write_all(&self.id_suffix)?;
         if self.id_prefix.len() + self.id_len + self.id_suffix.len() != 0 {
             output.write_all(&[b' '])?;
@@ -168,23 +192,51 @@ impl format::Format for Fastq {
 
         // comment
         output.write_all(&self.comment_prefix)?;
-        output.write_all(&self.comment.generate(rng, self.comment_len)?)?;
+        if self.comment_weights.is_empty() {
+            output.write_all(&self.comment.generate(rng, self.comment_len)?)?;
+        } else {
+            output.write_all(&self.comment.weighted(
+                rng,
+                self.comment_len,
+                &self.comment_weights,
+            )?)?;
+        }
         output.write_all(&self.comment_suffix)?;
         output.write_all(b"\n")?;
 
         // sequence
-        output.write_all(&self.sequence.generate(rng, self.sequence_len)?)?;
+        if self.sequence_weights.is_empty() {
+            output.write_all(&self.sequence.generate(rng, self.sequence_len)?)?;
+        } else {
+            output.write_all(&self.sequence.weighted(
+                rng,
+                self.sequence_len,
+                &self.sequence_weights,
+            )?)?;
+        }
         output.write_all(b"\n")?;
 
         // plus
         output.write_all(b"+")?;
         output.write_all(&self.plus_prefix)?;
-        output.write_all(&self.plus.generate(rng, self.plus_len)?)?;
+        if self.plus_weights.is_empty() {
+            output.write_all(&self.plus.generate(rng, self.plus_len)?)?;
+        } else {
+            output.write_all(&self.plus.weighted(rng, self.plus_len, &self.plus_weights)?)?;
+        }
         output.write_all(&self.plus_suffix)?;
         output.write_all(b"\n")?;
 
         // quality
-        output.write_all(&self.quality.generate(rng, self.sequence_len)?)?;
+        if self.quality_weights.is_empty() {
+            output.write_all(&self.quality.generate(rng, self.sequence_len)?)?;
+        } else {
+            output.write_all(&self.quality.weighted(
+                rng,
+                self.sequence_len,
+                &self.quality_weights,
+            )?)?;
+        }
 
         Ok(())
     }
@@ -221,6 +273,11 @@ atcaCtGcTAGCCAgaTTgcAaTtaTGgACTTagGgtATACCtcTctCAt
 E(1)(8E,\'HC4<55;&3!,*$G>A)@H149G@/7.D$$6-CGI5#@$F=
 ";
 
+    const WEIGHTED_TRUTH: &[u8] = b"@ECEED cdeeacdeac
+GAAGGTCCTGCTGGGTCCGATCCATGTTGAGCCGGTGCAGGTGGACGGTT
++DEDCC
+(%))&$)'$)(&##&'*)(*!)*''%%)())'&(!(!'')(&$)')%''&";
+
     #[test]
     fn record() -> error::Result<()> {
         let mut output = Vec::new();
@@ -236,6 +293,29 @@ E(1)(8E,\'HC4<55;&3!,*$G>A)@H149G@/7.D$$6-CGI5#@$F=
         generator.record(&mut output, &mut rng)?;
 
         assert_eq!(output, TRUTH.to_vec()[..121]);
+
+        Ok(())
+    }
+
+    #[test]
+    fn weigthed_record() -> error::Result<()> {
+        let mut output = Vec::new();
+        let mut rng = crate::rand();
+
+        let generator = Fastq::builder()
+            .id_len(5)
+            .id_weights(vec![1, 2, 3, 4, 5])
+            .comment_len(10)
+            .comment_weights(vec![1, 2, 3, 4, 5])
+            .sequence_len(50)
+            .sequence_weights(vec![1, 2, 3, 4])
+            .plus_weights(vec![1, 2, 3, 4, 5])
+            .quality_weights(vec![1, 0, 3, 4, 5, 6, 7, 8, 9, 2])
+            .build()?;
+
+        generator.record(&mut output, &mut rng)?;
+
+        assert_eq!(output, WEIGHTED_TRUTH.to_vec());
 
         Ok(())
     }
