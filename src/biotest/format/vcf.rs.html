@@ -220,7 +220,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>output = Vec::new();
         <span class="kw">let </span><span class="kw-2">mut </span>rng = <span class="kw">crate</span>::rand();
 
-        <span class="kw">let </span>generator = Vcf::builder().build()<span class="question-mark">?</span>;
+        <span class="kw">let </span>generator = Vcf::default();
 
         generator.header(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng)<span class="question-mark">?</span>;
         generator.records(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>;

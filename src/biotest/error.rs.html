@@ -87,6 +87,9 @@
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
 <a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Error struct of project biotest
 
 </span><span class="comment">/* crate use */
@@ -158,12 +161,15 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="comment">/* local use */
+    </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
+
     <span class="attr">#[test]
     </span><span class="kw">fn </span>unreachable_macro() {
         <span class="macro">assert_matches::assert_matches!</span>(
             <span class="macro">create_unreachable!</span>(),
             <span class="kw">crate</span>::error::Error::Unreachable {
-                line: <span class="number">75</span>,
+                line: <span class="number">78</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"windows"</span>)]
                 </span>file: <span class="string">"src\\error.rs"</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"unix"</span>)]
