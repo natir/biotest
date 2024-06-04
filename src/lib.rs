@@ -37,6 +37,9 @@ pub use format::vcf::Vcf;
 #[cfg(feature = "sequence")]
 pub use format::sequence::Sequence;
 
+#[cfg(feature = "quality")]
+pub use format::quality::Quality;
+
 /// Create a random generator with [constants::SEED]
 pub fn rand() -> rand::rngs::StdRng {
     rand::rngs::StdRng::from_seed(constants::SEED)

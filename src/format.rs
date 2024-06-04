@@ -17,6 +17,9 @@ pub mod vcf;
 #[cfg(feature = "sequence")]
 pub mod sequence;
 
+#[cfg(feature = "quality")]
+pub mod quality;
+
 /* projet use */
 use crate::error;
 

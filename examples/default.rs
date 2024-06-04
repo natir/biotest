@@ -27,6 +27,9 @@ pub enum Type {
 
     /// Generate a sequence file
     Sequence,
+
+    /// Generate a sequence file
+    Quality,
 }
 
 /// Example: {{project_description}}
@@ -93,6 +96,11 @@ fn main() -> error::Result<()> {
             params.number_record as usize,
         ),
         Type::Sequence => biotest::Sequence::default().create(
+            params.output_path,
+            &mut rng,
+            params.number_record as usize,
+        ),
+        Type::Quality => biotest::Quality::default().create(
             params.output_path,
             &mut rng,
             params.number_record as usize,
