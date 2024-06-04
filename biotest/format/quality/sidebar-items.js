@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["QualityBuilderError"],"struct":["Quality","QualityBuilder"]};

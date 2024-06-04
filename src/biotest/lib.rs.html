@@ -71,6 +71,9 @@
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Generate random test data for bioinformatics
 //!
 //! There's a feature for every file format that can be generated:
@@ -109,6 +112,9 @@
 
 <span class="attr">#[cfg(feature = <span class="string">"sequence"</span>)]
 </span><span class="kw">pub use </span>format::sequence::Sequence;
+
+<span class="attr">#[cfg(feature = <span class="string">"quality"</span>)]
+</span><span class="kw">pub use </span>format::quality::Quality;
 
 <span class="doccomment">/// Create a random generator with [constants::SEED]
 </span><span class="kw">pub fn </span>rand() -&gt; rand::rngs::StdRng {

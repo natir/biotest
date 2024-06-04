@@ -95,6 +95,11 @@
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
 <a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Error struct of project biotest
 
 </span><span class="comment">/* crate use */
@@ -153,6 +158,11 @@
     </span><span class="attr">#[cfg(feature = <span class="string">"sequence"</span>)]
     #[error(transparent)]
     </span>SequenceBuilderError(<span class="attr">#[from] </span><span class="kw">crate</span>::format::sequence::SequenceBuilderError),
+
+    <span class="doccomment">/// crate::format::quality::QualityBuilderError
+    </span><span class="attr">#[cfg(feature = <span class="string">"quality"</span>)]
+    #[error(transparent)]
+    </span>QualityBuilderError(<span class="attr">#[from] </span><span class="kw">crate</span>::format::quality::QualityBuilderError),
 }
 
 <span class="macro">macro_rules!</span> create_unreachable {
@@ -179,7 +189,7 @@
         <span class="macro">assert_matches::assert_matches!</span>(
             <span class="macro">create_unreachable!</span>(),
             <span class="kw">crate</span>::error::Error::Unreachable {
-                line: <span class="number">83</span>,
+                line: <span class="number">88</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"windows"</span>)]
                 </span>file: <span class="string">"src\\error.rs"</span>,
                 <span class="attr">#[cfg(target_family = <span class="string">"unix"</span>)]
