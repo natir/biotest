@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">biotest</h1>
+# biotest 🧬 💻
 
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/natir/biotest/blob/master/LICENSE)
 ![Test](https://github.com/natir/biotest/workflows/Test/badge.svg)
@@ -13,7 +13,7 @@ Generate random test data for bioinformatics
 
 In your Cargo.toml add
 ```toml
-biotest = { version = "0.1", features = ["fasta", "fastq", "vcf", "sequence"] }
+biotest = { version = "0.2", features = ["fasta", "fastq", "vcf", "sequence", "quality"] }
 ```
 
 ## Minimum supported Rust version

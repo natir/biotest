@@ -1,6 +1,6 @@
 [package]
 name = "biotest"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Pierre Marijon <pierre@marijon.fr>"]
 edition = "2021"
 description = "Generate random test data for bioinformatics"
