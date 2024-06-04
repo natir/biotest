@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["fasta","fastq","vcf"],"trait":["Format"]};
+window.SIDEBAR_ITEMS = {"mod":["fasta","fastq","sequence","vcf"],"trait":["Format"]};

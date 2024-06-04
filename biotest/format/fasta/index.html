@@ -29,11 +29,11 @@ generator.record(<span class="kw-2">&amp;mut </span>output, <span class="kw-2">&
     .id(biotest::values::Alphabet::Lower) <span class="comment">// Set alphabet use to generate sequence id
     </span>.id_len(<span class="number">10</span>) <span class="comment">// Set length of id
     </span>.id_prefix(<span class="string">b"prefix"</span>.to_vec()) <span class="comment">// Set read id prefix
-    </span>.id_suffix(<span class="string">b"suffix"</span>.to_vec()) <span class="comment">// Set read id prefix
+    </span>.id_suffix(<span class="string">b"suffix"</span>.to_vec()) <span class="comment">// Set read id suffix
     </span>.comment(biotest::values::Alphabet::Upper) <span class="comment">// Set alphabet use to generate sequence comment
     </span>.comment_len(<span class="number">0</span>) <span class="comment">// If comment length is set to 0 prefix and suffix isn't write
     </span>.comment_prefix(<span class="string">b"prefix"</span>.to_vec()) <span class="comment">// Set read id prefix
-    </span>.comment_suffix(<span class="string">b"suffix"</span>.to_vec()) <span class="comment">// Set read id prefix
+    </span>.comment_suffix(<span class="string">b"suffix"</span>.to_vec()) <span class="comment">// Set read id suffix
     </span>.build()<span class="question-mark">?</span>;
 
 generator.create(<span class="string">"test.fasta"</span>, <span class="kw-2">&amp;mut </span>rng, <span class="number">5</span>)<span class="question-mark">?</span>; <span class="comment">// Write five fasta record in "test.fasta"</span></code></pre></div>
