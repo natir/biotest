@@ -230,31 +230,31 @@ mod tests {
 ##FILTER=<ID=filter_0,Description=\"generated vcf filter field\">
 ##FILTER=<ID=filter_1,Description=\"generated vcf filter field\">
 ##FILTER=<ID=filter_2,Description=\"generated vcf filter field\">
-##INFO=<ID=info_Integer_1,Number=1,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Integer_2,Number=2,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Integer_A,Number=A,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Integer_R,Number=R,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Integer_G,Number=G,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Integer_.,Number=.,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Float_1,Number=1,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Float_2,Number=2,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Float_A,Number=A,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Flag_0,Number=0,Type=Flag,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Character_R,Number=R,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Character_G,Number=G,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_Character_.,Number=.,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_String_1,Number=1,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_String_2,Number=2,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_String_A,Number=A,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_String_R,Number=R,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_String_G,Number=G,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=info_String_.,Number=.,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.1.0\">
+##INFO=<ID=info_Integer_1,Number=1,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Integer_2,Number=2,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Integer_A,Number=A,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Integer_R,Number=R,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Integer_G,Number=G,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Integer_.,Number=.,Type=Integer,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Float_1,Number=1,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Float_2,Number=2,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Float_A,Number=A,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Float_R,Number=R,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Float_G,Number=G,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Float_.,Number=.,Type=Float,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Flag_0,Number=0,Type=Flag,Description=\"generated vcf info field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Character_1,Number=1,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Character_2,Number=2,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Character_A,Number=A,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Character_R,Number=R,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Character_G,Number=G,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_Character_.,Number=.,Type=Character,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_String_1,Number=1,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_String_2,Number=2,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_String_A,Number=A,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_String_R,Number=R,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_String_G,Number=G,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=info_String_.,Number=.,Type=String,Description=\"generated vcf format field\",Source=\"biotest\",Version=\"0.2.0\">
 ##FORMAT=<ID=format_Integer_1,Number=1,Type=Integer,Description=\"generated vcf format field\">
 ##FORMAT=<ID=format_Integer_2,Number=2,Type=Integer,Description=\"generated vcf format field\">
 ##FORMAT=<ID=format_Integer_A,Number=A,Type=Integer,Description=\"generated vcf format field\">
@@ -286,10 +286,10 @@ mod tests {
 ##contig=<ID=A,length=4223,species=\"alphabet\">
 ##contig=<ID=B,length=4223,species=\"alphabet\">
 ##contig=<ID=C,length=4223,species=\"alphabet\">
-##INFO=<ID=INFO_Integer_1,Number=1,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=INFO_Integer_2,Number=2,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=INFO_Float_1,Number=1,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
-##INFO=<ID=INFO_Float_2,Number=2,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.1.0\">
+##INFO=<ID=INFO_Integer_1,Number=1,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=INFO_Integer_2,Number=2,Type=Integer,Description=\"description\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=INFO_Float_1,Number=1,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.2.0\">
+##INFO=<ID=INFO_Float_2,Number=2,Type=Float,Description=\"description\",Source=\"biotest\",Version=\"0.2.0\">
 ##FORMAT=<ID=FORMAT_Integer_1,Number=1,Type=Integer,Description=\"description\">
 ##FORMAT=<ID=FORMAT_Integer_2,Number=2,Type=Integer,Description=\"description\">
 ##FORMAT=<ID=FORMAT_Float_1,Number=1,Type=Float,Description=\"description\">
