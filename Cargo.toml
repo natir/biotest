@@ -15,9 +15,10 @@ license-file = "LICENSE"
 
 
 [features]
-fasta  = []
-fastq  = []
-vcf  = []
+fasta    = []
+fastq    = []
+sequence = []
+vcf      = []
 
 
 [dependencies]
@@ -42,7 +43,7 @@ stderrlog      = { version = "0.6" }
 
 [[example]]
 name = "default"
-required-features = ["fasta", "fastq", "vcf"]
+required-features = ["fasta", "fastq", "vcf", "sequence"]
 
 [profile.release]
 lto = 'thin'

@@ -14,6 +14,9 @@ pub mod fastq;
 #[cfg(feature = "vcf")]
 pub mod vcf;
 
+#[cfg(feature = "sequence")]
+pub mod sequence;
+
 /* projet use */
 use crate::error;
 

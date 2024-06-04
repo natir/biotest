@@ -37,11 +37,11 @@
 //!     .id(biotest::values::Alphabet::Lower) // Set alphabet use to generate sequence id
 //!     .id_len(10) // Set length of id
 //!     .id_prefix(b"prefix".to_vec()) // Set read id prefix
-//!     .id_suffix(b"suffix".to_vec()) // Set read id prefix
+//!     .id_suffix(b"suffix".to_vec()) // Set read id suffix
 //!     .comment(biotest::values::Alphabet::Upper) // Set alphabet use to generate sequence comment
 //!     .comment_len(0) // If comment length is set to 0 prefix and suffix isn't write
 //!     .comment_prefix(b"prefix".to_vec()) // Set read id prefix
-//!     .comment_suffix(b"suffix".to_vec()) // Set read id prefix
+//!     .comment_suffix(b"suffix".to_vec()) // Set read id suffix
 //!     .build()?;
 //!
 //! generator.create("test.fasta", &mut rng, 5)?; // Write five fasta record in "test.fasta"

@@ -51,6 +51,11 @@ pub enum Error {
     #[cfg(feature = "vcf")]
     #[error(transparent)]
     VcfHeaderBuilderError(#[from] crate::format::vcf::header::HeaderBuilderError),
+
+    /// crate::format::sequence::SequenceBuilderError
+    #[cfg(feature = "sequence")]
+    #[error(transparent)]
+    SequenceBuilderError(#[from] crate::format::sequence::SequenceBuilderError),
 }
 
 macro_rules! create_unreachable {
@@ -77,7 +82,7 @@ mod tests {
         assert_matches::assert_matches!(
             create_unreachable!(),
             crate::error::Error::Unreachable {
-                line: 78,
+                line: 83,
                 #[cfg(target_family = "windows")]
                 file: "src\\error.rs",
                 #[cfg(target_family = "unix")]

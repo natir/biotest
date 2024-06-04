@@ -4,6 +4,7 @@
 //! - [`fasta`](module@format::fasta)
 //! - [`fastq`](module@format::fastq)
 //! - [`vcf`](module@format::vcf)
+//! - [`sequence`](module@format::sequence)
 
 #![warn(missing_docs)]
 
@@ -32,6 +33,9 @@ pub use format::fastq::Fastq;
 
 #[cfg(feature = "vcf")]
 pub use format::vcf::Vcf;
+
+#[cfg(feature = "sequence")]
+pub use format::sequence::Sequence;
 
 /// Create a random generator with [constants::SEED]
 pub fn rand() -> rand::rngs::StdRng {

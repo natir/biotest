@@ -24,6 +24,9 @@ pub enum Type {
 
     /// Generate a vcf file
     Vcf,
+
+    /// Generate a sequence file
+    Sequence,
 }
 
 /// Example: {{project_description}}
@@ -74,17 +77,22 @@ fn main() -> error::Result<()> {
     let mut rng = rand::rngs::StdRng::from_entropy();
 
     match params.out_type {
-        Type::Fasta => biotest::Fasta::builder().build().unwrap().create(
+        Type::Fasta => biotest::Fasta::default().create(
             params.output_path,
             &mut rng,
             params.number_record as usize,
         ),
-        Type::Fastq => biotest::Fastq::builder().build().unwrap().create(
+        Type::Fastq => biotest::Fastq::default().create(
             params.output_path,
             &mut rng,
             params.number_record as usize,
         ),
-        Type::Vcf => biotest::Vcf::builder().build().unwrap().create(
+        Type::Vcf => biotest::Vcf::default().create(
+            params.output_path,
+            &mut rng,
+            params.number_record as usize,
+        ),
+        Type::Sequence => biotest::Sequence::default().create(
             params.output_path,
             &mut rng,
             params.number_record as usize,
