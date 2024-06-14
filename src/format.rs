@@ -20,6 +20,9 @@ pub mod sequence;
 #[cfg(feature = "quality")]
 pub mod quality;
 
+#[cfg(feature = "gff")]
+pub mod gff;
+
 /* projet use */
 use crate::error;
 

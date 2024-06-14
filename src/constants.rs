@@ -56,6 +56,15 @@ pub static VCF_FORMAT_NUMBER: [&[u8]; 6] = [b"1", b"2", b"A", b"R", b"G", b"."];
 /// Length of vcf string
 pub static VCF_STRING_LENGTH: usize = 5;
 
+/// Strand
+pub static STRAND: [&[u8]; 3] = [b".", b"+", b"-"];
+
+/// Gff feature
+pub static GFF_FEATURE: [&[u8]; 4] = [b"gene", b"transcript", b"repeat", b"exon"];
+
+/// Gff feature
+pub static GFF_PHASE: [&[u8]; 4] = [b".", b"0", b"1", b"2"];
+
 /// biotest version
 pub const BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
 

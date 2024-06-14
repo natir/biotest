@@ -338,6 +338,78 @@ impl core::convert::AsRef<[&'static [u8]]> for VcfFormatNumber {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+/// Possible value for strand
+pub enum Strand {
+    #[default]
+    /// All possible value for strand
+    All,
+
+    /// No unknow
+    NoUnknow,
+
+    /// UserDefine
+    UserDefine(Vec<&'static [u8]>),
+}
+
+impl core::convert::AsRef<[&'static [u8]]> for Strand {
+    fn as_ref(&self) -> &[&'static [u8]] {
+        match self {
+            Strand::All => &constants::STRAND,
+            Strand::NoUnknow => &constants::STRAND[1..],
+            Strand::UserDefine(a) => a.as_ref(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Default)]
+/// Possible value for frame
+pub enum GffFeature {
+    #[default]
+    /// All possible gff frame format type
+    All,
+
+    /// No unknow
+    NoUnknow,
+
+    /// UserDefine
+    UserDefine(Vec<&'static [u8]>),
+}
+
+impl core::convert::AsRef<[&'static [u8]]> for GffFeature {
+    fn as_ref(&self) -> &[&'static [u8]] {
+        match self {
+            GffFeature::All => &constants::GFF_FEATURE,
+            GffFeature::NoUnknow => &constants::GFF_FEATURE[1..],
+            GffFeature::UserDefine(a) => a.as_ref(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Default)]
+/// Possible value for frame
+pub enum GffPhase {
+    #[default]
+    /// All possible gff frame format type
+    All,
+
+    /// No unknow
+    NoUnknow,
+
+    /// UserDefine
+    UserDefine(Vec<&'static [u8]>),
+}
+
+impl core::convert::AsRef<[&'static [u8]]> for GffPhase {
+    fn as_ref(&self) -> &[&'static [u8]] {
+        match self {
+            GffPhase::All => &constants::GFF_PHASE,
+            GffPhase::NoUnknow => &constants::GFF_PHASE[1..],
+            GffPhase::UserDefine(a) => a.as_ref(),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     /* project use */
@@ -534,6 +606,36 @@ mod tests {
         assert_eq!(
             Float::UserDefine(-1023.3..3002.5).get(&mut rng,),
             b"2202.4844".to_vec()
+        );
+    }
+
+    #[test]
+    fn strand() {
+        assert_eq!(Strand::All.as_ref(), constants::STRAND);
+        assert_eq!(Strand::NoUnknow.as_ref(), &constants::STRAND[1..]);
+        assert_eq!(
+            Strand::UserDefine(vec![b"Forward", b"Reverse"]).as_ref(),
+            &[b"Forward", b"Reverse"]
+        );
+    }
+
+    #[test]
+    fn gff_feature() {
+        assert_eq!(GffFeature::All.as_ref(), constants::GFF_FEATURE);
+        assert_eq!(GffFeature::NoUnknow.as_ref(), &constants::GFF_FEATURE[1..]);
+        assert_eq!(
+            GffFeature::UserDefine(vec![b"intron", b"exon__"]).as_ref(),
+            &[b"intron", b"exon__"]
+        );
+    }
+
+    #[test]
+    fn gff_phase() {
+        assert_eq!(GffPhase::All.as_ref(), constants::GFF_PHASE);
+        assert_eq!(GffPhase::NoUnknow.as_ref(), &constants::GFF_PHASE[1..]);
+        assert_eq!(
+            GffPhase::UserDefine(vec![b"One", b"Two"]).as_ref(),
+            &[b"One", b"Two"]
         );
     }
 }
