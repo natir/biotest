@@ -4,6 +4,8 @@
 
 ### Added
 
+- Add a Cigar format
+
 ### Changed
 
 ### Deprecated

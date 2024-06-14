@@ -338,6 +338,28 @@ impl core::convert::AsRef<[&'static [u8]]> for VcfFormatNumber {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+/// Possible cigar alphabet
+pub enum Cigar {
+    #[default]
+    /// Sam CIGAR value
+    Sam,
+
+    /// Gff CIGAR value
+    Gff,
+}
+
+impl core::convert::AsRef<[u8]> for Cigar {
+    fn as_ref(&self) -> &[u8] {
+        match self {
+            Cigar::Sam => &constants::CIGAR_SAM,
+            Cigar::Gff => &constants::CIGAR_GFF,
+        }
+    }
+}
+
+impl Generate for Cigar {}
+
 #[cfg(test)]
 mod tests {
     /* project use */
@@ -535,5 +557,34 @@ mod tests {
             Float::UserDefine(-1023.3..3002.5).get(&mut rng,),
             b"2202.4844".to_vec()
         );
+    }
+
+    #[test]
+    fn cigar() -> error::Result<()> {
+        assert_eq!(Cigar::Sam.as_ref(), constants::CIGAR_SAM);
+        assert_eq!(Cigar::Gff.as_ref(), constants::CIGAR_GFF);
+
+        let mut rng = crate::rand();
+        assert_eq!(Cigar::Sam.generate(&mut rng, 5)?, b"=DPDH".to_vec());
+        assert_eq!(
+            Cigar::Sam.weighted(&mut rng, 5, [1, 1, 1, 1])?,
+            b"NNMII".to_vec()
+        );
+        assert!(matches!(
+            Cigar::Sam.weighted(&mut rng, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]),
+            Err(error::Error::WeightArrayLargerValueArray)
+        ));
+
+        assert_eq!(Cigar::Gff.generate(&mut rng, 5)?, b"MMMDI".to_vec());
+        assert_eq!(
+            Cigar::Gff.weighted(&mut rng, 5, [1, 1, 1])?,
+            b"MIDMI".to_vec()
+        );
+        assert!(matches!(
+            Cigar::Gff.weighted(&mut rng, 1, [0, 0, 0, 0, 0, 1]),
+            Err(error::Error::WeightArrayLargerValueArray)
+        ));
+
+        Ok(())
     }
 }

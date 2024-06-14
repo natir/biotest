@@ -20,7 +20,7 @@ fastq    = []
 quality  = []
 sequence = []
 vcf      = []
-
+cigar    = []
 
 [dependencies]
 rand           = { version = "0.8" }

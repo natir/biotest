@@ -61,6 +61,11 @@ pub enum Error {
     #[cfg(feature = "quality")]
     #[error(transparent)]
     QualityBuilderError(#[from] crate::format::quality::QualityBuilderError),
+
+    /// crate::format::quality::QualityBuilderError
+    #[cfg(feature = "cigar")]
+    #[error(transparent)]
+    CigarBuilderError(#[from] crate::format::cigar::CigarBuilderError),
 }
 
 macro_rules! create_unreachable {
@@ -87,7 +92,7 @@ mod tests {
         assert_matches::assert_matches!(
             create_unreachable!(),
             crate::error::Error::Unreachable {
-                line: 88,
+                line: 93,
                 #[cfg(target_family = "windows")]
                 file: "src\\error.rs",
                 #[cfg(target_family = "unix")]

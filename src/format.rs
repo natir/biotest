@@ -20,6 +20,9 @@ pub mod sequence;
 #[cfg(feature = "quality")]
 pub mod quality;
 
+#[cfg(feature = "cigar")]
+pub mod cigar;
+
 /* projet use */
 use crate::error;
 
