@@ -9,89 +9,83 @@ use crate::constants;
 use crate::error;
 use crate::values;
 
-#[derive(derive_builder::Builder)]
-#[builder(pattern = "owned")]
+#[derive(typed_builder::TypedBuilder)]
 /// Struct to generate header
 pub struct Header {
     /// Value use for chromosomes
-    #[builder(default = "values::Chromosomes::Default")]
+    #[builder(default = values::Chromosomes::Default)]
     contigs: values::Chromosomes,
 
     /// vcf version number
-    #[builder(default = "b\"VCFv4.3\".to_vec()")]
+    #[builder(default = b"VCFv4.3".to_vec())]
     version: Vec<u8>,
 
     /// contig species
-    #[builder(default = "b\"random\".to_vec()")]
+    #[builder(default = b"random".to_vec())]
     contig_species: Vec<u8>,
 
     /// contig length
-    #[builder(default = "u32::MAX")]
+    #[builder(default = u32::MAX)]
     contig_length: u32,
 
     /// filter range
-    #[builder(default = "values::Integer::UserDefine(0..3)")]
+    #[builder(default = values::Integer::UserDefine(0..3))]
     filter: values::Integer,
 
     /// filter prefix
-    #[builder(default = "b\"filter_\".to_vec()")]
+    #[builder(default = b"filter_".to_vec())]
     filter_prefix: Vec<u8>,
 
     /// filter description
-    #[builder(default = "b\"generated vcf filter field\".to_vec()")]
+    #[builder(default = b"generated vcf filter field".to_vec())]
     filter_description: Vec<u8>,
 
     /// info prefix
-    #[builder(default = "b\"info_\".to_vec()")]
+    #[builder(default = b"info_".to_vec())]
     info_prefix: Vec<u8>,
 
     /// info description
-    #[builder(default = "b\"generated vcf info field\".to_vec()")]
+    #[builder(default = b"generated vcf info field".to_vec())]
     info_description: Vec<u8>,
 
     /// InfoType
-    #[builder(default = "values::VcfInfoType::All")]
+    #[builder(default = values::VcfInfoType::All)]
     info_type: values::VcfInfoType,
 
     /// InfoNumber
-    #[builder(default = "values::VcfInfoNumber::All")]
+    #[builder(default = values::VcfInfoNumber::All)]
     info_number: values::VcfInfoNumber,
 
     /// format prefix
-    #[builder(default = "b\"format_\".to_vec()")]
+    #[builder(default = b"format_".to_vec())]
     format_prefix: Vec<u8>,
 
     /// format description
-    #[builder(default = "b\"generated vcf format field\".to_vec()")]
+    #[builder(default = b"generated vcf format field".to_vec())]
     format_description: Vec<u8>,
 
     /// FormatType
-    #[builder(default = "values::VcfFormatType::All")]
+    #[builder(default = values::VcfFormatType::All)]
     format_type: values::VcfFormatType,
 
     /// FormatNumber
-    #[builder(default = "values::VcfFormatNumber::All")]
+    #[builder(default = values::VcfFormatNumber::All)]
     format_number: values::VcfFormatNumber,
 
     /// Number of sample
-    #[builder(default = "3")]
+    #[builder(default = 3)]
     sample: usize,
 
     /// Sample prefix
-    #[builder(default = "b\"sample_\".to_vec()")]
+    #[builder(default = b"sample_".to_vec())]
     sample_prefix: Vec<u8>,
 
     /// Sample suffix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     sample_suffix: Vec<u8>,
 }
 
 impl Header {
-    /// Create a HeaderBuilder
-    pub fn builder() -> HeaderBuilder {
-        HeaderBuilder::default()
-    }
-
     /// Generate vcf header
     pub fn generate(&self, output: &mut dyn std::io::Write) -> error::Result<()> {
         // version
@@ -207,7 +201,7 @@ impl Header {
 
 impl core::default::Default for Header {
     fn default() -> Self {
-        HeaderBuilder::default().build().unwrap() // it's default no error
+        Header::builder().build()
     }
 }
 
@@ -301,7 +295,7 @@ mod tests {
     fn default() -> error::Result<()> {
         let mut output = Vec::new();
 
-        let generator = Header::builder().build()?;
+        let generator = Header::builder().build();
 
         generator.generate(&mut output)?;
 
@@ -334,7 +328,7 @@ mod tests {
             .sample(0)
             .sample_prefix(b"individual_".to_vec())
             .sample_suffix(b" auie".to_vec())
-            .build()?;
+            .build();
 
         generator.generate(&mut output)?;
 

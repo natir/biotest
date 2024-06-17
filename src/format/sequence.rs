@@ -37,7 +37,7 @@
 //!
 //! let generator = biotest::Sequence::builder()
 //!     .sequence_len(50) // Set sequence length
-//!     .build()?;
+//!     .build();
 //!
 //! generator.create("test.sequence", &mut rng, 5)?; // Write five sequence record in "test.sequence"
 //! # Ok(())
@@ -56,32 +56,24 @@ use crate::values;
 use crate::values::Generate as _;
 
 /// Struct to generate random DNA sequence
-#[derive(derive_builder::Builder)]
-#[builder(pattern = "owned")]
+#[derive(typed_builder::TypedBuilder)]
 pub struct Sequence {
     /// Alphabet use for sequence generation
-    #[builder(default = "values::Nucleotides::Dna")]
+    #[builder(default = values::Nucleotides::Dna)]
     sequence: values::Nucleotides,
 
     /// Sequence length
-    #[builder(default = "150")]
+    #[builder(default = 150)]
     sequence_len: usize,
 
     /// Sequence weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     sequence_weights: Vec<u8>,
-}
-
-impl Sequence {
-    /// Create a SequenceBuilder
-    pub fn builder() -> SequenceBuilder {
-        SequenceBuilder::default()
-    }
 }
 
 impl core::default::Default for Sequence {
     fn default() -> Self {
-        SequenceBuilder::default().build().unwrap() // it's default no error
+        Sequence::builder().build()
     }
 }
 
@@ -153,7 +145,7 @@ TgACAGCCaCGctGagattTGtgCttaAGggTcCTGcGTAGCTGTCCACg
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Sequence::builder().sequence_len(50).build()?;
+        let generator = Sequence::builder().sequence_len(50).build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -170,7 +162,7 @@ TgACAGCCaCGctGagattTGtgCttaAGggTcCTGcGTAGCTGTCCACg
         let generator = Sequence::builder()
             .sequence_len(50)
             .sequence_weights(vec![1, 2, 3, 4])
-            .build()?;
+            .build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -184,7 +176,7 @@ TgACAGCCaCGctGagattTGtgCttaAGggTcCTGcGTAGCTGTCCACg
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Sequence::builder().sequence_len(50).build()?;
+        let generator = Sequence::builder().sequence_len(50).build();
 
         generator.records(&mut output, &mut rng, 5)?;
 
@@ -202,7 +194,7 @@ TgACAGCCaCGctGagattTGtgCttaAGggTcCTGcGTAGCTGTCCACg
 
         let temp_file = temp_path.join("tmp.sequence");
 
-        let generator = Sequence::builder().sequence_len(50).build()?;
+        let generator = Sequence::builder().sequence_len(50).build();
 
         generator.create(&temp_file, &mut rng, 5)?;
 

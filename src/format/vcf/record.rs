@@ -14,97 +14,91 @@ use crate::values;
 use crate::values::Generate as _;
 use crate::values::Get as _;
 
-#[derive(derive_builder::Builder)]
-#[builder(pattern = "owned")]
+#[derive(typed_builder::TypedBuilder)]
 /// Struct to generate record
 pub struct Record {
     /// Value use for chromosomes
-    #[builder(default = "values::Chromosomes::Default")]
+    #[builder(default = values::Chromosomes::Default)]
     contigs: values::Chromosomes,
 
     /// Possible position
-    #[builder(default = "values::Integer::Position")]
+    #[builder(default = values::Integer::Position)]
     position: values::Integer,
 
     /// Alphabet use to variant id
-    #[builder(default = "values::Alphabet::VcfDefault")]
+    #[builder(default = values::Alphabet::VcfDefault)]
     id: values::Alphabet,
 
     /// Length of id
-    #[builder(default = "1")]
+    #[builder(default = 1)]
     id_len: usize,
 
     /// Id prefix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     id_prefix: Vec<u8>,
 
     /// Id suffix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     id_suffix: Vec<u8>,
 
     /// Alphabet use to reference sequence
-    #[builder(default = "values::Nucleotides::Dna")]
+    #[builder(default = values::Nucleotides::Dna)]
     reference: values::Nucleotides,
 
     /// Alphabet use to reference sequence
-    #[builder(default = "1")]
+    #[builder(default = 1)]
     reference_len: usize,
 
     /// Alphabet use to alternative sequence
-    #[builder(default = "values::Nucleotides::DnaUpper")]
+    #[builder(default = values::Nucleotides::DnaUpper)]
     alternative: values::Nucleotides,
 
     /// Alphabet use to alternative sequence
-    #[builder(default = "1")]
+    #[builder(default = 1)]
     alternative_len: usize,
 
     /// Quality range
-    #[builder(default = "values::Integer::Quality")]
+    #[builder(default = values::Integer::Quality)]
     quality: values::Integer,
 
     /// filter range
-    #[builder(default = "values::Integer::UserDefine(0..3)")]
+    #[builder(default = values::Integer::UserDefine(0..3))]
     filter: values::Integer,
 
     /// filter prefix
-    #[builder(default = "b\"filter_\".to_vec()")]
+    #[builder(default = b"filter_".to_vec())]
     filter_prefix: Vec<u8>,
 
     /// info prefix
-    #[builder(default = "b\"info_\".to_vec()")]
+    #[builder(default = b"info_".to_vec())]
     info_prefix: Vec<u8>,
 
     /// InfoType
-    #[builder(default = "values::VcfInfoType::All")]
+    #[builder(default = values::VcfInfoType::All)]
     info_type: values::VcfInfoType,
 
     /// InfoNumber
-    #[builder(default = "values::VcfInfoNumber::All")]
+    #[builder(default = values::VcfInfoNumber::All)]
     info_number: values::VcfInfoNumber,
 
     /// format prefix
-    #[builder(default = "b\"format_\".to_vec()")]
+    #[builder(default = b"format_".to_vec())]
     format_prefix: Vec<u8>,
 
     /// FormatType
-    #[builder(default = "values::VcfFormatType::All")]
+    #[builder(default = values::VcfFormatType::All)]
     format_type: values::VcfFormatType,
 
     /// FormatNumber
-    #[builder(default = "values::VcfFormatNumber::All")]
+    #[builder(default = values::VcfFormatNumber::All)]
     format_number: values::VcfFormatNumber,
 
     /// Number of sample
-    #[builder(default = "3")]
+    #[builder(default = 3)]
     sample: usize,
 }
 
 impl Record {
-    /// Create a RecordBuilder
-    pub fn builder() -> RecordBuilder {
-        RecordBuilder::default()
-    }
-
     fn format<W>(&self, output: &mut W) -> error::Result<()>
     where
         W: std::io::Write + ?Sized,
@@ -430,7 +424,7 @@ fn generate_value(
 
 impl core::default::Default for Record {
     fn default() -> Self {
-        RecordBuilder::default().build().unwrap() // it's default no error
+        Record::builder().build()
     }
 }
 
@@ -462,7 +456,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Record::builder().build()?;
+        let generator = Record::builder().build();
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -476,7 +470,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Record::builder().sample(0).build()?;
+        let generator = Record::builder().sample(0).build();
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -492,7 +486,7 @@ mod tests {
 
         let generator = Record::builder()
             .info_number(values::VcfInfoNumber::UserDefine(vec![]))
-            .build()?;
+            .build();
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -509,7 +503,7 @@ mod tests {
         let generator = Record::builder()
             .info_number(values::VcfInfoNumber::UserDefine(vec![]))
             .sample(0)
-            .build()?;
+            .build();
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -528,7 +522,7 @@ mod tests {
             .info_number(values::VcfInfoNumber::UserDefine(vec![]))
             .format_number(values::VcfFormatNumber::UserDefine(vec![]))
             .sample(0)
-            .build()?;
+            .build();
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -551,7 +545,7 @@ mod tests {
             .id(values::Alphabet::A2z)
             .id_prefix(b"id_".to_vec())
             .id_suffix(b"!".to_vec())
-            .build()?;
+            .build();
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -572,7 +566,7 @@ mod tests {
             .sample(0)
             .id_len(0)
             .id(values::Alphabet::A2z)
-            .build()?;
+            .build();
 
         generator.generate(&mut output, &mut rng)?;
 
@@ -594,7 +588,7 @@ mod tests {
             .sample(0)
             .id_len(0)
             .id(values::Alphabet::A2z)
-            .build()?;
+            .build();
 
         generator.generate(&mut output, &mut rng)?;
 

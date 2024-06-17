@@ -33,28 +33,20 @@ pub mod header;
 pub mod record;
 
 /// Struct to generate random fastq record
-#[derive(derive_builder::Builder)]
-#[builder(pattern = "owned")]
+#[derive(typed_builder::TypedBuilder)]
 pub struct Vcf {
     /// Structure to define header
-    #[builder(default = "header::Header::default()")]
+    #[builder(default = header::Header::default())]
     header: header::Header,
 
     /// Structure to define record
-    #[builder(default = "record::Record::default()")]
+    #[builder(default = record::Record::default())]
     record: record::Record,
-}
-
-impl Vcf {
-    /// Create a VcfBuilder
-    pub fn builder() -> VcfBuilder {
-        VcfBuilder::default()
-    }
 }
 
 impl core::default::Default for Vcf {
     fn default() -> Self {
-        VcfBuilder::default().build().unwrap() // it's default no error
+        Vcf::builder().build()
     }
 }
 
@@ -111,7 +103,7 @@ mod tests {
 
         let temp_file = temp_path.join("tmp.vcf");
 
-        let generator = Vcf::builder().build()?;
+        let generator = Vcf::builder().build();
 
         generator.create(&temp_file, &mut rng, 5)?;
 

@@ -23,6 +23,9 @@ pub mod quality;
 #[cfg(feature = "gff")]
 pub mod gff;
 
+#[cfg(feature = "cigar")]
+pub mod cigar;
+
 /* projet use */
 use crate::error;
 

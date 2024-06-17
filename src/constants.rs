@@ -65,6 +65,12 @@ pub static GFF_FEATURE: [&[u8]; 4] = [b"gene", b"transcript", b"repeat", b"exon"
 /// Gff feature
 pub static GFF_PHASE: [&[u8]; 4] = [b".", b"0", b"1", b"2"];
 
+/// CIGAR SAM
+pub static CIGAR_SAM: [u8; 9] = *b"MIDNSHP=X";
+
+/// CIGAR GFF
+pub static CIGAR_GFF: [u8; 5] = *b"MIDFR";
+
 /// biotest version
 pub const BIOTEST_VERSION: &[u8] = env!("CARGO_PKG_VERSION").as_bytes();
 

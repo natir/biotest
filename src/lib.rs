@@ -40,6 +40,9 @@ pub use format::sequence::Sequence;
 #[cfg(feature = "quality")]
 pub use format::quality::Quality;
 
+#[cfg(feature = "cigar")]
+pub use format::cigar::Cigar;
+
 /// Create a random generator with [constants::SEED]
 pub fn rand() -> rand::rngs::StdRng {
     rand::rngs::StdRng::from_seed(constants::SEED)
