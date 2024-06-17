@@ -181,13 +181,13 @@ impl format::Format for Gff {
 
         // start
         let start = rng.gen_range::<i32, core::ops::Range<i32>>(self.position.clone().into());
-        output.write_all(&start.to_string().as_bytes().to_vec())?;
+        output.write_all(start.to_string().as_bytes())?;
         output.write_all(b"\t")?;
 
         // end
         let end: i32 =
             start + rng.gen_range::<i32, core::ops::Range<i32>>(self.length.clone().into());
-        output.write_all(&end.to_string().as_bytes().to_vec())?;
+        output.write_all(end.to_string().as_bytes())?;
         output.write_all(b"\t")?;
 
         // score
