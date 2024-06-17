@@ -24,7 +24,7 @@ cigar    = []
 
 [dependencies]
 rand           = { version = "0.8" }
-derive_builder = { version = "0.20" }
+typed-builder  = { version = "0.18" }
 
 # Error management
 thiserror      = { version = "1" }

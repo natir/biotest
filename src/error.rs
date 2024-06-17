@@ -26,46 +26,6 @@ pub enum Error {
     /// rand::distributions::weighted::WeightedError
     #[error(transparent)]
     RandWeightedError(#[from] rand::distributions::weighted::WeightedError),
-
-    /// biotest::format::fasta::FastaBuilderError
-    #[cfg(feature = "fasta")]
-    #[error(transparent)]
-    FastaBuilderError(#[from] crate::format::fasta::FastaBuilderError),
-
-    /// crate::format::fastq::FastqBuilderError
-    #[cfg(feature = "fastq")]
-    #[error(transparent)]
-    FastqBuilderError(#[from] crate::format::fastq::FastqBuilderError),
-
-    /// crate::format::vcf::VcfBuilderError
-    #[cfg(feature = "vcf")]
-    #[error(transparent)]
-    VcfBuilderError(#[from] crate::format::vcf::VcfBuilderError),
-
-    /// crate::format::vcf::record::RecordBuilderError
-    #[cfg(feature = "vcf")]
-    #[error(transparent)]
-    VcfRecordBuilderError(#[from] crate::format::vcf::record::RecordBuilderError),
-
-    /// crate::format::vcf::header::HeaderBuilderError
-    #[cfg(feature = "vcf")]
-    #[error(transparent)]
-    VcfHeaderBuilderError(#[from] crate::format::vcf::header::HeaderBuilderError),
-
-    /// crate::format::sequence::SequenceBuilderError
-    #[cfg(feature = "sequence")]
-    #[error(transparent)]
-    SequenceBuilderError(#[from] crate::format::sequence::SequenceBuilderError),
-
-    /// crate::format::quality::QualityBuilderError
-    #[cfg(feature = "quality")]
-    #[error(transparent)]
-    QualityBuilderError(#[from] crate::format::quality::QualityBuilderError),
-
-    /// crate::format::quality::QualityBuilderError
-    #[cfg(feature = "cigar")]
-    #[error(transparent)]
-    CigarBuilderError(#[from] crate::format::cigar::CigarBuilderError),
 }
 
 macro_rules! create_unreachable {
@@ -92,7 +52,7 @@ mod tests {
         assert_matches::assert_matches!(
             create_unreachable!(),
             crate::error::Error::Unreachable {
-                line: 93,
+                line: 53,
                 #[cfg(target_family = "windows")]
                 file: "src\\error.rs",
                 #[cfg(target_family = "unix")]

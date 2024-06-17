@@ -37,7 +37,7 @@
 //!
 //! let generator = biotest::Quality::builder()
 //!     .quality_len(50) // Set quality length
-//!     .build()?;
+//!     .build();
 //!
 //! generator.create("test.sequence", &mut rng, 5)?; // Write five sequence record in "test.sequence"
 //! # Ok(())
@@ -56,32 +56,24 @@ use crate::values;
 use crate::values::Generate as _;
 
 /// Struct to generate random DNA sequence
-#[derive(derive_builder::Builder)]
-#[builder(pattern = "owned")]
+#[derive(typed_builder::TypedBuilder)]
 pub struct Quality {
     /// Alphabet use for sequence generation
-    #[builder(default = "values::Quality::Illumina")]
+    #[builder(default = values::Quality::Illumina)]
     quality: values::Quality,
 
     /// quality length
-    #[builder(default = "150")]
+    #[builder(default = 150)]
     quality_len: usize,
 
     /// quality weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     quality_weights: Vec<u8>,
-}
-
-impl Quality {
-    /// Create a QualityBuilder
-    pub fn builder() -> QualityBuilder {
-        QualityBuilder::default()
-    }
 }
 
 impl core::default::Default for Quality {
     fn default() -> Self {
-        QualityBuilder::default().build().unwrap() // it's default no error
+        Quality::builder().build()
     }
 }
 
@@ -153,7 +145,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Quality::builder().quality_len(50).build()?;
+        let generator = Quality::builder().quality_len(50).build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -170,7 +162,7 @@ mod tests {
         let generator = Quality::builder()
             .quality_len(50)
             .quality_weights(vec![1, 0, 3, 4, 5, 6])
-            .build()?;
+            .build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -184,7 +176,7 @@ mod tests {
         let mut output = Vec::new();
         let mut rng = crate::rand();
 
-        let generator = Quality::builder().quality_len(50).build()?;
+        let generator = Quality::builder().quality_len(50).build();
 
         generator.records(&mut output, &mut rng, 5)?;
 
@@ -202,7 +194,7 @@ mod tests {
 
         let temp_file = temp_path.join("tmp.quality");
 
-        let generator = Quality::builder().quality_len(50).build()?;
+        let generator = Quality::builder().quality_len(50).build();
 
         generator.create(&temp_file, &mut rng, 5)?;
 

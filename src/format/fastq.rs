@@ -48,7 +48,7 @@
 //!     .plus_len(0) // If plus length is set to 0 prefix and suffix isn't write
 //!     .plus_prefix(b"prefix".to_vec()) // Set read id prefix
 //!     .plus_suffix(b"suffix".to_vec()) // Set read id prefix
-//!     .build()?;
+//!     .build();
 //!
 //! generator.create("test.fastq", &mut rng, 5)?; // Write five fasta record in "test.fastq"
 //! # Ok(())
@@ -67,99 +67,91 @@ use crate::values;
 use crate::values::Generate as _;
 
 /// Struct to generate random fastq record
-#[derive(derive_builder::Builder)]
-#[builder(pattern = "owned")]
+#[derive(typed_builder::TypedBuilder)]
 pub struct Fastq {
     /// Alphabet use for id generation
-    #[builder(default = "values::Alphabet::Upper")]
+    #[builder(default = values::Alphabet::Upper )]
     id: values::Alphabet,
 
     /// Length of id
-    #[builder(default = "10")]
+    #[builder(default = 10)]
     id_len: usize,
 
     /// Id prefix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     id_prefix: Vec<u8>,
 
     /// Id suffix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     id_suffix: Vec<u8>,
 
     /// Id weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     id_weights: Vec<u8>,
 
     /// Alphapet use for comment generation
-    #[builder(default = "values::Alphabet::Lower")]
+    #[builder(default = values::Alphabet::Lower)]
     comment: values::Alphabet,
     /// Comment length
-    #[builder(default = "20")]
+    #[builder(default = 20)]
     comment_len: usize,
 
     /// Comment prefix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     comment_prefix: Vec<u8>,
 
     /// Comment suffix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     comment_suffix: Vec<u8>,
 
     /// Comment weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     comment_weights: Vec<u8>,
 
     /// Alphabet use for sequence generation
-    #[builder(default = "values::Nucleotides::Dna")]
+    #[builder(default = values::Nucleotides::Dna)]
     sequence: values::Nucleotides,
 
     /// Sequence length
-    #[builder(default = "150")]
+    #[builder(default = 150)]
     sequence_len: usize,
 
     /// Sequence weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     sequence_weights: Vec<u8>,
 
     /// Alphabet use for plus comment generation
-    #[builder(default = "values::Alphabet::A2z")]
+    #[builder(default = values::Alphabet::A2z)]
     plus: values::Alphabet,
 
     /// Plus comment len
-    #[builder(default = "5")]
+    #[builder(default = 5)]
     plus_len: usize,
 
     /// Plus prefix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     plus_prefix: Vec<u8>,
 
     /// Plus suffix
-    #[builder(default = "b\"\".to_vec()")]
+    #[builder(default = b"".to_vec())]
     plus_suffix: Vec<u8>,
 
     /// Plus weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     plus_weights: Vec<u8>,
 
     /// Alphabet use for quality generation
-    #[builder(default = "values::Quality::Illumina")]
+    #[builder(default = values::Quality::Illumina)]
     quality: values::Quality,
 
     /// Quality weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     quality_weights: Vec<u8>,
-}
-
-impl Fastq {
-    /// Create a FastqBuilder
-    pub fn builder() -> FastqBuilder {
-        FastqBuilder::default()
-    }
 }
 
 impl core::default::Default for Fastq {
     fn default() -> Self {
-        FastqBuilder::default().build().unwrap() // it's default no error
+        Fastq::builder().build()
     }
 }
 
@@ -307,7 +299,7 @@ GAAGGTCCTGCTGGGTCCGATCCATGTTGAGCCGGTGCAGGTGGACGGTT
             .comment_len(10)
             .plus_len(0)
             .sequence_len(50)
-            .build()?;
+            .build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -330,7 +322,7 @@ GAAGGTCCTGCTGGGTCCGATCCATGTTGAGCCGGTGCAGGTGGACGGTT
             .sequence_weights(vec![1, 2, 3, 4])
             .plus_weights(vec![1, 2, 3, 4, 5])
             .quality_weights(vec![1, 0, 3, 4, 5, 6, 7, 8, 9, 2])
-            .build()?;
+            .build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -355,7 +347,7 @@ GAAGGTCCTGCTGGGTCCGATCCATGTTGAGCCGGTGCAGGTGGACGGTT
             .comment_suffix(b"_comment_suffix".to_vec())
             .plus_prefix(b"plus_prefix_".to_vec())
             .plus_suffix(b"_plus_suffix".to_vec())
-            .build()?;
+            .build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -381,7 +373,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT
             .comment_len(10)
             .plus_len(0)
             .sequence_len(50)
-            .build()?;
+            .build();
 
         generator.records(&mut output, &mut rng, 5)?;
 
@@ -404,7 +396,7 @@ CGCgtGTTAGTTAagccAcggtAatGcTtgtaCgcAGgAtaTcgAAtTaT
             .comment_len(10)
             .plus_len(0)
             .sequence_len(50)
-            .build()?;
+            .build();
 
         generator.create(&temp_file, &mut rng, 5)?;
 

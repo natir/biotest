@@ -13,37 +13,24 @@ use crate::values;
 use crate::values::Generate as _;
 
 /// Struct to generate cigar record
-#[derive(derive_builder::Builder)]
-#[builder(pattern = "owned")]
+#[derive(typed_builder::TypedBuilder)]
 pub struct Cigar {
     /// Cigar length
-    #[builder(default = "20")]
+    #[builder(default = 20)]
     length: u64,
 
     /// Cigar Alphabet
-    #[builder(default = "values::Cigar::Sam")]
+    #[builder(default = values::Cigar::Sam)]
     alphabet: values::Cigar,
 
     /// Cigar weights
-    #[builder(default = "vec![1; 0]")]
+    #[builder(default = vec![1; 0])]
     alphabet_weights: Vec<u8>,
-}
-
-impl Cigar {
-    /// Create a CigarBuilder
-    pub fn builder() -> CigarBuilder {
-        CigarBuilder::default()
-    }
-
-    /// Set cigar length
-    pub fn set_length(&mut self, new: u64) {
-        self.length = new
-    }
 }
 
 impl core::default::Default for Cigar {
     fn default() -> Self {
-        CigarBuilder::default().build().unwrap() // it's default no error
+        Cigar::builder().build()
     }
 }
 
@@ -131,7 +118,7 @@ mod tests {
         let generator = Cigar::builder()
             .length(50)
             .alphabet(values::Cigar::Gff)
-            .build()?;
+            .build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -149,7 +136,7 @@ mod tests {
             .length(50)
             .alphabet(values::Cigar::Gff)
             .alphabet_weights(vec![1, 2, 3, 4, 5])
-            .build()?;
+            .build();
 
         generator.record(&mut output, &mut rng)?;
 
@@ -166,7 +153,7 @@ mod tests {
         let generator = Cigar::builder()
             .length(50)
             .alphabet(values::Cigar::Gff)
-            .build()?;
+            .build();
 
         generator.records(&mut output, &mut rng, 5)?;
 
@@ -187,7 +174,7 @@ mod tests {
         let generator = Cigar::builder()
             .length(50)
             .alphabet(values::Cigar::Gff)
-            .build()?;
+            .build();
 
         generator.create(&temp_file, &mut rng, 5)?;
 

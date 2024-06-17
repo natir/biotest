@@ -8,9 +8,13 @@
 
 ### Changed
 
+- Replace derive_builder by typed_builder
+
 ### Deprecated
 
 ### Removed
+
+- All error related to Builder
 
 ### Fixed
 
