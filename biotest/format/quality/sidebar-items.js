@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["QualityBuilderError"],"struct":["Quality","QualityBuilder"]};
+window.SIDEBAR_ITEMS = {"struct":["Quality"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["VcfBuilderError"],"mod":["header","record"],"struct":["Vcf","VcfBuilder"]};
+window.SIDEBAR_ITEMS = {"mod":["header","record"],"struct":["Vcf"]};

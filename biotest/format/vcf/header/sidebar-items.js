@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["HeaderBuilderError"],"struct":["Header","HeaderBuilder"]};
+window.SIDEBAR_ITEMS = {"struct":["Header"]};

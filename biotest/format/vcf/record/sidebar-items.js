@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["RecordBuilderError"],"struct":["Record","RecordBuilder"]};
+window.SIDEBAR_ITEMS = {"struct":["Record"]};

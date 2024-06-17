@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["SequenceBuilderError"],"struct":["Sequence","SequenceBuilder"]};
+window.SIDEBAR_ITEMS = {"struct":["Sequence"]};

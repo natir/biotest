@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["FastaBuilderError"],"struct":["Fasta","FastaBuilder"]};
+window.SIDEBAR_ITEMS = {"struct":["Fasta"]};
