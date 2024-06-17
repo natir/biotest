@@ -15,13 +15,14 @@ license-file = "LICENSE"
 
 
 [features]
+cigar    = []
 fasta    = []
 fastq    = []
+gff      = []
 quality  = []
 sequence = []
 vcf      = []
-gff      = []
-cigar    = []
+
 
 [dependencies]
 rand           = { version = "0.8" }

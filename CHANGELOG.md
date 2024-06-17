@@ -4,7 +4,8 @@
 
 ### Added
 
-- Add a Cigar format
+- Add support of Cigar format
+- Add support of Gff format
 
 ### Changed
 

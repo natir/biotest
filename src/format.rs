@@ -5,14 +5,17 @@
 /* crates use */
 
 /* module declaration */
+#[cfg(feature = "cigar")]
+pub mod cigar;
+
 #[cfg(feature = "fasta")]
 pub mod fasta;
 
 #[cfg(feature = "fastq")]
 pub mod fastq;
 
-#[cfg(feature = "vcf")]
-pub mod vcf;
+#[cfg(feature = "gff")]
+pub mod gff;
 
 #[cfg(feature = "sequence")]
 pub mod sequence;
@@ -20,11 +23,8 @@ pub mod sequence;
 #[cfg(feature = "quality")]
 pub mod quality;
 
-#[cfg(feature = "gff")]
-pub mod gff;
-
-#[cfg(feature = "cigar")]
-pub mod cigar;
+#[cfg(feature = "vcf")]
+pub mod vcf;
 
 /* projet use */
 use crate::error;

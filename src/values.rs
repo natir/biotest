@@ -361,6 +361,8 @@ impl core::convert::AsRef<[&'static [u8]]> for Strand {
         }
     }
 }
+
+#[derive(Default)]
 /// Possible cigar alphabet
 pub enum Cigar {
     #[default]
@@ -379,6 +381,8 @@ impl core::convert::AsRef<[u8]> for Cigar {
         }
     }
 }
+
+impl Generate for Cigar {}
 
 #[derive(Debug, Clone, Default)]
 /// Possible value for frame
@@ -427,8 +431,6 @@ impl core::convert::AsRef<[&'static [u8]]> for GffPhase {
         }
     }
 }
-
-impl Generate for Cigar {}
 
 #[cfg(test)]
 mod tests {
@@ -659,6 +661,7 @@ mod tests {
         );
     }
 
+    #[test]
     fn cigar() -> error::Result<()> {
         assert_eq!(Cigar::Sam.as_ref(), constants::CIGAR_SAM);
         assert_eq!(Cigar::Gff.as_ref(), constants::CIGAR_GFF);

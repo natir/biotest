@@ -50,15 +50,11 @@ impl format::Format for Cigar {
     ) -> error::Result<()> {
         let mut len = 0;
         while len < self.length {
-            dbg!(self.length);
-            dbg!(len);
-            dbg!(1..(self.length - len) as usize);
             let size = if self.length - len > 1 {
                 rng.gen_range::<usize, core::ops::Range<usize>>(1..(self.length - len) as usize)
             } else {
                 1
             };
-            dbg!(size);
 
             let letter = if self.alphabet_weights.is_empty() {
                 self.alphabet.generate(rng, 1)
