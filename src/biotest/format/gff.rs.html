@@ -526,13 +526,13 @@
 
         <span class="comment">// start
         </span><span class="kw">let </span>start = rng.gen_range::&lt;i32, core::ops::Range&lt;i32&gt;&gt;(<span class="self">self</span>.position.clone().into());
-        output.write_all(<span class="kw-2">&amp;</span>start.to_string().as_bytes().to_vec())<span class="question-mark">?</span>;
+        output.write_all(start.to_string().as_bytes())<span class="question-mark">?</span>;
         output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
 
         <span class="comment">// end
         </span><span class="kw">let </span>end: i32 =
             start + rng.gen_range::&lt;i32, core::ops::Range&lt;i32&gt;&gt;(<span class="self">self</span>.length.clone().into());
-        output.write_all(<span class="kw-2">&amp;</span>end.to_string().as_bytes().to_vec())<span class="question-mark">?</span>;
+        output.write_all(end.to_string().as_bytes())<span class="question-mark">?</span>;
         output.write_all(<span class="string">b"\t"</span>)<span class="question-mark">?</span>;
 
         <span class="comment">// score
