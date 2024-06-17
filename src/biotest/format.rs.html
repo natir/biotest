@@ -69,6 +69,9 @@
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Format data generation
 
 </span><span class="comment">/* std use */
@@ -76,14 +79,17 @@
 /* crates use */
 
 /* module declaration */
-</span><span class="attr">#[cfg(feature = <span class="string">"fasta"</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"cigar"</span>)]
+</span><span class="kw">pub mod </span>cigar;
+
+<span class="attr">#[cfg(feature = <span class="string">"fasta"</span>)]
 </span><span class="kw">pub mod </span>fasta;
 
 <span class="attr">#[cfg(feature = <span class="string">"fastq"</span>)]
 </span><span class="kw">pub mod </span>fastq;
 
-<span class="attr">#[cfg(feature = <span class="string">"vcf"</span>)]
-</span><span class="kw">pub mod </span>vcf;
+<span class="attr">#[cfg(feature = <span class="string">"gff"</span>)]
+</span><span class="kw">pub mod </span>gff;
 
 <span class="attr">#[cfg(feature = <span class="string">"sequence"</span>)]
 </span><span class="kw">pub mod </span>sequence;
@@ -91,8 +97,8 @@
 <span class="attr">#[cfg(feature = <span class="string">"quality"</span>)]
 </span><span class="kw">pub mod </span>quality;
 
-<span class="attr">#[cfg(feature = <span class="string">"cigar"</span>)]
-</span><span class="kw">pub mod </span>cigar;
+<span class="attr">#[cfg(feature = <span class="string">"vcf"</span>)]
+</span><span class="kw">pub mod </span>vcf;
 
 <span class="comment">/* projet use */
 </span><span class="kw">use </span><span class="kw">crate</span>::error;
